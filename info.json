@@ -4,7 +4,7 @@
   "title": "Todo List",
   "author": "Jonas Jurczok",
   "contact": "jonasjurczok@gmail.com",
-  "homepage": "",
+  "homepage": "https://github.com/JonasJurczok/factorio-todo-list",
   "factorio_version": "0.15",
   "dependencies": ["base >= 0.15"],
   "description": "This mod adds a distributed todo list to the game to allow players to synchronize their work."
