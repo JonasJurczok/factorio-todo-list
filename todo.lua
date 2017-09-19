@@ -137,6 +137,7 @@ function todo.refresh_task_table(player)
 
     -- if the player has the UI minimized do nothing
     if not player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
+        todo.log("GUI minimized. Skipping.")
         return
     end
 
@@ -147,7 +148,7 @@ function todo.refresh_task_table(player)
         end
     end
 
-    local index, players = todo.get_player_list(player)
+    local players, lookup = todo.get_player_list(player)
 
     for i, task in ipairs(global.todo.open) do
         table.add({
@@ -163,12 +164,19 @@ function todo.refresh_task_table(player)
             single_line = false
         })
 
-        table.add({
-            type = "drop-down",
-            name = "todo_item_assignee_" .. i,
-            items = players,
-            selected_index = index
-        })
+        if (task.assignee) then
+            table.add({
+                type = "label",
+                name = "todo_item_assignee_" .. i,
+                caption = task.assignee
+            })
+        else
+            table.add({
+                type = "button",
+                name = "todo_item_assign_self_" .. i,
+                caption = {"todo.assign_self"}
+            })
+        end
     end
 
     todo.log("Refreshing table done.")
@@ -186,6 +194,11 @@ function todo.on_gui_click(event)
         todo.add_new(player)
     elseif (element.name == "todo_persist_button") then
         todo.persist(element)
+    elseif (string.find(element.name, "todo_item_assign_self_")) then
+        local _, start = string.find(element.name, "todo_item_assign_self_")
+        local index = tonumber(string.sub(element.name, start + 1))
+        todo.log("Assigning task number " .. index .. " to player " .. player.name)
+        global.todo.open[index].assignee = player.name
     else
         todo.log("Unknown element name:" .. element.name)
     end
@@ -203,18 +216,18 @@ end
 
 function todo.get_player_list(current_player)
     local result = {{"todo.unassigned"} }
-    local index = 0
 
-    for i, player in pairs(game.players) do
+    for _, player in pairs(game.players) do
         table.insert(result, player.name)
+    end
 
-        if (player.name == current_player.name) then
-            index = i -- all lists are 1 based except the dropdown selected item attribute...
-        end
+    local lookup = {}
+    for i, player in ipairs(result) do
+        lookup[player] = i
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
 
-    return index, result
+    return result, lookup
 end
 

@@ -16,7 +16,7 @@ script.on_event(defines.events.on_gui_click, function(event)
 end)
 
 script.on_event(defines.events.on_tick, function(event)
-    if (event.tick % 15 == 0) then
+    if (event.tick % 30 == 0) then
         todo.update_task_table()
     end
 end)
