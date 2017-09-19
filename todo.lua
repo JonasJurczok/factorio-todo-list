@@ -147,21 +147,72 @@ end
 function todo.persist(element)
     local frame = element.parent
 
-    local task = frame.todo_add_task_table.children[2].text
+    local task = todo.get_task_from_add_frame(frame)
 
-    local assignees = frame.todo_add_task_table.children[4]
-    local assignee = nil
-    if (assignees.selected_index > 1) then
-        assignee = assignees.items[assignees.selected_index]
-        todo.log("Persisting task: " .. task .. " with assignee " .. serpent.dump(assignee))
-    else
-        todo.log("Persisting task: " .. task)
-    end
-
-    table.insert(global.todo.open, {["task"] = task, ["assignee"] = assignee, ["completed"] = false})
+    table.insert(global.todo.open, task)
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
+end
+
+function todo.update(element)
+    local frame = element.parent
+    local _, start = string.find(element.name, "todo_update_button_")
+    local index = tonumber(string.sub(element.name, start + 1))
+
+    local task = todo.get_task_from_add_frame(frame)
+
+    local original = global.todo.open[index]
+
+    original.task = task.task
+    if (task.assignee) then
+        original.assignee = task.assignee
+    else
+        original.assignee = nil
+    end
+
+    frame.destroy()
+end
+
+function todo.get_task_from_add_frame(frame)
+    local taskText = frame.todo_add_task_table.children[2].text
+
+    local assignees = frame.todo_add_task_table.children[4]
+    local assignee
+    if (assignees.selected_index > 1) then
+        assignee = assignees.items[assignees.selected_index]
+    end
+
+    local task = {["task"] = taskText, ["assignee"] = assignee, ["completed"] = false}
+
+    todo.log("Reading task " .. serpent.block(task))
+
+    return task
+end
+
+function todo.edit_task(player, index)
+    todo.add_new(player)
+
+    local task = global.todo.open[index]
+    local players, lookup = todo.get_player_list()
+    local table = player.gui.center.todo_add_frame.todo_add_task_table
+
+    table.children[2].text = task.task
+
+    table.children[4].items = players
+    if (task.assignee) then
+        table.children[4].selected_index = lookup[task.assignee]
+    else
+        table.children[4].selected_index = 0
+    end
+
+    table.parent.todo_persist_button.destroy()
+
+    table.parent.add({
+        type = "button",
+        name = "todo_update_button_" .. index,
+        caption = {"todo.update"}
+    })
 end
 
 function todo.update_task_table()
@@ -243,9 +294,12 @@ function todo.on_gui_click(event)
         todo.log("Assigning task number " .. index .. " to player " .. player.name)
         global.todo.open[index].assignee = player.name
     elseif (string.find(element.name, "todo_item_edit_")) then
-        local _, start = string.find(element.name, "todo_item_assign_self_")
+        local _, start = string.find(element.name, "todo_item_edit_")
         local index = tonumber(string.sub(element.name, start + 1))
 
+        todo.edit_task(player, index)
+    elseif (string.find(element.name, "todo_update_button_")) then
+        todo.update(element)
     else
         todo.log("Unknown element name:" .. element.name)
     end
