@@ -65,7 +65,7 @@ function todo.create_task_table(frame)
     local table = frame.add({
         type = "table",
         name = "todo_task_table",
-        colspan = 3
+        colspan = 4
     })
 
     table.add({
@@ -84,6 +84,11 @@ function todo.create_task_table(frame)
         name = "todo_title_assignee",
         caption = {"todo.title_assignee"}
     })
+    table.add({
+        type = "label",
+        name = "todo_title_edit",
+        caption = ""
+    })
 
     return table
 end
@@ -93,17 +98,44 @@ function todo.add_new(player)
 
     local frame = gui.add({
         type = "frame",
-        name = "todo_main_frame",
+        name = "todo_add_frame",
         caption = {"todo.add_title"},
         direction = "vertical"
     })
 
-    local textbox = frame.add({
+    local table = frame.add({
+        type = "table",
+        name = "todo_add_task_table",
+        colspan = 2
+    })
+
+    table.add({
+        type = "label",
+        name = "todo_add_task_label",
+        caption = {"todo.add_task"}
+    })
+
+    local textbox = table.add({
         type = "text-box",
         name = "todo_new_task_textbox"
     })
     textbox.style.minimal_width = 300
     textbox.style.minimal_height = 100
+
+    table.add({
+        type = "label",
+        name = "todo_add_assignee_label",
+        caption = {"todo.add_assignee"}
+    })
+
+
+    local players, _ = todo.get_player_list()
+    table.add({
+        type = "drop-down",
+        name = "todo_add_assignee_drop_down",
+        items = players,
+        selected_index = 1
+    })
 
     frame.add({
         type = "button",
@@ -115,11 +147,18 @@ end
 function todo.persist(element)
     local frame = element.parent
 
-    local task = frame.todo_new_task_textbox.text
+    local task = frame.todo_add_task_table.children[2].text
 
-    todo.log("Persisting task:" .. task)
+    local assignees = frame.todo_add_task_table.children[4]
+    local assignee = nil
+    if (assignees.selected_index > 1) then
+        assignee = assignees.items[assignees.selected_index]
+        todo.log("Persisting task: " .. task .. " with assignee " .. serpent.dump(assignee))
+    else
+        todo.log("Persisting task: " .. task)
+    end
 
-    table.insert(global.todo.open, {["task"] = task, ["assignee"] = nil, ["completed"] = false})
+    table.insert(global.todo.open, {["task"] = task, ["assignee"] = assignee, ["completed"] = false})
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
@@ -143,12 +182,10 @@ function todo.refresh_task_table(player)
 
     local table = player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.todo_task_table
     for i, element in ipairs(table.children) do
-        if i > 3 then
+        if i > 4 then
             element.destroy()
         end
     end
-
-    local players, lookup = todo.get_player_list(player)
 
     for i, task in ipairs(global.todo.open) do
         table.add({
@@ -177,6 +214,12 @@ function todo.refresh_task_table(player)
                 caption = {"todo.assign_self"}
             })
         end
+
+        table.add({
+            type = "button",
+            name = "todo_item_edit_" .. i,
+            caption = {"todo.title_edit"}
+        })
     end
 
     todo.log("Refreshing table done.")
@@ -199,6 +242,10 @@ function todo.on_gui_click(event)
         local index = tonumber(string.sub(element.name, start + 1))
         todo.log("Assigning task number " .. index .. " to player " .. player.name)
         global.todo.open[index].assignee = player.name
+    elseif (string.find(element.name, "todo_item_edit_")) then
+        local _, start = string.find(element.name, "todo_item_assign_self_")
+        local index = tonumber(string.sub(element.name, start + 1))
+
     else
         todo.log("Unknown element name:" .. element.name)
     end
