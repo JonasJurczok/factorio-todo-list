@@ -7,7 +7,7 @@ A distributed todo list for Factorio to keep track of all the tasks in your fact
 
 We are playing a lot of multiplayer Factorio in our free time.
 Especially as bases grow and you progress into the late game it becomes more and more
-difficult to keep track of all the little things you are planning and have todo.
+difficult to keep track of all the little things you are planning and have yet to do.
 
 During every session our desk fills with paper notes with little tasks on them but we
 always keep being annoyed by this less than perfect solution. Hence this mod was created :)
@@ -16,8 +16,8 @@ always keep being annoyed by this less than perfect solution. Hence this mod was
 
 ### Basic usage
 
-Uppon starting a game with this mod (or loading an existing save for that matter) you will
-find a small button in the upper left corner. Just click it :)
+Upon starting a game with this mod (or loading an existing save for that matter) you will
+find a small button in the upper left corner. Just click it or press shift-T :)
 
 ![minimized](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/minimized.png)
 
@@ -46,7 +46,7 @@ The task will be moved to the done list.
 
 To get it back to the open list, just click on the `Show completed tasks` button and uncheck the checkbox.
 
-![show compelted](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/show%20compelted.png)
+![show completed](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/show%20completed.png)
 
 ## How to contribute?
 
@@ -58,6 +58,9 @@ an idea for a feature.
 If you don't have a github account feel free to contact us via mail at `jonasjurczok+factorio@gmail.com`.
 
 ## Changelog
+
+### 1.3.0
+* Added hotkey shift-t to toggle the UI
 
 ### 1.1.0
 * Added german translation
