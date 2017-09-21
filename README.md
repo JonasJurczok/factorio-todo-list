@@ -19,6 +19,8 @@ always keep being annoyed by this less than perfect solution. Hence this mod was
 Uppon starting a game with this mod (or loading an existing save for that matter) you will
 find a small button in the upper left corner. Just click it :)
 
+![minimized](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/minimized.png)
+
 ### Adding tasks
 
 Click the `Add` button to add a new task.
@@ -46,3 +48,12 @@ Otherwise you can [create an issue](https://github.com/JonasJurczok/factorio-tod
 an idea for a feature.
 
 If you don't have a github account feel free to contact us via mail. See the [Mod Homepage](LINK MISSING) for contact details.
+
+## Changelog
+
+### 1.0.0
+* Minimizable UI
+* Add tasks
+* Complete/uncomplete tasks
+* Show/Hide completed tasks
+* Assign tasks to self/others
