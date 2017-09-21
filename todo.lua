@@ -149,7 +149,19 @@ function todo.add_new(player)
         selected_index = 1
     })
 
-    frame.add({
+    local flow = frame.add({
+        type = "flow",
+        name = "todo_add_button_flow",
+        direction = "horizontal"
+    })
+
+    flow.add({
+        type = "button",
+        name = "todo_cancel_button",
+        caption = {"todo.cancel"}
+    })
+
+    flow.add({
         type = "button",
         name = "todo_persist_button",
         caption = {"todo.persist"}
@@ -157,7 +169,7 @@ function todo.add_new(player)
 end
 
 function todo.persist(element)
-    local frame = element.parent
+    local frame = element.parent.parent
 
     local task = todo.get_task_from_add_frame(frame)
 
@@ -168,7 +180,7 @@ function todo.persist(element)
 end
 
 function todo.update(element)
-    local frame = element.parent
+    local frame = element.parent.parent
     local _, start = string.find(element.name, "todo_update_button_")
     local index = tonumber(string.sub(element.name, start + 1))
 
@@ -218,9 +230,10 @@ function todo.edit_task(player, index)
         table.children[4].selected_index = 0
     end
 
-    table.parent.todo_persist_button.destroy()
+    local flow = table.parent.todo_add_button_flow
+    flow.todo_persist_button.destroy()
 
-    table.parent.add({
+    flow.add({
         type = "button",
         name = "todo_update_button_" .. index,
         caption = {"todo.update"}
@@ -351,6 +364,8 @@ function todo.on_gui_click(event)
         todo.mark_complete(index)
     elseif (element.name == "todo_toggle_done_button") then
         todo.toggle_show_completed(player)
+    elseif (element.name == "todo_cancel_button") then
+        element.parent.parent.destroy()
     else
         todo.log("Unknown element name:" .. element.name)
     end
