@@ -9,7 +9,8 @@ script.on_event(defines.events.on_player_created, function(event)
     todo.create_ui(player)
 end)
 
--- TODO: on configuration changed
+-- if the version of the mod or any other version changed
+script.on_configuration_changed(todo.mod_init)
 
 script.on_event(defines.events.on_gui_click, function(event)
     todo.on_gui_click(event)

@@ -3,21 +3,27 @@ require "mod-gui"
 if not todo then todo = {} end
 
 function todo.mod_init()
-    game.print("setting up mod data.")
+    todo.log("setting up mod data.")
 
     if not global.todo then
-        global.todo = {["open"] = {}, ["done"] = {}}
+        global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
+    end
+
+    for _, player in pairs(game.players) do
+        todo.create_ui(player)
     end
 end
 
 function todo.create_ui(player)
     todo.log("Creating Basic UI for player " .. player.name)
 
-    mod_gui.get_button_flow(player).add({
-        type = "button",
-        name = "todo_maximize_button",
-        caption = "Todo List"
-    })
+    if not player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button then
+        mod_gui.get_button_flow(player).add({
+            type = "button",
+            name = "todo_maximize_button",
+            caption = "Todo List"
+        })
+    end
 end
 
 function todo.minimize(player)
@@ -43,7 +49,7 @@ function todo.maximize(player)
 
     local flow = frame.add({
         type = "flow",
-        name = "todo.main_button_flow",
+        name = "todo_main_button_flow",
         direction = "horizontal"
     })
 
@@ -51,6 +57,12 @@ function todo.maximize(player)
         type = "button",
         name = "todo_add_button",
         caption = {"todo.add"}
+    })
+
+    flow.add({
+        type = "button",
+        name = "todo_toggle_done_button",
+        caption = {"todo.show_done"}
     })
 
     flow.add({
@@ -183,7 +195,7 @@ function todo.get_task_from_add_frame(frame)
         assignee = assignees.items[assignees.selected_index]
     end
 
-    local task = {["task"] = taskText, ["assignee"] = assignee, ["completed"] = false}
+    local task = {["task"] = taskText, ["assignee"] = assignee}
 
     todo.log("Reading task " .. serpent.block(task))
 
@@ -223,11 +235,8 @@ end
 
 function todo.refresh_task_table(player)
 
-    todo.log("Refreshing table...")
-
     -- if the player has the UI minimized do nothing
     if not player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
-        todo.log("GUI minimized. Skipping.")
         return
     end
 
@@ -239,41 +248,74 @@ function todo.refresh_task_table(player)
     end
 
     for i, task in ipairs(global.todo.open) do
-        table.add({
-            type = "checkbox",
-            name = "todo_item_checkbox_" .. i,
-            state = task.completed
-        })
+        todo.add_task_to_table(table, task, i, "", false)
+    end
 
+    if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
+        for i, task in ipairs(global.todo.done) do
+            todo.add_task_to_table(table, task, i, "done_", true)
+        end
+    end
+end
+
+function todo.add_task_to_table(table, task, index, prefix, completed)
+    table.add({
+        type = "checkbox",
+        name = "todo_item_checkbox_" .. prefix .. index,
+        state = completed
+    })
+
+    table.add({
+        type = "label",
+        name = "todo_item_task_" .. prefix .. index,
+        caption = task.task,
+        single_line = false
+    })
+
+    if (task.assignee) then
         table.add({
             type = "label",
-            name = "todo_item_task_" .. i,
-            caption = task.task,
-            single_line = false
+            name = "todo_item_assignee_" .. prefix .. index,
+            caption = task.assignee
         })
-
-        if (task.assignee) then
-            table.add({
-                type = "label",
-                name = "todo_item_assignee_" .. i,
-                caption = task.assignee
-            })
-        else
-            table.add({
-                type = "button",
-                name = "todo_item_assign_self_" .. i,
-                caption = {"todo.assign_self"}
-            })
-        end
-
+    else
         table.add({
             type = "button",
-            name = "todo_item_edit_" .. i,
-            caption = {"todo.title_edit"}
+            name = "todo_item_assign_self_" .. prefix .. index,
+            caption = {"todo.assign_self"}
         })
     end
 
-    todo.log("Refreshing table done.")
+    table.add({
+        type = "button",
+        name = "todo_item_edit_" .. prefix .. index,
+        caption = {"todo.title_edit"}
+    })
+
+end
+
+function todo.mark_complete(index)
+    table.insert(global.todo.done, table.remove(global.todo.open, index))
+end
+
+function todo.mark_open(index)
+    table.insert(global.todo.open, table.remove(global.todo.done, index))
+end
+
+function todo.toggle_show_completed(player)
+    if not global.todo.settings[player.name] then
+        global.todo.settings[player.name] = {}
+        global.todo.settings[player.name].show_completed = false
+    end
+
+    global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
+
+    if (global.todo.settings[player.name].show_completed) then
+        player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.todo_main_button_flow.todo_toggle_done_button.caption = {"todo.hide_done"}
+    else
+        player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.todo_main_button_flow.todo_toggle_done_button.caption = {"todo.show_done"}
+    end
+
 end
 
 function todo.on_gui_click(event)
@@ -289,30 +331,48 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_persist_button") then
         todo.persist(element)
     elseif (string.find(element.name, "todo_item_assign_self_")) then
-        local _, start = string.find(element.name, "todo_item_assign_self_")
-        local index = tonumber(string.sub(element.name, start + 1))
+        local index = todo.get_task_index_from_element_name(element.name, "todo_item_assign_self_")
+
         todo.log("Assigning task number " .. index .. " to player " .. player.name)
         global.todo.open[index].assignee = player.name
     elseif (string.find(element.name, "todo_item_edit_")) then
-        local _, start = string.find(element.name, "todo_item_edit_")
-        local index = tonumber(string.sub(element.name, start + 1))
+        local index = todo.get_task_index_from_element_name(element.name, "todo_item_edit_")
 
         todo.edit_task(player, index)
     elseif (string.find(element.name, "todo_update_button_")) then
         todo.update(element)
+    elseif (string.find(element.name, "todo_item_checkbox_done_")) then
+        local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_done_")
+
+        todo.mark_open(index)
+    elseif (string.find(element.name, "todo_item_checkbox_")) then
+        local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_")
+
+        todo.mark_complete(index)
+    elseif (element.name == "todo_toggle_done_button") then
+        todo.toggle_show_completed(player)
     else
         todo.log("Unknown element name:" .. element.name)
     end
 end
 
+function todo.get_task_index_from_element_name(name, pattern)
+    local _, start = string.find(name, pattern)
+    local index = tonumber(string.sub(name, start + 1))
+    return index
+end
+
 function todo.log(message)
-    if game then
+    return
+    -- TODO: add settings to enable logging per player
+    --[[if game then
         for _, p in pairs(game.players) do
             p.print(message)
         end
     else
         error(serpent.dump(message, {compact = false, nocode = true, indent = ' '}))
     end
+    ]]--
 end
 
 function todo.get_player_list(current_player)
