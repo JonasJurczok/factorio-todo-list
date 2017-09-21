@@ -17,7 +17,7 @@ always keep being annoyed by this less than perfect solution. Hence this mod was
 ### Basic usage
 
 Uppon starting a game with this mod (or loading an existing save for that matter) you will
-find a small button in the upper left corner. Just click it :)
+find a small button in the upper left corner. Just click it or press shift-T :)
 
 ![minimized](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/minimized.png)
 
@@ -58,6 +58,9 @@ an idea for a feature.
 If you don't have a github account feel free to contact us via mail at `jonasjurczok+factorio@gmail.com`.
 
 ## Changelog
+
+### 1.3.0
+* Added hotkey shift-t to toggle the UI
 
 ### 1.1.0
 * Added german translation
