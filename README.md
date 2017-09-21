@@ -59,7 +59,7 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
-### 1.3.0
+### 1.2.0
 * Added hotkey shift-t to toggle the UI
 * Add cancel button to add/edit frame
 
