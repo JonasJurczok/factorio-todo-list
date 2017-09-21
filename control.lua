@@ -21,3 +21,12 @@ script.on_event(defines.events.on_tick, function(event)
         todo.update_task_table()
     end
 end)
+
+script.on_event("todolist-toggle-ui", function(event)
+    local player = game.players[event.player_index]
+    if player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button then
+        todo.maximize(player)
+    else
+        todo.minimize(player)
+    end
+end)
