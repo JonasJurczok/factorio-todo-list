@@ -67,11 +67,13 @@ function todo.maximize(player)
         caption = {"todo.show_done"}
     })
 
-    flow.add({
-        type = "button",
-        name = "todo_minimize_button",
-        caption = {"todo.minimize"}
-    })
+    if settings.get_player_settings(player)["todolist-show-minimized"].value then
+        flow.add({
+            type = "button",
+            name = "todo_minimize_button",
+            caption = {"todo.minimize"}
+        })
+    end
 
 end
 
