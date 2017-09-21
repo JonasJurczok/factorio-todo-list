@@ -17,7 +17,7 @@ end
 function todo.create_ui(player)
     todo.log("Creating Basic UI for player " .. player.name)
 
-    if not player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button then
+    if not player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button and not player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
         mod_gui.get_button_flow(player).add({
             type = "button",
             name = "todo_maximize_button",
