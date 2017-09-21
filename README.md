@@ -26,6 +26,8 @@ find a small button in the upper left corner. Just click it :)
 Click the `Add` button to add a new task.
 You can enter a multiline text and choose an assignee. Picking an assignee is optional.
 
+![add task](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/add%20task.png)
+
 ### Assigning tasks
 
 There are two ways to assign a task to someone:
@@ -33,12 +35,18 @@ There are two ways to assign a task to someone:
 * If a task is created or edited you can pick an assignee there.
 * If a task is unassigned you can click the `Assign to me` button to assign it to yourself.
 
+![unassigned](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/maximized%20unassigned.png)
+
 ### Completing tasks
 
 Just click the checkbox besides the task to mark it as completed.
 The task will be moved to the done list.
 
+![complete](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/maximized%20complete.png)
+
 To get it back to the open list, just click on the `Show completed tasks` button and uncheck the checkbox.
+
+![show compelted](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/show%20compelted.png)
 
 ## How to contribute?
 
@@ -50,6 +58,10 @@ an idea for a feature.
 If you don't have a github account feel free to contact us via mail. See the [Mod Homepage](LINK MISSING) for contact details.
 
 ## Changelog
+
+### 1.1.0
+* Added german translation
+* Added pictures to the documentation
 
 ### 1.0.0
 * Minimizable UI
