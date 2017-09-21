@@ -17,7 +17,7 @@ end
 function todo.create_ui(player)
     todo.log("Creating Basic UI for player " .. player.name)
 
-    if not player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button and not player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
+    if not player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button and not player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame and settings.get_player_settings(player)["todolist-show-minimized"].value then
         mod_gui.get_button_flow(player).add({
             type = "button",
             name = "todo_maximize_button",
@@ -36,7 +36,9 @@ end
 function todo.maximize(player)
     todo.log("Maximizing UI for player " .. player.name)
 
-    player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button.destroy()
+    if player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button then
+      player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button.destroy()
+    end
 
     local frame = mod_gui.get_frame_flow(player).add({
         type = "frame",
