@@ -5,8 +5,8 @@ import os, sys, shutil, glob, zipfile, json
 version = ""
 
 with open("info.json") as info:
-		version = json.load(info)["version"]
-		print "Found version " + version + "."
+    version = json.load(info)["version"]
+    print "Found version " + version + "."
 
 if (version == ""):
     print "No version found. Aborting"
