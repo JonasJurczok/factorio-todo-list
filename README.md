@@ -67,7 +67,7 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
-### NEXT
+### 1.3.0
 * Added setting to hide the minimized UI and work only with hotkey
 
 ### 1.2.0
