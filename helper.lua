@@ -31,6 +31,10 @@ end
 
 -- Returns the maximize button if it is displayed, nil otherwise
 function todo.get_maximize_button(player)
+    if not todo.has_mod_gui(player) then
+        return nil
+    end
+
     if player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button then
         return player.gui.left.mod_gui_flow.mod_gui_button_flow.todo_maximize_button
     else
@@ -39,11 +43,21 @@ function todo.get_maximize_button(player)
 end
 
 function todo.get_main_frame(player)
+    if not todo.has_mod_gui(player) then
+        return nil
+    end
+
     if player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
         return player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame
     else
         return nil
     end
+end
+
+function todo.has_mod_gui(player)
+    return player.gui.left.mod_gui_flow ~= nil and
+            player.gui.left.mod_gui_flow.mod_gui_frame_flow ~= nil and
+            player.gui.left.mod_gui_flow.mod_gui_button_flow ~= nil
 end
 
 function todo.show_minimized(player)

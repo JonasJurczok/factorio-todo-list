@@ -67,6 +67,9 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 1.4.6
+* Bugfix: it was not possible to load old saves that did not contain this mod
+
 ### 1.4.0 (technical release)
 * Added settings for debug messages (mostly interesting for development)
 * Major code refactoring to make future changes much easier
