@@ -1,15 +1,12 @@
 #! python
 
-import os, sys, shutil, glob, zipfile
+import os, sys, shutil, glob, zipfile, json
 
 version = ""
 
 with open("info.json") as info:
-    for line in info:
-        if ("\"version\"" in line):
-            contents = line.split("\"")
-            version = contents[3]
-            print "Found version " + version + "."
+		version = json.load(info)["version"]
+		print "Found version " + version + "."
 
 if (version == ""):
     print "No version found. Aborting"
