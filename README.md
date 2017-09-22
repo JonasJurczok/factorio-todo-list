@@ -48,6 +48,14 @@ To get it back to the open list, just click on the `Show completed tasks` button
 
 ![show completed](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/show%20completed.png)
 
+### Hide the minimized UI?
+
+Is the minimized UI (the "Todo List" button) still taking up your precious
+screen space?
+
+In the settings menu you can disable it. Then you'll only
+be able to use the hotkey (default shift-t) to show/hide the todo list.
+
 ## How to contribute?
 
 If you want to contribute feel free to create a [pull request](https://github.com/JonasJurczok/factorio-todo-list/pulls) (with new translations for example).
@@ -58,6 +66,9 @@ an idea for a feature.
 If you don't have a github account feel free to contact us via mail at `jonasjurczok+factorio@gmail.com`.
 
 ## Changelog
+
+### NEXT
+* Added setting to hide the minimized UI and work only with hotkey
 
 ### 1.2.0
 * Added hotkey shift-t to toggle the UI
