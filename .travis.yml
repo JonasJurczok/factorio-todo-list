@@ -7,13 +7,10 @@ before_install:
   - (cd /tmp/luarocks-2.3.0 && ./configure --prefix=/usr --lua-version=5.2)
   - make -C /tmp/luarocks-2.3.0 build
   - sudo make -C /tmp/luarocks-2.3.0 install
-  - sudo luarocks install luasec OPENSSL_LIBDIR=/usr/lib/x86_64-linux-gnu
   - sudo luarocks install serpent
   - sudo luarocks install busted
-  - sudo luarocks install markdown
-  - sudo luarocks install ldoc
   - sudo luarocks install luacheck
 
 script:
-  - luacheck .
+  - luacheck --globals todo .
   - busted
