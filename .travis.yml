@@ -12,5 +12,5 @@ before_install:
   - sudo luarocks install luacheck
 
 script:
-  - luacheck --globals todo .
+  - luacheck . --globals todo
   - busted
