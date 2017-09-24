@@ -2,7 +2,7 @@
 function todo.create_minimized_button(player)
     todo.log("Creating Basic UI for player " .. player.name)
 
-    if (todo.get_maximize_button(player) == nil) and (todo.get_main_frame(player) == nil) and todo.show_minimized(player) then
+    if not todo.get_maximize_button(player) and not todo.get_main_frame(player) and todo.show_minimized(player) then
         mod_gui.get_button_flow(player).add({
             type = "button",
             name = "todo_maximize_button",

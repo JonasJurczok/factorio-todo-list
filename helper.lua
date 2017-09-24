@@ -12,7 +12,7 @@ function todo.log(message)
 
 end
 
-function todo.get_player_list(current_player)
+function todo.get_player_list()
     local result = {{"todo.unassigned"} }
 
     for _, player in pairs(game.players) do
