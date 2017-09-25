@@ -1,6 +1,5 @@
 if not todo then todo = {} end
 
-require "mod-gui"
 require "helper"
 require "UI"
 
