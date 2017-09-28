@@ -130,6 +130,8 @@ function todo.refresh_task_table(player)
         todo.add_task_to_table(table, task, i, "", false)
     end
 
+    require 'pl.pretty'.dump(global.todo)
+
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
         for i, task in ipairs(global.todo.done) do
             todo.add_task_to_table(table, task, i, "done_", true)
@@ -146,13 +148,12 @@ function todo.mark_open(index)
 end
 
 function todo.toggle_show_completed(player)
-    -- todo: move to actual setting for easier access
     if not global.todo.settings[player.name] then
         global.todo.settings[player.name] = {}
-        global.todo.settings[player.name].show_completed = false
+        global.todo.settings[player.name].show_completed = true
+    else
+      global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
     end
-
-    global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
 
     local frame = todo.get_main_frame(player)
     if (global.todo.settings[player.name].show_completed) then
