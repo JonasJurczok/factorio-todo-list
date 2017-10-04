@@ -12,7 +12,7 @@ function todo.log(message)
 
 end
 
-function todo.get_player_list(current_player)
+function todo.get_player_list()
     local result = {{"todo.unassigned"} }
 
     for _, player in pairs(game.players) do
@@ -72,4 +72,27 @@ function todo.get_task_index_from_element_name(name, pattern)
     local _, start = string.find(name, pattern)
     local index = tonumber(string.sub(name, start + 1))
     return index
+end
+
+function todo.generate_id()
+  if not global.todo.next_id then
+    global.todo.next_id = 1
+  end
+
+  global.todo.next_id = global.todo.next_id + 1
+  return global.todo.next_id - 1
+end
+
+function todo.get_task_by_id(id)
+  for _, task in pairs(global.todo.open) do
+    if (task.id == id) then
+      return task
+    end
+  end
+
+  for _, task in pairs(global.todo.done) do
+    if (task.id == id) then
+      return task
+    end
+  end
 end
