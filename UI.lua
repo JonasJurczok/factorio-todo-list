@@ -152,7 +152,7 @@ function todo.add_task_to_table(table, task, index, prefix, completed)
 
     table.add({
         type = "label",
-        name = "todo_item_task_" .. prefix .. index,
+        name = "todo_item_task_" .. index,
         caption = task.task,
         single_line = false
     })
@@ -160,20 +160,20 @@ function todo.add_task_to_table(table, task, index, prefix, completed)
     if (task.assignee) then
         table.add({
             type = "label",
-            name = "todo_item_assignee_" .. prefix .. index,
+            name = "todo_item_assignee_" .. index,
             caption = task.assignee
         })
     else
         table.add({
             type = "button",
-            name = "todo_item_assign_self_" .. prefix .. index,
+            name = "todo_item_assign_self_" .. index,
             caption = {"todo.assign_self"}
         })
     end
 
     table.add({
         type = "button",
-        name = "todo_item_edit_" .. prefix .. index,
+        name = "todo_item_edit_" .. index,
         caption = {"todo.title_edit"}
     })
 

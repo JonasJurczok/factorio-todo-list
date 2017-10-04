@@ -8,6 +8,18 @@ function todo.mod_init()
 
     if not global.todo then
         global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
+    else
+        for _, task in ipairs(global.todo.open) do
+          if not task.id then
+            task.id = todo.generate_id()
+          end
+        end
+
+        for _, task in ipairs(global.todo.done) do
+          if not task.id then
+            task.id = todo.generate_id()
+          end
+        end
     end
 
     for _, player in pairs(game.players) do
@@ -38,20 +50,17 @@ function todo.persist(element)
 
     local task = todo.get_task_from_add_frame(frame)
 
-    table.insert(global.todo.open, task)
+    table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
 end
 
-function todo.update(element)
+function todo.update(element, index)
     local frame = element.parent.parent
-    local _, start = string.find(element.name, "todo_update_button_")
-    local index = tonumber(string.sub(element.name, start + 1))
-
     local task = todo.get_task_from_add_frame(frame)
 
-    local original = global.todo.open[index]
+    local original = todo.get_task_by_id(index)
 
     original.task = task.task
     if (task.assignee) then
@@ -79,10 +88,18 @@ function todo.get_task_from_add_frame(frame)
     return task
 end
 
+function todo.create_task(text, assignee)
+  local task = {}
+  task.id = todo.generate_id()
+  task.task = text
+  task.assignee = assignee
+  return task
+end
+
 function todo.edit_task(player, index)
     todo.create_add_edit_frame(player)
 
-    local task = global.todo.open[index]
+    local task = todo.get_task_by_id(index)
     local players, lookup = todo.get_player_list()
     local table = player.gui.center.todo_add_frame.todo_add_task_table
 
@@ -114,6 +131,7 @@ end
 function todo.refresh_task_table(player)
 
     -- if the player has the UI minimized do nothing
+    -- TODO: switch to helper methods
     local main_frame = todo.get_main_frame(player)
     if not main_frame then
         return
@@ -129,8 +147,6 @@ function todo.refresh_task_table(player)
     for i, task in ipairs(global.todo.open) do
         todo.add_task_to_table(table, task, i, "", false)
     end
-
-    require 'pl.pretty'.dump(global.todo)
 
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
         for i, task in ipairs(global.todo.done) do
@@ -185,7 +201,8 @@ function todo.on_gui_click(event)
 
         todo.edit_task(player, index)
     elseif (string.find(element.name, "todo_update_button_")) then
-        todo.update(element)
+        local index = todo.get_task_index_from_element_name(element.name, "todo_update_button_")
+        todo.update(element, index)
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
         local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_done_")
 
