@@ -19,7 +19,7 @@ function todo.create_maximized_frame(player)
         direction = "vertical"
     })
 
-    todo.create_task_table(frame)
+    todo.create_task_table(frame, player)
 
     local flow = frame.add({
         type = "flow",
@@ -48,8 +48,19 @@ function todo.create_maximized_frame(player)
     end
 end
 
-function todo.create_task_table(frame)
-    local table = frame.add({
+function todo.create_task_table(frame, player)
+
+    local scroll = frame.add({
+        type = "scroll-pane",
+        name = "todo_scroll_pane"
+    })
+
+    scroll.vertical_scroll_policy = "auto"
+    scroll.horizontal_scroll_policy = "never"
+    scroll.style.maximal_height = todo.get_window_height(player)
+    scroll.style.minimal_height = scroll.style.maximal_height
+
+    local table = scroll.add({
         type = "table",
         name = "todo_task_table",
         colspan = 4

@@ -10,24 +10,30 @@ script.on_event(defines.events.on_player_created, function(event)
 end)
 
 -- if the version of the mod or any other version changed
-script.on_configuration_changed(todo.mod_init)
+script.on_configuration_changed(function(event)
+
+    for _, player in pairs(game.players) do
+        if (player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_scroll_pane) then
+            player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_scroll_pane.destroy()
+        elseif (player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame) then
+            player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.destroy()
+        end
+    end
+
+    todo.mod_init()
+end)
 
 script.on_event(defines.events.on_gui_click, function(event)
     todo.on_gui_click(event)
 end)
 
-script.on_event(defines.events.on_tick, function(event)
-    if (event.tick % 30 == 0) then
-        todo.update_task_table()
-    end
-end)
-
 script.on_event("todolist-toggle-ui", function(event)
     local player = game.players[event.player_index]
-    if player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame then
+    if todo.get_main_frame(player) then
         todo.minimize(player)
     else
         todo.maximize(player)
+        todo.refresh_task_table(player)
     end
 end)
 

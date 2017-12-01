@@ -54,6 +54,15 @@ function todo.get_main_frame(player)
     end
 end
 
+function todo.get_task_table(player)
+    local main_frame = todo.get_main_frame(player)
+    if (main_frame.todo_task_table) then
+        return main_frame.todo_task_table
+    elseif (main_frame.todo_scroll_pane.todo_task_table) then
+        return main_frame.todo_scroll_pane.todo_task_table
+    end
+end
+
 function todo.has_mod_gui(player)
     return player.gui.left.mod_gui_flow ~= nil and
             player.gui.left.mod_gui_flow.mod_gui_frame_flow ~= nil and
@@ -62,6 +71,10 @@ end
 
 function todo.show_minimized(player)
     return settings.get_player_settings(player)["todolist-show-minimized"].value
+end
+
+function todo.get_window_height(player)
+    return settings.get_player_settings(player)["todolist-window-height"].value
 end
 
 function todo.show_log(player)

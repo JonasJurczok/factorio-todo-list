@@ -120,7 +120,7 @@ function todo.refresh_task_table(player)
         return
     end
 
-    local table = main_frame.todo_task_table
+    local table = todo.get_task_table(player)
     for i, element in ipairs(table.children) do
         if i > 4 then
             element.destroy()
@@ -147,7 +147,6 @@ function todo.mark_open(index)
 end
 
 function todo.toggle_show_completed(player)
-    -- todo: move to actual setting for easier access
     if not global.todo.settings[player.name] then
         global.todo.settings[player.name] = {}
         global.todo.settings[player.name].show_completed = false
@@ -169,35 +168,43 @@ function todo.on_gui_click(event)
 
     if (element.name == "todo_maximize_button") then
         todo.maximize(player)
+        todo.refresh_task_table(player)
     elseif (element.name == "todo_minimize_button") then
         todo.minimize(player)
     elseif (element.name == "todo_add_button") then
         todo.create_add_edit_frame(player)
     elseif (element.name == "todo_persist_button") then
         todo.persist(element)
+        todo.update_task_table()
     elseif (string.find(element.name, "todo_item_assign_self_")) then
         local index = todo.get_task_index_from_element_name(element.name, "todo_item_assign_self_")
 
         todo.log("Assigning task number " .. index .. " to player " .. player.name)
         global.todo.open[index].assignee = player.name
+        todo.update_task_table()
     elseif (string.find(element.name, "todo_item_edit_")) then
         local index = todo.get_task_index_from_element_name(element.name, "todo_item_edit_")
 
         todo.edit_task(player, index)
     elseif (string.find(element.name, "todo_update_button_")) then
         todo.update(element)
+        todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
         local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_done_")
 
         todo.mark_open(index)
+        todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_")) then
         local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_")
 
         todo.mark_complete(index)
+        todo.update_task_table()
     elseif (element.name == "todo_toggle_done_button") then
         todo.toggle_show_completed(player)
+        todo.refresh_task_table(player)
     elseif (element.name == "todo_cancel_button") then
         element.parent.parent.destroy()
+        todo.refresh_task_table(player)
     else
         todo.log("Unknown element name:" .. element.name)
     end
