@@ -1,3 +1,5 @@
+
+require "mod-gui"
 require "todo"
 
 -- when creating a new game, initialize data structure

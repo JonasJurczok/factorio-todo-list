@@ -10,7 +10,8 @@ before_install:
   - sudo luarocks install serpent
   - sudo luarocks install busted
   - sudo luarocks install luacheck
+  - sudo luarocks install faketorio
 
 script:
-  - luacheck . --globals todo
+  - luacheck ./*.lua --globals todo mod_gui script game defines data serpent settings global 
   - busted
