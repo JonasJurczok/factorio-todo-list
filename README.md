@@ -67,6 +67,10 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 1.5.0
+* Added scrollbar to make it usable with a lot of tasks
+* Added window height option to match default window height to screen size
+
 ### 1.4.6
 * Bugfix: it was not possible to load old saves that did not contain this mod
 
