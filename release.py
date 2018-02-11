@@ -6,32 +6,32 @@ version = ""
 
 with open("info.json") as info:
     version = json.load(info)["version"]
-    print "Found version " + version + "."
+    print ("Found version " + version + ".")
 
 if (version == ""):
-    print "No version found. Aborting"
+    print ("No version found. Aborting")
     sys.exit(-1)
 
 directory = "Todo-List_" + version
 
 if not os.path.exists(directory):
     os.makedirs(directory)
-    print "Directory " + directory + " created."
+    print ("Directory " + directory + " created.")
 else:
-    print "Directory " + directory + " already exists. Aborting..."
+    print ("Directory " + directory + " already exists. Aborting...")
     sys.exit(-2)
 
 for file in glob.glob(r'*.lua'):
-    print "Copying " + file + "..."
+    print ("Copying " + file + "...")
     shutil.copy(file, directory)
 
-print "Copying locales"
+print ("Copying locales")
 shutil.copytree("locale", directory + "/locale")
 
-print "Copying info.json"
+print ("Copying info.json")
 shutil.copy("info.json", directory)
 
-print "Creating zipfile..."
+print ("Creating zipfile...")
 zipf = zipfile.ZipFile(directory + '.zip', 'w', zipfile.ZIP_DEFLATED)
 
 for root, dirs, files in os.walk(directory):
@@ -39,7 +39,7 @@ for root, dirs, files in os.walk(directory):
         zipf.write(os.path.join(root, file))
 zipf.close()
 
-print "Removing directory..."
+print ("Removing directory...")
 shutil.rmtree(directory)
 
-print "Release " + version + " completed."
+print ("Release " + version + " completed.")
