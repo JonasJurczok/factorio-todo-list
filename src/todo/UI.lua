@@ -63,7 +63,7 @@ function todo.create_task_table(frame, player)
     local table = scroll.add({
         type = "table",
         name = "todo_task_table",
-        colspan = 4
+        column_count = 4
     })
 
     table.add({
@@ -104,7 +104,7 @@ function todo.create_add_edit_frame(player)
     local table = frame.add({
         type = "table",
         name = "todo_add_task_table",
-        colspan = 2
+        column_count = 2
     })
 
     table.add({
@@ -154,16 +154,23 @@ function todo.create_add_edit_frame(player)
     })
 end
 
-function todo.add_task_to_table(table, task, index, prefix, completed)
+function todo.add_task_to_table(table, task, completed)
+    local prefix = ""
+    if (completed) then
+        prefix = "done_"
+    end
+
+    local id = task.id
+
     table.add({
         type = "checkbox",
-        name = "todo_item_checkbox_" .. prefix .. index,
+        name = "todo_item_checkbox_" .. prefix .. id,
         state = completed
     })
 
     table.add({
         type = "label",
-        name = "todo_item_task_" .. index,
+        name = "todo_item_task_" .. id,
         caption = task.task,
         single_line = false
     })
@@ -171,20 +178,20 @@ function todo.add_task_to_table(table, task, index, prefix, completed)
     if (task.assignee) then
         table.add({
             type = "label",
-            name = "todo_item_assignee_" .. index,
+            name = "todo_item_assignee_" .. id,
             caption = task.assignee
         })
     else
         table.add({
             type = "button",
-            name = "todo_item_assign_self_" .. index,
+            name = "todo_item_assign_self_" .. id,
             caption = {"todo.assign_self"}
         })
     end
 
     table.add({
         type = "button",
-        name = "todo_item_edit_" .. index,
+        name = "todo_item_edit_" .. id,
         caption = {"todo.title_edit"}
     })
 

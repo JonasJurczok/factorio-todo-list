@@ -67,9 +67,12 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
-### 1.5.0
+### 16.0.0
+* Updates are now transfered on demand and not every 250ms anymore. This should improve performance by
+a lot.
 * Added scrollbar to make it usable with a lot of tasks
 * Added window height option to match default window height to screen size
+* Major code refactoring to make it easier to maintain
 
 ### 1.4.6
 * Bugfix: it was not possible to load old saves that did not contain this mod

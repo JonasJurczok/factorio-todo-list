@@ -1,6 +1,6 @@
 
 require "mod-gui"
-require "todo"
+require "todo/todo"
 
 -- when creating a new game, initialize data structure
 script.on_init(todo.mod_init)
@@ -12,16 +12,7 @@ script.on_event(defines.events.on_player_created, function(event)
 end)
 
 -- if the version of the mod or any other version changed
-script.on_configuration_changed(function(event)
-
-    for _, player in pairs(game.players) do
-        if (player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_scroll_pane) then
-            player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_scroll_pane.destroy()
-        elseif (player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame) then
-            player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.destroy()
-        end
-    end
-
+script.on_configuration_changed(function(_)
     todo.mod_init()
 end)
 
@@ -44,3 +35,5 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     local key = event.setting
     todo.on_runtime_mod_setting_changed(player, key)
 end)
+
+require("faketorio/runner")

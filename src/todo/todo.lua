@@ -1,7 +1,7 @@
 if not todo then todo = {} end
 
-require "helper"
-require "UI"
+require "todo/helper"
+require "todo/UI"
 
 function todo.mod_init()
     todo.log("setting up mod data.")
@@ -131,7 +131,6 @@ end
 function todo.refresh_task_table(player)
 
     -- if the player has the UI minimized do nothing
-    -- TODO: switch to helper methods
     local main_frame = todo.get_main_frame(player)
     if not main_frame then
         return
@@ -144,23 +143,45 @@ function todo.refresh_task_table(player)
         end
     end
 
-    for i, task in ipairs(global.todo.open) do
-        todo.add_task_to_table(table, task, i, "", false)
+    for _, task in ipairs(global.todo.open) do
+        todo.add_task_to_table(table, task, false)
     end
 
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
-        for i, task in ipairs(global.todo.done) do
-            todo.add_task_to_table(table, task, i, "done_", true)
+        for _, task in ipairs(global.todo.done) do
+            todo.add_task_to_table(table, task, true)
         end
     end
 end
 
-function todo.mark_complete(index)
-    table.insert(global.todo.done, table.remove(global.todo.open, index))
+function todo.mark_complete(id)
+    todo.log("Marking task [" .. id .. "] as completed.")
+    local t
+    for i, task in ipairs(global.todo.open) do
+        if (task.id == id) then
+            t = table.remove(global.todo.open, i)
+            todo.log("Removed task from open list.")
+            break
+        end
+    end
+
+    todo.log("Adding task [" .. t.id .. "] to done list.")
+    table.insert(global.todo.done, t)
 end
 
-function todo.mark_open(index)
-    table.insert(global.todo.open, table.remove(global.todo.done, index))
+function todo.mark_open(id)
+    todo.log("Marking task [" .. id .. "] as open.")
+    local t
+    for i, task in ipairs(global.todo.done) do
+        if (task.id == id) then
+            t = table.remove(global.todo.done, i)
+            todo.log("Removed task from done list.")
+            break
+        end
+    end
+
+    todo.log("Adding task [" .. t.id .. "] to open list.")
+    table.insert(global.todo.open, t)
 end
 
 function todo.toggle_show_completed(player)
@@ -194,26 +215,29 @@ function todo.on_gui_click(event)
         todo.persist(element)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_assign_self_")) then
-        local index = todo.get_task_index_from_element_name(element.name, "todo_item_assign_self_")
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_assign_self_")
 
-        todo.log("Assigning task number " .. index .. " to player " .. player.name)
-        global.todo.open[index].assignee = player.name
+        todo.log("Assigning task number " .. id .. " to player " .. player.name)
+        local task = todo.get_task_by_id(id)
+        task.assignee = player.name
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_edit_")) then
-        local index = todo.get_task_index_from_element_name(element.name, "todo_item_edit_")
+        local index = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
 
         todo.edit_task(player, index)
     elseif (string.find(element.name, "todo_update_button_")) then
 
-        todo.update(element)
+        local index = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
+
+        todo.update(element, index)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
-        local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_done_")
+        local index = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_done_")
 
         todo.mark_open(index)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_")) then
-        local index = todo.get_task_index_from_element_name(element.name, "todo_item_checkbox_")
+        local index = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_")
 
         todo.mark_complete(index)
         todo.update_task_table()
