@@ -35,5 +35,3 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     local key = event.setting
     todo.on_runtime_mod_setting_changed(player, key)
 end)
-
-require("faketorio/runner")
