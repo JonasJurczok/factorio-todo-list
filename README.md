@@ -67,7 +67,7 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
-### 16.0.0
+### 16.0.1
 * Updates are now transfered on demand and not every 250ms anymore. This should improve performance by
 a lot.
 * Added scrollbar to make it usable with a lot of tasks
