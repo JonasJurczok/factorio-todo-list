@@ -63,7 +63,7 @@ function todo.create_task_table(frame, player)
     local table = scroll.add({
         type = "table",
         name = "todo_task_table",
-        column_count = 4
+        column_count = 6
     })
 
     table.add({
@@ -77,11 +77,25 @@ function todo.create_task_table(frame, player)
         name = "todo_title_task",
         caption = {"todo.title_task"}
     })
+
     table.add({
         type = "label",
         name = "todo_title_assignee",
         caption = {"todo.title_assignee"}
     })
+
+    table.add({
+        type = "label",
+        name = "todo_title_up",
+        caption = ""
+    })
+
+    table.add({
+        type = "label",
+        name = "todo_title_down",
+        caption = ""
+    })
+
     table.add({
         type = "label",
         name = "todo_title_edit",
@@ -154,7 +168,7 @@ function todo.create_add_edit_frame(player)
     })
 end
 
-function todo.add_task_to_table(table, task, completed)
+function todo.add_task_to_table(table, task, completed, is_first, is_last)
     local prefix = ""
     if (completed) then
         prefix = "done_"
@@ -186,6 +200,34 @@ function todo.add_task_to_table(table, task, completed)
             type = "button",
             name = "todo_item_assign_self_" .. id,
             caption = {"todo.assign_self"}
+        })
+    end
+
+    if (is_first) then
+        table.add({
+            type = "label",
+            name = "todo_item_firstup_" .. id,
+            caption = ""
+        })
+    else
+        table.add({
+            type = "button",
+            name = "todo_item_up_" .. id,
+            caption = "↑"
+        })
+    end
+
+    if (is_last) then
+        table.add({
+            type = "label",
+            name = "todo_item_lastdown_" .. id,
+            caption = ""
+        })
+    else
+        table.add({
+            type = "button",
+            name = "todo_item_down_" .. id,
+            caption = "↓"
         })
     end
 
