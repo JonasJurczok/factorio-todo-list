@@ -138,18 +138,20 @@ function todo.refresh_task_table(player)
 
     local table = todo.get_task_table(player)
     for i, element in ipairs(table.children) do
-        if i > 4 then
+        if i > table.column_count then
             element.destroy()
         end
     end
 
-    for _, task in ipairs(global.todo.open) do
-        todo.add_task_to_table(table, task, false)
+    local open_length = #global.todo.open
+    for i, task in ipairs(global.todo.open) do
+        todo.add_task_to_table(table, task, false, i == 1, i == open_length)
     end
 
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
-        for _, task in ipairs(global.todo.done) do
-            todo.add_task_to_table(table, task, true)
+        for i, task in ipairs(global.todo.done) do
+            -- we don't want ordering for completed tasks
+            todo.add_task_to_table(table, task, true, true, true)
         end
     end
 end
@@ -200,6 +202,25 @@ function todo.toggle_show_completed(player)
     end
 end
 
+function todo.move_up(id)
+    todo.move(id, -1)
+end
+
+function todo.move_down(id)
+    todo.move(id, 1)
+end
+
+function todo.move(id, modifier)
+    for i, task in pairs(global.todo.open) do
+        if (task.id == id) then
+            local copy = global.todo.open[i + modifier]
+            global.todo.open[i + modifier] = task
+            global.todo.open[i] = copy
+            break
+        end
+    end
+end
+
 function todo.on_gui_click(event)
     local player = game.players[event.player_index]
     local element = event.element
@@ -222,24 +243,23 @@ function todo.on_gui_click(event)
         task.assignee = player.name
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_edit_")) then
-        local index = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
 
-        todo.edit_task(player, index)
+        todo.edit_task(player, id)
     elseif (string.find(element.name, "todo_update_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 
-        local index = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
-
-        todo.update(element, index)
+        todo.update(element, id)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
-        local index = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_done_")
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_done_")
 
-        todo.mark_open(index)
+        todo.mark_open(id)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_")) then
-        local index = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_")
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_")
 
-        todo.mark_complete(index)
+        todo.mark_complete(id)
         todo.update_task_table()
     elseif (element.name == "todo_toggle_done_button") then
         todo.toggle_show_completed(player)
@@ -247,6 +267,14 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_cancel_button") then
         element.parent.parent.destroy()
         todo.refresh_task_table(player)
+    elseif (string.find(element.name, "todo_item_up_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_up_")
+        todo.move_up(id)
+        todo.update_task_table()
+    elseif (string.find(element.name, "todo_item_down_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_down_")
+        todo.move_down(id)
+        todo.update_task_table()
     else
         todo.log("Unknown element name:" .. element.name)
     end
