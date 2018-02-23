@@ -149,7 +149,7 @@ function todo.refresh_task_table(player)
     end
 
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
-        for i, task in ipairs(global.todo.done) do
+        for _, task in ipairs(global.todo.done) do
             -- we don't want ordering for completed tasks
             todo.add_task_to_table(table, task, true, true, true)
         end
