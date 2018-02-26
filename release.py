@@ -21,7 +21,7 @@ else:
     print ("Directory " + directory + " already exists. Aborting...")
     sys.exit(-2)
 
-for file in glob.glob(r'src/**/*.lua', recursive=True):
+for file in glob.glob(r'*.lua'):
     print ("Copying " + file + "...")
     shutil.copy(file, directory)
 
@@ -30,7 +30,6 @@ shutil.copytree("locale", directory + "/locale")
 
 print ("Copying info.json")
 shutil.copy("info.json", directory)
-
 
 print ("Creating zipfile...")
 zipf = zipfile.ZipFile(directory + '.zip', 'w', zipfile.ZIP_DEFLATED)
