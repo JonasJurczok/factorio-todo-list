@@ -202,6 +202,7 @@ function todo.mark_complete(id)
 end
 
 function todo.mark_open(id)
+    -- TODO : if subtask then insert in the proper sublist
     todo.log("Marking task [" .. id .. "] as open.")
     local t
     for i, task in ipairs(global.todo.done) do
