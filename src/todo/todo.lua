@@ -7,12 +7,19 @@ function todo.mod_init()
     todo.log("setting up mod data.")
 
     if not global.todo then
-        global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
+        global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}, ["open_subs"] = {}}
     else
+        if not global.todo.open_subs then
+            todo.log("creating subtasks container")
+            global.toto.open_subs = {}
+        end
         for _, task in ipairs(global.todo.open) do
-          if not task.id then
-            task.id = todo.generate_id()
-          end
+            if not task.id then
+                task.id = todo.generate_id()
+            end
+            if not task.parent then
+                task.parent = 0
+            end
         end
 
         for _, task in ipairs(global.todo.done) do
@@ -50,8 +57,15 @@ function todo.persist(element)
 
     local task = todo.get_task_from_add_frame(frame)
 
-    table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
-
+    if task.parent == 0 then
+        table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
+    else
+        todo.log("inserting task in subs")
+        if not global.todo.open_subs[task.parent] then
+            global.todo.open_subs[task.parent] = {}
+        end
+        table.insert(global.todo.open_subs[task.parent], todo.create_task(task.task, task.assignee))
+    end
     todo.log(serpent.block(global.todo))
     frame.destroy()
 end
@@ -81,7 +95,7 @@ function todo.get_task_from_add_frame(frame)
         assignee = assignees.items[assignees.selected_index]
     end
 
-    local task = {["task"] = taskText, ["assignee"] = assignee}
+    local task = {["task"] = taskText, ["assignee"] = assignee, ["parent"] = 1}
 
     todo.log("Reading task " .. serpent.block(task))
 
@@ -146,6 +160,11 @@ function todo.refresh_task_table(player)
     local open_length = #global.todo.open
     for i, task in ipairs(global.todo.open) do
         todo.add_task_to_table(table, task, false, i == 1, i == open_length)
+        if global.todo.open_subs[i] then
+            for j, subtask in ipairs(global.todo.open_subs[i]) do
+                todo.add_task_to_table(table, subtask, false, true, true)
+            end
+        end
     end
 
     if (global.todo.settings[player.name] and global.todo.settings[player.name].show_completed) then
@@ -164,6 +183,17 @@ function todo.mark_complete(id)
             t = table.remove(global.todo.open, i)
             todo.log("Removed task from open list.")
             break
+        end
+    end
+
+    -- if no task found, maybe its a subtask
+    for j, subs in ipairs(global.todo.open_subs) do
+        for i, task in ipairs(subs) do
+            if (task.id == id) then
+                t = table.remove(subs, i)
+                todo.log("removed subtasks from sublist " .. j)
+                break
+            end
         end
     end
 

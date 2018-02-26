@@ -9,6 +9,7 @@ script.on_init(todo.mod_init)
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.players[event.player_index]
     todo.create_minimized_button(player)
+    todo.mod_init()
 end)
 
 -- if the version of the mod or any other version changed
