@@ -170,7 +170,7 @@ function todo.create_add_edit_frame(player)
         name = "todo_persist_button",
         caption = {"todo.persist"}
     })
-    end
+end
 
 function todo.add_task_to_table(table, task, completed, is_first, is_last)
     local prefix = ""
