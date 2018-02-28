@@ -108,6 +108,10 @@ end
 function todo.create_add_edit_frame(player)
     local gui = player.gui.center
 
+    if (gui.todo_add_frame ~= nil) then
+        gui.todo_add_frame.destroy()
+    end
+
     local frame = gui.add({
         type = "frame",
         name = "todo_add_frame",

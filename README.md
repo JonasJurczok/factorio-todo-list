@@ -67,6 +67,10 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 16.0.3
+* Added French translation
+* Fixed a bug where clicking add/edit twice would crash the game
+
 ### 16.0.2
 * Added sorting of tasks. Thanks to Tarrke for the reminder, input and code examples
 

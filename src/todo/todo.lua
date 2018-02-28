@@ -10,15 +10,15 @@ function todo.mod_init()
         global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
     else
         for _, task in ipairs(global.todo.open) do
-          if not task.id then
-            task.id = todo.generate_id()
-          end
+            if not task.id then
+                task.id = todo.generate_id()
+            end
         end
 
         for _, task in ipairs(global.todo.done) do
-          if not task.id then
-            task.id = todo.generate_id()
-          end
+            if not task.id then
+                task.id = todo.generate_id()
+            end
         end
     end
 
@@ -89,11 +89,11 @@ function todo.get_task_from_add_frame(frame)
 end
 
 function todo.create_task(text, assignee)
-  local task = {}
-  task.id = todo.generate_id()
-  task.task = text
-  task.assignee = assignee
-  return task
+    local task = {}
+    task.id = todo.generate_id()
+    task.task = text
+    task.assignee = assignee
+    return task
 end
 
 function todo.edit_task(player, index)
@@ -191,7 +191,7 @@ function todo.toggle_show_completed(player)
         global.todo.settings[player.name] = {}
         global.todo.settings[player.name].show_completed = true
     else
-      global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
+        global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
     end
 
     local frame = todo.get_main_frame(player)
