@@ -95,6 +95,7 @@ function todo.get_task_from_add_frame(frame)
         assignee = assignees.items[assignees.selected_index]
     end
 
+<<<<<<< HEAD
     local parents = frame.todo_add_task_table.children[6]
     local parent  = tonumber(parents.items[parents.selected_index])
 
@@ -217,6 +218,7 @@ function todo.mark_complete(id)
 end
 
 function todo.mark_open(id)
+    -- TODO : if subtask then insert in the proper sublist
     todo.log("Marking task [" .. id .. "] as open.")
 
     local t
