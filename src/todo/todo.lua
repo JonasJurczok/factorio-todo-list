@@ -95,7 +95,6 @@ function todo.get_task_from_add_frame(frame)
         assignee = assignees.items[assignees.selected_index]
     end
 
-<<<<<<< HEAD
     local parents = frame.todo_add_task_table.children[6]
     local parent  = tonumber(parents.items[parents.selected_index])
 
