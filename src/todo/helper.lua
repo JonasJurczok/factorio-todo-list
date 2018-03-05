@@ -85,15 +85,23 @@ function todo.generate_id()
 end
 
 function todo.get_task_by_id(id)
-  for _, task in pairs(global.todo.open) do
-    if (task.id == id) then
-      return task
+    for _, task in pairs(global.todo.open) do
+        if (task.id == id) then
+            return task
+        end
     end
-  end
 
-  for _, task in pairs(global.todo.done) do
-    if (task.id == id) then
-      return task
+    for _, subs in pairs(global.todo.open_subs) do
+        for _, task in pairs(subs) do
+            if (task.id == id) then
+                return task
+            end
+        end
     end
-  end
+
+    for _, task in pairs(global.todo.done) do
+        if (task.id == id) then
+            return task
+        end
+    end
 end
