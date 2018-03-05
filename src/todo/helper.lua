@@ -105,3 +105,25 @@ function todo.get_task_by_id(id)
         end
     end
 end
+
+function todo.get_open_taks_ids()
+    local ids = { 0 }
+    for _, task in pairs(global.todo.open) do
+        table.insert(ids, task.id)
+    end
+    return ids
+end
+
+function todo.is_task_open(taskID)
+    todo.log("looking if task [" .. taskID .. "] is done.")
+    todo.log(serpent.block(global.todo.done))
+    for _, task in pairs(global.todo.done) do
+        todo.log(task.id)
+        if (task.id == taskID) then
+            todo.log("task [" .. taskID .. "] is done...")
+            return false
+        end
+    end
+    todo.log("task [" .. taskID .. "] is NOT done...")
+    return true
+end

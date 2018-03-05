@@ -58,13 +58,13 @@ function todo.persist(element)
     local task = todo.get_task_from_add_frame(frame)
 
     if task.parent == 0 then
-        table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
+        table.insert(global.todo.open, todo.create_task(task.task, task.assignee, task.parent))
     else
         todo.log("inserting task in subs")
         if not global.todo.open_subs[task.parent] then
             global.todo.open_subs[task.parent] = {}
         end
-        table.insert(global.todo.open_subs[task.parent], todo.create_task(task.task, task.assignee))
+        table.insert(global.todo.open_subs[task.parent], todo.create_task(task.task, task.assignee, task.parent))
     end
     todo.log(serpent.block(global.todo))
     frame.destroy()
@@ -95,18 +95,22 @@ function todo.get_task_from_add_frame(frame)
         assignee = assignees.items[assignees.selected_index]
     end
 
-    local task = {["task"] = taskText, ["assignee"] = assignee, ["parent"] = 1}
+    local parents = frame.todo_add_task_table.children[6]
+    local parent  = tonumber(parents.items[parents.selected_index])
+
+    local task = {["task"] = taskText, ["assignee"] = assignee, ["parent"] = parent}
 
     todo.log("Reading task " .. serpent.block(task))
 
     return task
 end
 
-function todo.create_task(text, assignee)
+function todo.create_task(text, assignee, parent)
     local task = {}
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
+    task.parent = parent
     return task
 end
 
@@ -159,9 +163,12 @@ function todo.refresh_task_table(player)
 
     local open_length = #global.todo.open
     for i, task in ipairs(global.todo.open) do
+        todo.log("doing task" .. task.id)
         todo.add_task_to_table(table, task, false, i == 1, i == open_length)
-        if global.todo.open_subs[i] then
-            for j, subtask in ipairs(global.todo.open_subs[i]) do
+        if global.todo.open_subs[task.id] then
+            todo.log("task " .. task.id .. " has subtasks...")
+            for j, subtask in ipairs(global.todo.open_subs[task.id]) do
+                todo.log("subtask id: " .. subtask.id)
                 todo.add_task_to_table(table, subtask, false, true, true)
             end
         end
@@ -187,8 +194,11 @@ function todo.mark_complete(id)
     end
 
     -- if no task found, maybe its a subtask
-    for j, subs in ipairs(global.todo.open_subs) do
-        for i, task in ipairs(subs) do
+    todo.log("looking into subtasks...")
+    todo.log(serpent.block(global.todo.open_subs))
+    for j, subs in pairs(global.todo.open_subs) do
+        todo.log("looking into " .. serpent.block(subs))
+        for i, task in pairs(subs) do
             if (task.id == id) then
                 t = table.remove(subs, i)
                 todo.log("removed subtasks from sublist " .. j)
@@ -199,22 +209,42 @@ function todo.mark_complete(id)
 
     todo.log("Adding task [" .. t.id .. "] to done list.")
     table.insert(global.todo.done, t)
+    if global.todo.open_subs[t.id] then
+        for _, task in pairs(global.todo.open_subs[t.id]) do
+            todo.mark_complete(task.id)
+        end
+    end
 end
 
 function todo.mark_open(id)
-    -- TODO : if subtask then insert in the proper sublist
     todo.log("Marking task [" .. id .. "] as open.")
+
     local t
     for i, task in ipairs(global.todo.done) do
         if (task.id == id) then
-            t = table.remove(global.todo.done, i)
-            todo.log("Removed task from done list.")
+            if task.parent == 0 then
+                t = table.remove(global.todo.done, i)
+                todo.log("Removed task from done list.")
+            else
+                if not todo.is_task_open(task.parent) then
+                    todo.log("parent task " .. task.parent .. " is done. Undone the parent task first.")
+                    return
+                else
+                    t = table.remove(global.todo.done, i)
+                    todo.log("Removed task from done list.")
+                end
+            end
             break
         end
     end
 
-    todo.log("Adding task [" .. t.id .. "] to open list.")
-    table.insert(global.todo.open, t)
+    if t.parent == 0 then
+        todo.log("Adding task [" .. t.id .. "] to open list.")
+        table.insert(global.todo.open, t)
+    else
+        todo.log("Adding task [" .. t.id .. "] to subtask [" .. t.parent .. "] list.")
+        table.insert(global.todo.open_subs[t.parent], t)
+    end
 end
 
 function todo.toggle_show_completed(player)

@@ -153,6 +153,20 @@ function todo.create_add_edit_frame(player)
         selected_index = 1
     })
 
+    table.add({
+        type = "label",
+        name = "todo_subtask_label",
+        caption = "Subtask of"
+    })
+
+    local ids = todo.get_open_taks_ids()
+    table.add({
+        type = "drop-down",
+        name = "todo_subtask_drop_down",
+        items = ids,
+        selected_index = 1
+    })
+
     local flow = frame.add({
         type = "flow",
         name = "todo_add_button_flow",
