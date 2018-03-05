@@ -27,6 +27,7 @@ function todo.get_player_list()
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
+    todo.log("Players in the game : " .. count - 1)
 
     return result, lookup, count
 end
@@ -61,6 +62,10 @@ end
 
 function todo.show_minimized(player)
     return settings.get_player_settings(player)["todolist-show-minimized"].value
+end
+
+function todo.auto_assign(player)
+    return settings.get_player_settings(player)["todolist-auto-assign"].value
 end
 
 function todo.get_window_height(player)

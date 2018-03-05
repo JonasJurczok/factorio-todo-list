@@ -285,6 +285,8 @@ function todo.on_runtime_mod_setting_changed(player, key)
         todo.on_show_minimized_changed(player)
     elseif (key == "todolist-show-log") then
         todo.log("Updated logging settings for player " .. player.name)
+    elseif (key == "todolist-auto-assign") then
+        todo.log("Changed auto-assign...")
     end
 end
 
