@@ -145,13 +145,24 @@ function todo.create_add_edit_frame(player)
     })
 
 
-    local players, _ = todo.get_player_list()
-    table.add({
-        type = "drop-down",
-        name = "todo_add_assignee_drop_down",
-        items = players,
-        selected_index = 1
-    })
+    local players, _, c = todo.get_player_list()
+    -- The count is off by 1 so if the result is 2 we get only one player
+    if( c == 2 ) then
+        table.add({
+            type = "drop-down",
+            name = "todo_add_assignee_drop_down",
+            items = players,
+            selected_index = 2
+        })
+    else 
+        table.add({
+            type = "drop-down",
+            name = "todo_add_assignee_drop_down",
+            items = players,
+            selected_index = 1
+        })
+    end
+
 
     local flow = frame.add({
         type = "flow",

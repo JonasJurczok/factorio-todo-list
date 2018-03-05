@@ -13,20 +13,22 @@ function todo.log(message)
 end
 
 function todo.get_player_list()
-    local result = {{"todo.unassigned"} }
+    local result = { {"todo.unassigned"} }
 
     for _, player in pairs(game.players) do
         table.insert(result, player.name)
     end
 
     local lookup = {}
+    local count = 0
     for i, player in ipairs(result) do
         lookup[player] = i
+        count = count + 1
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
 
-    return result, lookup
+    return result, lookup, count
 end
 
 -- Returns the maximize button if it is displayed, nil otherwise
