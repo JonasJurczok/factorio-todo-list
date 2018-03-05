@@ -154,7 +154,7 @@ function todo.create_add_edit_frame(player)
             items = players,
             selected_index = 2
         })
-    else 
+    else
         table.add({
             type = "drop-down",
             name = "todo_add_assignee_drop_down",
