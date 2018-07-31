@@ -21,9 +21,12 @@ else:
     print ("Directory " + directory + " already exists. Aborting...")
     sys.exit(-2)
 
-for file in glob.glob(r'*.lua'):
+for file in glob.glob(r'src/*.lua'):
     print ("Copying " + file + "...")
     shutil.copy(file, directory)
+
+print ("Copying todo directory...")
+shutil.copytree('src/todo', directory + "/todo")
 
 print ("Copying locales")
 shutil.copytree("locale", directory + "/locale")
