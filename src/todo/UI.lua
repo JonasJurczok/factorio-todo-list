@@ -152,7 +152,7 @@ function todo.create_add_edit_frame(player)
         name = "todo_add_assignee_drop_down",
         items = players
     }
-    if( todo.auto_assign(player) and c == 2 ) then
+    if( todo.auto_assign(player) and c == 1 ) then
         t.selected_index = 2
     else
         t.selected_index = 1

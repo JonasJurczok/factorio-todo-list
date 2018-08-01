@@ -15,15 +15,15 @@ end
 function todo.get_player_list()
     local result = { {"todo.unassigned"} }
 
+    local count = 0
     for _, player in pairs(game.players) do
         table.insert(result, player.name)
+        count = count + 1
     end
 
     local lookup = {}
-    local count = 0
     for i, player in ipairs(result) do
         lookup[player] = i
-        count = count + 1
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
