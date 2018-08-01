@@ -27,7 +27,7 @@ function todo.get_player_list()
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
-    todo.log("Players in the game : " .. count - 1)
+    todo.log("Players in the game : " .. count)
 
     return result, lookup, count
 end
