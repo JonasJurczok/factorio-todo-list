@@ -64,7 +64,7 @@ function todo.show_minimized(player)
     return settings.get_player_settings(player)["todolist-show-minimized"].value
 end
 
-function todo.auto_assign(player)
+function todo.is_auto_assign(player)
     return settings.get_player_settings(player)["todolist-auto-assign"].value
 end
 
