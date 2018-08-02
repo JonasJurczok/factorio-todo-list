@@ -13,10 +13,12 @@ function todo.log(message)
 end
 
 function todo.get_player_list()
-    local result = {{"todo.unassigned"} }
+    local result = { {"todo.unassigned"} }
 
+    local count = 0
     for _, player in pairs(game.players) do
         table.insert(result, player.name)
+        count = count + 1
     end
 
     local lookup = {}
@@ -25,8 +27,9 @@ function todo.get_player_list()
     end
 
     todo.log("Created Assignee list: " .. serpent.block(result))
+    todo.log("Players in the game : " .. count)
 
-    return result, lookup
+    return result, lookup, count
 end
 
 -- Returns the maximize button if it is displayed, nil otherwise
@@ -59,6 +62,10 @@ end
 
 function todo.show_minimized(player)
     return settings.get_player_settings(player)["todolist-show-minimized"].value
+end
+
+function todo.is_auto_assign(player)
+    return settings.get_player_settings(player)["todolist-auto-assign"].value
 end
 
 function todo.get_window_height(player)

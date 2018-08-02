@@ -145,12 +145,16 @@ function todo.create_add_edit_frame(player)
     })
 
 
-    local players, _ = todo.get_player_list()
+    local players, _, c = todo.get_player_list()
+    local index = 1
+    if( todo.is_auto_assign(player) and c == 1 ) then
+        index = 2
+    end
     table.add({
         type = "drop-down",
         name = "todo_add_assignee_drop_down",
         items = players,
-        selected_index = 1
+        selected_index = index
     })
 
     local flow = frame.add({
