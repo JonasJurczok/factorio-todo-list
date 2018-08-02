@@ -157,7 +157,6 @@ function todo.create_add_edit_frame(player)
         selected_index = index
     })
 
-
     local flow = frame.add({
         type = "flow",
         name = "todo_add_button_flow",
