@@ -1,5 +1,10 @@
 
 function todo.log(message)
+    if type(message) == 'table' then
+        message = serpent.dump(message) .. ' [' .. #message .. ']'
+    end
+    message = "" .. message or '<nil>'
+
     if game then
         for _, p in pairs(game.players) do
             if (todo.show_log(p)) then
@@ -77,6 +82,7 @@ function todo.show_log(player)
 end
 
 function todo.get_task_id_from_element_name(name, pattern)
+    -- TODO: This probably doesn't need the pattern, just split on the last _
     local _, start = string.find(name, pattern)
     local index = tonumber(string.sub(name, start + 1))
     return index
