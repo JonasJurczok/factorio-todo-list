@@ -219,6 +219,19 @@ function todo.move(id, modifier)
     end
 end
 
+function todo.move_top(id)
+    local task = todo.get_task_by_id(id)
+    local new_list = {task}
+    global.todo.open =  todo.filter_table_by_id(global.todo.open, id, new_list)
+end
+
+function todo.move_bottom(id)
+    local task = todo.get_task_by_id(id)
+    new_list = todo.filter_table_by_id(global.todo.open, id)
+    new_list[#new_list + 1] = task
+    global.todo.open = new_list
+end
+
 function todo.on_gui_click(event)
     local player = game.players[event.player_index]
     local element = event.element
@@ -271,6 +284,16 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_item_down_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_down_")
         todo.move_down(id)
+        todo.update_task_table()
+    elseif (string.find(element.name, "todo_item_top_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_top_")
+        todo.log('Moving task ' .. id .. ' to top.')
+        todo.move_top(id)
+        todo.update_task_table()
+    elseif (string.find(element.name, "todo_item_bottom_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_bottom_")
+        todo.log('Moving task ' .. id .. ' to bottom.')
+        todo.move_bottom(id)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
