@@ -1,5 +1,6 @@
 
 function todo.log(message)
+    log(message)
     if game then
         for _, p in pairs(game.players) do
             if (todo.show_log(p)) then
