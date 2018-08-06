@@ -1,3 +1,5 @@
+require('todo.style')
+
 local hotkey = {
     type = "custom-input",
     name = "todolist-toggle-ui",

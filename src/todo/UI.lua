@@ -2,9 +2,12 @@
 function todo.create_minimized_button(player)
     todo.log("Creating Basic UI for player " .. player.name)
 
-    if not todo.get_maximize_button(player) and not todo.get_main_frame(player) and todo.show_minimized(player) then
+    if (not todo.get_maximize_button(player)
+      and not todo.get_main_frame(player)
+      and todo.show_minimized(player) ) then
         mod_gui.get_button_flow(player).add({
             type = "button",
+            style = "todo_button_default",
             name = "todo_maximize_button",
             caption = {"todo.todo_list"},
         })
@@ -29,12 +32,14 @@ function todo.create_maximized_frame(player)
 
     flow.add({
         type = "button",
+        style = "todo_button_default",
         name = "todo_add_button",
         caption = {"todo.add"}
     })
 
     flow.add({
         type = "button",
+        style = "todo_button_default",
         name = "todo_toggle_done_button",
         caption = {"todo.show_done"}
     })
@@ -42,6 +47,7 @@ function todo.create_maximized_frame(player)
     if todo.show_minimized(player) then
         flow.add({
             type = "button",
+            style = "todo_button_default",
             name = "todo_minimize_button",
             caption = {"todo.minimize"}
         })
@@ -62,42 +68,49 @@ function todo.create_task_table(frame, player)
 
     local table = scroll.add({
         type = "table",
+        style = "todo_table_default",
         name = "todo_task_table",
         column_count = 6
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_done",
         caption = {"", {"todo.title_done"}, "   "}
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_task",
         caption = {"todo.title_task"}
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_assignee",
         caption = {"todo.title_assignee"}
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_up",
         caption = ""
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_down",
         caption = ""
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_title_edit",
         caption = ""
     })
@@ -121,25 +134,27 @@ function todo.create_add_edit_frame(player)
 
     local table = frame.add({
         type = "table",
+        style = "todo_table_default",
         name = "todo_add_task_table",
         column_count = 2
     })
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_add_task_label",
         caption = {"todo.add_task"}
     })
 
     local textbox = table.add({
         type = "text-box",
+        style = "todo_textbox_default",
         name = "todo_new_task_textbox"
     })
-    textbox.style.minimal_width = 300
-    textbox.style.minimal_height = 100
 
     table.add({
         type = "label",
+        style = "todo_label_default",
         name = "todo_add_assignee_label",
         caption = {"todo.add_assignee"}
     })
@@ -152,6 +167,7 @@ function todo.create_add_edit_frame(player)
     end
     table.add({
         type = "drop-down",
+        style = "todo_dropdown_default",
         name = "todo_add_assignee_drop_down",
         items = players,
         selected_index = index
@@ -165,12 +181,14 @@ function todo.create_add_edit_frame(player)
 
     flow.add({
         type = "button",
+        style = "todo_button_default",
         name = "todo_cancel_button",
         caption = {"todo.cancel"}
     })
 
     flow.add({
         type = "button",
+        style = "todo_button_default",
         name = "todo_persist_button",
         caption = {"todo.persist"}
     })
@@ -192,6 +210,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
 
     table.add({
         type = "label",
+        style = "todo_label_task",
         name = "todo_item_task_" .. id,
         caption = task.task,
         single_line = false
@@ -200,12 +219,14 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     if (task.assignee) then
         table.add({
             type = "label",
+            style = "todo_label_default",
             name = "todo_item_assignee_" .. id,
             caption = task.assignee
         })
     else
         table.add({
             type = "button",
+            style = "todo_button_default",
             name = "todo_item_assign_self_" .. id,
             caption = {"todo.assign_self"}
         })
@@ -220,6 +241,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     else
         table.add({
             type = "button",
+            style = "todo_button_default",
             name = "todo_item_up_" .. id,
             caption = "↑"
         })
@@ -234,6 +256,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     else
         table.add({
             type = "button",
+            style = "todo_button_default",
             name = "todo_item_down_" .. id,
             caption = "↓"
         })
@@ -241,8 +264,8 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
 
     table.add({
         type = "button",
+        style = "todo_button_default",
         name = "todo_item_edit_" .. id,
         caption = {"todo.title_edit"}
     })
-
 end
