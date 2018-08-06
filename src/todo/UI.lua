@@ -6,7 +6,7 @@ function todo.create_minimized_button(player)
         mod_gui.get_button_flow(player).add({
             type = "button",
             name = "todo_maximize_button",
-            caption = "Todo List"
+            caption = {"todo.todo_list"},
         })
     end
 end
@@ -15,7 +15,7 @@ function todo.create_maximized_frame(player)
     local frame = mod_gui.get_frame_flow(player).add({
         type = "frame",
         name = "todo_main_frame",
-        caption = "Todo List",
+        caption = {"todo.todo_list"},
         direction = "vertical"
     })
 
