@@ -31,16 +31,10 @@ function todo.minimize(player)
     todo.log("Minimizing UI for player " .. player.name)
 
     todo.get_main_frame(player).destroy()
-    todo.create_minimized_button(player)
 end
 
 function todo.maximize(player)
     todo.log("Maximizing UI for player " .. player.name)
-
-    local max_button = todo.get_maximize_button(player)
-    if max_button then
-        max_button.destroy()
-    end
 
     todo.create_maximized_frame(player)
 end
