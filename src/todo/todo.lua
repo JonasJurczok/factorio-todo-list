@@ -251,8 +251,8 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_down_")
         todo.move_down(id)
         todo.update_task_table()
-    else
-        todo.log("Unknown element name:" .. element.name)
+    elseif (string.find(element.name, "todo_")) then
+        todo.log("Unknown todo element name:" .. element.name)
     end
 end
 
