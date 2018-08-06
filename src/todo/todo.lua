@@ -99,32 +99,6 @@ function todo.create_task(text, assignee)
     return task
 end
 
-function todo.edit_task(player, index)
-    todo.create_add_edit_frame(player)
-
-    local task = todo.get_task_by_id(index)
-    local players, lookup = todo.get_player_list()
-    local table = player.gui.center.todo_add_frame.todo_add_task_table
-
-    table.children[2].text = task.task
-
-    table.children[4].items = players
-    if (task.assignee) then
-        table.children[4].selected_index = lookup[task.assignee]
-    else
-        table.children[4].selected_index = 0
-    end
-
-    local flow = table.parent.todo_add_button_flow
-    flow.todo_persist_button.destroy()
-
-    flow.add({
-        type = "button",
-        name = "todo_update_button_" .. index,
-        caption = {"todo.update"}
-    })
-end
-
 function todo.update_task_table()
     for _, player in pairs(game.players) do
         todo.refresh_task_table(player)
@@ -246,8 +220,8 @@ function todo.on_gui_click(event)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_edit_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
-
-        todo.edit_task(player, id)
+        local task = todo.get_task_by_id(id)
+        todo.create_add_edit_frame(player, task)
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 

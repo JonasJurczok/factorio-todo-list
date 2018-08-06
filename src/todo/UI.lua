@@ -118,8 +118,9 @@ function todo.create_task_table(frame, player)
     return table
 end
 
-function todo.create_add_edit_frame(player)
+function todo.create_add_edit_frame(player, task)
     local gui = player.gui.center
+    local task = task or nil
 
     if (gui.todo_add_frame ~= nil) then
         gui.todo_add_frame.destroy()
@@ -149,7 +150,8 @@ function todo.create_add_edit_frame(player)
     local textbox = table.add({
         type = "text-box",
         style = "todo_textbox_default",
-        name = "todo_new_task_textbox"
+        name = "todo_new_task_textbox",
+        text = task and task.task or ""
     })
 
     table.add({
@@ -159,18 +161,21 @@ function todo.create_add_edit_frame(player)
         caption = {"todo.add_assignee"}
     })
 
-
-    local players, _, c = todo.get_player_list()
-    local index = 1
-    if( todo.is_auto_assign(player) and c == 1 ) then
-        index = 2
+    local players, lookup, c = todo.get_player_list()
+    local assign_index = 1
+    if task then
+        assign_index = task.assignee and lookup[task.assignee] or 1
+    else
+        if( todo.is_auto_assign(player) and c == 1 ) then
+            assign_index = 2
+        end
     end
     table.add({
         type = "drop-down",
         style = "todo_dropdown_default",
         name = "todo_add_assignee_drop_down",
         items = players,
-        selected_index = index
+        selected_index = assign_index
     })
 
     local flow = frame.add({
@@ -186,12 +191,21 @@ function todo.create_add_edit_frame(player)
         caption = {"todo.cancel"}
     })
 
-    flow.add({
-        type = "button",
-        style = "todo_button_default",
-        name = "todo_persist_button",
-        caption = {"todo.persist"}
-    })
+    if task then
+        flow.add({
+            type = "button",
+            style = "todo_button_default",
+            name = "todo_update_button_" .. task.id,
+            caption = {"todo.update"}
+        })
+    else
+        flow.add({
+            type = "button",
+            style = "todo_button_default",
+            name = "todo_persist_button",
+            caption = {"todo.persist"}
+        })
+    end
 end
 
 function todo.add_task_to_table(table, task, completed, is_first, is_last)
@@ -212,8 +226,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
         type = "label",
         style = "todo_label_task",
         name = "todo_item_task_" .. id,
-        caption = task.task,
-        single_line = false
+        caption = task.task
     })
 
     if (task.assignee) then
