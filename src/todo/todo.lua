@@ -27,6 +27,15 @@ function todo.mod_init()
     end
 end
 
+function todo.toggle_ui(player)
+  if todo.get_main_frame(player) then
+    todo.minimize(player)
+  else
+    todo.maximize(player)
+    todo.refresh_task_table(player)
+  end
+end
+
 function todo.minimize(player)
     todo.log("Minimizing UI for player " .. player.name)
 
@@ -220,8 +229,7 @@ function todo.on_gui_click(event)
     local element = event.element
 
     if (element.name == "todo_maximize_button") then
-        todo.maximize(player)
-        todo.refresh_task_table(player)
+        todo.toggle_ui(player)
     elseif (element.name == "todo_minimize_button") then
         todo.minimize(player)
     elseif (element.name == "todo_add_button") then
