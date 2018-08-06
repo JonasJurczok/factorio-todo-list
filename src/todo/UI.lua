@@ -120,7 +120,7 @@ end
 
 function todo.create_add_edit_frame(player, task)
     local gui = player.gui.center
-    local task = task or nil
+    task = task or nil
 
     if (gui.todo_add_frame ~= nil) then
         gui.todo_add_frame.destroy()
@@ -147,7 +147,7 @@ function todo.create_add_edit_frame(player, task)
         caption = {"todo.add_task"}
     })
 
-    local textbox = table.add({
+    table.add({
         type = "text-box",
         style = "todo_textbox_default",
         name = "todo_new_task_textbox",
