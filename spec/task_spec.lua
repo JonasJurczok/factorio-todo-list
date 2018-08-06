@@ -11,7 +11,7 @@ describe("task tests", function()
 
   before_each(function()
     faketorio.initialize_world_busted()
-    faketorio.add_default_setting("todolist-show-minimized", true)
+    faketorio.add_default_setting("todolist-show-button", true)
     faketorio.add_default_setting("todolist-show-log", false)
     todo.mod_init()	
   end)

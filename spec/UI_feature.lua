@@ -8,9 +8,9 @@ feature("Testing the UI", function()
 
     scenario("The maximize button should persist when the UI is toggled", function()
         -- TODO: how to manipulate settings?
-        local temp = todo.show_minimized
+        local temp = todo.show_button
 
-        todo.show_minimized = function()
+        todo.show_button = function()
             return false
         end
 
@@ -22,6 +22,6 @@ feature("Testing the UI", function()
 
         assert(button ~= nil, "Maximize button not found!")
 
-        todo.show_minimized = temp
+        todo.show_button = temp
     end)
 end)

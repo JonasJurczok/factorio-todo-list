@@ -257,8 +257,8 @@ function todo.on_gui_click(event)
 end
 
 function todo.on_runtime_mod_setting_changed(player, key)
-    if (key == "todolist-show-minimized") then
-        todo.on_show_minimized_changed(player)
+    if (key == "todolist-show-button") then
+        todo.on_show_button_changed(player)
     elseif (key == "todolist-show-log") then
         todo.log("Updated logging settings for player " .. player.name)
     elseif (key == "todolist-auto-assign") then
@@ -266,8 +266,8 @@ function todo.on_runtime_mod_setting_changed(player, key)
     end
 end
 
-function todo.on_show_minimized_changed(player)
-    if todo.show_minimized(player) then
+function todo.on_show_button_changed(player)
+    if todo.show_button(player) then
         todo.log("Showing minimized button.")
         if not todo.get_maximize_button(player) then
             todo.create_minimized_button(player)
