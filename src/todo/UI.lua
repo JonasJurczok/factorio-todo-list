@@ -147,11 +147,15 @@ function todo.create_add_edit_frame(player, task)
         caption = {"todo.add_task"}
     })
 
+    task_text = ""
+    if task then
+        task_text = task.task
+    end
     table.add({
         type = "text-box",
         style = "todo_textbox_default",
         name = "todo_new_task_textbox",
-        text = task and task.task or ""
+        text = task_text
     })
 
     table.add({
@@ -163,12 +167,10 @@ function todo.create_add_edit_frame(player, task)
 
     local players, lookup, c = todo.get_player_list()
     local assign_index = 1
-    if task then
-        assign_index = task.assignee and lookup[task.assignee] or 1
-    else
-        if( todo.is_auto_assign(player) and c == 1 ) then
-            assign_index = 2
-        end
+    if task and task.assignee then
+        assign_index = lookup[task.assignee]
+    elseif todo.is_auto_assign(player) and c == 1 then
+        assign_index = 2
     end
     table.add({
         type = "drop-down",
