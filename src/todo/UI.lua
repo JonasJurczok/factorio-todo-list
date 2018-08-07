@@ -147,7 +147,7 @@ function todo.create_add_edit_frame(player, task)
         caption = {"todo.add_task"}
     })
 
-    task_text = ""
+    local task_text = ""
     if task then
         task_text = task.task
     end
