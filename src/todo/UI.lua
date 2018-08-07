@@ -166,6 +166,7 @@ function todo.create_add_edit_frame(player, task)
     })
 
     local players, lookup, c = todo.get_player_list()
+
     local assign_index = 1
     if task and task.assignee then
         assign_index = lookup[task.assignee]
