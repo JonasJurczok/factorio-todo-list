@@ -222,6 +222,28 @@ function todo.create_add_edit_frame(player, task)
             name = "todo_persist_button",
             caption = {"todo.persist"}
         })
+        local add_where_frame = flow.add({
+            type = "frame",
+            style = "todo_frame_add_where",
+            name = "todo_add_where_frame",
+            caption = {"todo.add_where"}
+        })
+
+        add_where_frame.add({
+            type = "radiobutton",
+            style = "todo_radiobutton_default",
+            name = "todo_add_top",
+            state = false,
+            caption = {"todo.top"}
+        })
+
+        add_where_frame.add({
+            type = "radiobutton",
+            style = "todo_radiobutton_default",
+            name = "todo_add_bottom",
+            state = true,
+            caption = {"todo.bottom"}
+        })
     end
 end
 
