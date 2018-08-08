@@ -51,9 +51,13 @@ end
 function todo.persist(element)
     local frame = element.parent.parent
 
-    local task = todo.get_task_from_add_frame(frame)
+    local task, should_add_to_top = todo.get_task_from_add_frame(frame)
+    local add_index = #global.todo.open + 1
+    if should_add_to_top then
+        add_index = 1
+    end
 
-    table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
+    table.insert(global.todo.open, add_index, todo.create_task(task.task, task.assignee))
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
@@ -61,7 +65,7 @@ end
 
 function todo.update(element, index)
     local frame = element.parent.parent
-    local task = todo.get_task_from_add_frame(frame)
+    local task, _ = todo.get_task_from_add_frame(frame)
 
     local original = todo.get_task_by_id(index)
 
@@ -79,16 +83,23 @@ function todo.get_task_from_add_frame(frame)
     local taskText = frame.todo_add_task_table.children[2].text
 
     local assignees = frame.todo_add_task_table.children[4]
-    local assignee
+    local assignee = nil
     if (assignees.selected_index > 1) then
         assignee = assignees.items[assignees.selected_index]
+    end
+
+    local should_add_to_top = false
+    local add_where_frame = frame.todo_add_button_flow.todo_add_where_frame
+
+    if add_where_frame and add_where_frame.todo_add_top.state then  -- 'Top' radio button
+        should_add_to_top = true
     end
 
     local task = {["task"] = taskText, ["assignee"] = assignee}
 
     todo.log("Reading task " .. serpent.block(task))
 
-    return task
+    return task, should_add_to_top
 end
 
 function todo.create_task(text, assignee)
