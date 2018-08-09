@@ -58,6 +58,11 @@ default_gui["todo_frame_add_where"] = {
     font = "todo_font_subheading"
 }
 
+default_gui["todo_checkbox_default"] = {
+    type = "checkbox_style",
+    font = "todo_font_default"
+}
+
 default_gui["todo_radiobutton_default"] = {
     type = "radiobutton_style",
     font = "todo_font_default"

@@ -89,15 +89,18 @@ function todo.get_task_from_add_frame(frame)
     end
 
     local should_add_to_top = false
-    local add_where_frame = frame.todo_add_button_flow.todo_add_where_frame
-
-    if add_where_frame and add_where_frame.todo_add_top.state then  -- 'Top' radio button
+    -- 'Add to Top' control won't exist in an edit dialog
+    local add_top_control = frame.todo_add_button_flow.todo_add_top
+    if add_top_control and add_top_control.state then
         should_add_to_top = true
     end
 
     local task = {["task"] = taskText, ["assignee"] = assignee}
 
     todo.log("Reading task " .. serpent.block(task))
+    if should_add_to_top then
+        todo.log("Adding it at the top.")
+    end
 
     return task, should_add_to_top
 end
