@@ -68,7 +68,11 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 ## Changelog
 
 ### 16.1.0
-* Added auto assign feature. Thanks to Tarrke for implementing this.
+* Added auto assign feature. Thanks Tarrke!
+* Added localization for buttons. Thanks hoylemd!
+* Added styles for everything. Thanks hoylemd!
+* Streamlined the UI. Thanks hoylemd!
+* Lots of code refactorings. Thanks hoylemd!
 
 ### 16.0.3
 * Added French translation
