@@ -27,20 +27,23 @@ function todo.mod_init()
     end
 end
 
+function todo.toggle_ui(player)
+  if todo.get_main_frame(player) then
+    todo.minimize(player)
+  else
+    todo.maximize(player)
+    todo.refresh_task_table(player)
+  end
+end
+
 function todo.minimize(player)
     todo.log("Minimizing UI for player " .. player.name)
 
     todo.get_main_frame(player).destroy()
-    todo.create_minimized_button(player)
 end
 
 function todo.maximize(player)
     todo.log("Maximizing UI for player " .. player.name)
-
-    local max_button = todo.get_maximize_button(player)
-    if max_button then
-        max_button.destroy()
-    end
 
     todo.create_maximized_frame(player)
 end
@@ -94,32 +97,6 @@ function todo.create_task(text, assignee)
     task.task = text
     task.assignee = assignee
     return task
-end
-
-function todo.edit_task(player, index)
-    todo.create_add_edit_frame(player)
-
-    local task = todo.get_task_by_id(index)
-    local players, lookup = todo.get_player_list()
-    local table = player.gui.center.todo_add_frame.todo_add_task_table
-
-    table.children[2].text = task.task
-
-    table.children[4].items = players
-    if (task.assignee) then
-        table.children[4].selected_index = lookup[task.assignee]
-    else
-        table.children[4].selected_index = 0
-    end
-
-    local flow = table.parent.todo_add_button_flow
-    flow.todo_persist_button.destroy()
-
-    flow.add({
-        type = "button",
-        name = "todo_update_button_" .. index,
-        caption = {"todo.update"}
-    })
 end
 
 function todo.update_task_table()
@@ -226,8 +203,7 @@ function todo.on_gui_click(event)
     local element = event.element
 
     if (element.name == "todo_maximize_button") then
-        todo.maximize(player)
-        todo.refresh_task_table(player)
+        todo.toggle_ui(player)
     elseif (element.name == "todo_minimize_button") then
         todo.minimize(player)
     elseif (element.name == "todo_add_button") then
@@ -244,8 +220,8 @@ function todo.on_gui_click(event)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_edit_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
-
-        todo.edit_task(player, id)
+        local task = todo.get_task_by_id(id)
+        todo.create_add_edit_frame(player, task)
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 
@@ -275,14 +251,14 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_down_")
         todo.move_down(id)
         todo.update_task_table()
-    else
-        todo.log("Unknown element name:" .. element.name)
+    elseif (string.find(element.name, "todo_")) then
+        todo.log("Unknown todo element name:" .. element.name)
     end
 end
 
 function todo.on_runtime_mod_setting_changed(player, key)
-    if (key == "todolist-show-minimized") then
-        todo.on_show_minimized_changed(player)
+    if (key == "todolist-show-button") then
+        todo.on_show_button_changed(player)
     elseif (key == "todolist-show-log") then
         todo.log("Updated logging settings for player " .. player.name)
     elseif (key == "todolist-auto-assign") then
@@ -290,8 +266,8 @@ function todo.on_runtime_mod_setting_changed(player, key)
     end
 end
 
-function todo.on_show_minimized_changed(player)
-    if todo.show_minimized(player) then
+function todo.on_show_button_changed(player)
+    if todo.show_button(player) then
         todo.log("Showing minimized button.")
         if not todo.get_maximize_button(player) then
             todo.create_minimized_button(player)

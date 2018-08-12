@@ -22,12 +22,7 @@ end)
 
 script.on_event("todolist-toggle-ui", function(event)
     local player = game.players[event.player_index]
-    if todo.get_main_frame(player) then
-        todo.minimize(player)
-    else
-        todo.maximize(player)
-        todo.refresh_task_table(player)
-    end
+    todo.toggle_ui(player)
 end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)

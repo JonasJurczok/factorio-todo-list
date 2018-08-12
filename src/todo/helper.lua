@@ -60,8 +60,8 @@ function todo.get_task_table(player)
     end
 end
 
-function todo.show_minimized(player)
-    return settings.get_player_settings(player)["todolist-show-minimized"].value
+function todo.show_button(player)
+    return settings.get_player_settings(player)["todolist-show-button"].value
 end
 
 function todo.is_auto_assign(player)
