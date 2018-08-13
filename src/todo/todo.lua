@@ -222,6 +222,12 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
         local task = todo.get_task_by_id(id)
         todo.create_add_edit_frame(player, task)
+    elseif (string.find(element.name, "todo_item_task_")) then
+        if event.button == defines.mouse_button_type.right then
+            local id = todo.get_task_id_from_element_name(element.name, "todo_item_task_")
+            local task = todo.get_task_by_id(id)
+            todo.create_add_edit_frame(player, task)
+        end
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 
