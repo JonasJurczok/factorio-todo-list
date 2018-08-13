@@ -24,6 +24,16 @@ function todo.mod_init()
 
     for _, player in pairs(game.players) do
         todo.create_minimized_button(player)
+        todo.create_current_task_frame(player)
+        todo.set_click_edit_button(player)
+    end
+end
+
+function todo.set_click_edit_button(player)
+    if settings.get_player_settings(player)["todolist-click-edit-task"].value then
+        global.todo.settings['edit-task-button'] = defines.mouse_button_type.middle
+    else
+        global.todo.settings['edit-task-button'] = defines.mouse_button_type.right	
     end
 end
 
@@ -223,7 +233,7 @@ function todo.on_gui_click(event)
         local task = todo.get_task_by_id(id)
         todo.create_add_edit_frame(player, task)
     elseif (string.find(element.name, "todo_item_task_")) then
-        if event.button == defines.mouse_button_type.right then
+        if event.button == global.todo.settings['edit-task-button'] then
             local id = todo.get_task_id_from_element_name(element.name, "todo_item_task_")
             local task = todo.get_task_by_id(id)
             todo.create_add_edit_frame(player, task)
@@ -269,6 +279,9 @@ function todo.on_runtime_mod_setting_changed(player, key)
         todo.log("Updated logging settings for player " .. player.name)
     elseif (key == "todolist-auto-assign") then
         todo.log("Changed auto-assign...")
+    elseif (key == "todolist-click-edit-task") then
+        todo.log("Changed button click to open edit frame...")
+        todo.set_click_edit_button(player)
     end
 end
 
