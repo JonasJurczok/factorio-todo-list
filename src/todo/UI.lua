@@ -14,6 +14,23 @@ function todo.create_minimized_button(player)
     end
 end
 
+-- create our current task frame
+function todo.create_current_task_frame(player)
+    if not todo.get_curr_task_frame(player) then
+        local frame = mod_gui.get_button_flow(player).add({
+            type = "frame",
+            name = "todo_currtask_frame",
+            caption = {"todo.current_task_title"},
+            direction = "horizontal"
+        })
+        frame.add({
+            type = "label",
+            name = "todo_currtask_label",
+            caption = {"todo.nothing_todo"}
+        })
+    end
+end
+
 function todo.create_maximized_frame(player)
     local frame = mod_gui.get_frame_flow(player).add({
         type = "frame",

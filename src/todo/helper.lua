@@ -42,6 +42,26 @@ function todo.get_maximize_button(player)
     end
 end
 
+-- Returns the current task frame if it is displayed, nil otherwise
+function todo.get_curr_task_frame(player)
+    local flow = mod_gui.get_button_flow(player)
+    if flow.todo_currtask_frame then
+        return flow.todo_currtask_frame
+    else
+        return nil
+    end
+end
+
+-- Returns the current task frame label if it is deisplayed, nil otherwise
+function todo.get_curr_task_label(player)
+    local frame = todo.get_curr_task_frame(player)
+    if frame then
+       return frame.todo_currtask_label
+    else
+        return nil 
+    end
+end
+
 function todo.get_main_frame(player)
     local flow = mod_gui.get_frame_flow(player)
     if flow.todo_main_frame then
