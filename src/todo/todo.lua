@@ -33,7 +33,7 @@ function todo.set_click_edit_button(player)
     if settings.get_player_settings(player)["todolist-click-edit-task"].value then
         global.todo.settings['edit-task-button'] = defines.mouse_button_type.middle
     else
-        global.todo.settings['edit-task-button'] = defines.mouse_button_type.right	
+        global.todo.settings['edit-task-button'] = defines.mouse_button_type.right
     end
 end
 
