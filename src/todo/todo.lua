@@ -113,7 +113,7 @@ function todo.update_current_task_label(player)
     end
     -- we may update the frame label
     todo.log("updating frame label")
-    for i, task in ipairs(global.todo.open) do
+    for _, task in ipairs(global.todo.open) do
         if task.assignee and task.assignee == player.name then
             todo.log(serpent.block(task))
             current_task_label.caption = task.task

@@ -58,7 +58,7 @@ function todo.get_curr_task_label(player)
     if frame then
        return frame.todo_currtask_label
     else
-        return nil 
+        return nil
     end
 end
 
