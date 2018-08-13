@@ -24,7 +24,6 @@ function todo.mod_init()
 
     for _, player in pairs(game.players) do
         todo.create_minimized_button(player)
-        todo.create_current_task_frame(player)
         todo.set_click_edit_button(player)
     end
 end
@@ -233,6 +232,8 @@ function todo.on_gui_click(event)
         local task = todo.get_task_by_id(id)
         todo.create_add_edit_frame(player, task)
     elseif (string.find(element.name, "todo_item_task_")) then
+        todo.log(event.button)
+        todo.log(global.todo.settings['edit-task-button'])
         if event.button == global.todo.settings['edit-task-button'] then
             local id = todo.get_task_id_from_element_name(element.name, "todo_item_task_")
             local task = todo.get_task_by_id(id)
