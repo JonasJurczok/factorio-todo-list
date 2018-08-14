@@ -24,7 +24,6 @@ function todo.mod_init()
 
     for _, player in pairs(game.players) do
         todo.create_minimized_button(player)
-        todo.create_current_task_frame(player)
     end
 end
 
@@ -107,20 +106,21 @@ function todo.update_task_table()
 end
 
 function todo.update_current_task_label(player)
-    local current_task_label = todo.get_curr_task_label(player)
-    if not current_task_label then
+    if not todo.get_maximize_button(player) then
         return
     end
-    -- we may update the frame label
-    todo.log("updating frame label")
+
+    -- we may update the button label
+    todo.log("updating button label")
     for _, task in ipairs(global.todo.open) do
         if task.assignee and task.assignee == player.name then
             todo.log(serpent.block(task))
-            current_task_label.caption = task.task
+            todo.get_maximize_button(player).caption = {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
             return
         end
     end
-    current_task_label.caption = {"todo.nothing_todo"}
+    
+    todo.get_maximize_button(player).caption = {"todo.todo_maximize_button_caption", {"todo.todo_list"}, {"todo.nothing_todo"}}
 end
 
 function todo.refresh_task_table(player)
