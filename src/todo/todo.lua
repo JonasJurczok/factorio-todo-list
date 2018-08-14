@@ -29,7 +29,9 @@ function todo.mod_init()
 end
 
 function todo.set_click_edit_button(player)
-    if settings.get_player_settings(player)["todolist-click-edit-task"].value then
+    local button_value = settings.get_player_settings(player)["todolist-click-edit-task"].value
+    todo.log(button_value)
+    if button_value == "right" then
         global.todo.settings['edit-task-button'] = defines.mouse_button_type.middle
     else
         global.todo.settings['edit-task-button'] = defines.mouse_button_type.right
@@ -253,9 +255,14 @@ function todo.on_gui_click(event)
         local task = todo.get_task_by_id(id)
         todo.create_add_edit_frame(player, task)
     elseif (string.find(element.name, "todo_item_task_")) then
-        todo.log(event.button)
-        todo.log(global.todo.settings['edit-task-button'])
-        if event.button == global.todo.settings['edit-task-button'] then
+        local setting_value = settings.get_player_settings(player)["todolist-click-edit-task"].value
+        local setting_button = nil
+        if setting_value == "right-button" then
+            setting_button = defines.mouse_button_type.right
+        elseif setting_value == "middle-button" then
+            setting_button = defines.mouse_button_type.middle
+        end
+        if event.button == setting_button then
             local id = todo.get_task_id_from_element_name(element.name, "todo_item_task_")
             local task = todo.get_task_by_id(id)
             todo.create_add_edit_frame(player, task)
