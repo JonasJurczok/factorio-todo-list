@@ -42,6 +42,16 @@ function todo.get_maximize_button(player)
     end
 end
 
+-- Returns the add/edit frame if it is displayed, nil otherwise
+function todo.get_add_edit_frame(player)
+    local gui = player.gui.center
+    if gui.todo_add_frame then
+        return gui.todo_add_frame
+    else
+        return nil
+    end
+end
+
 function todo.get_main_frame(player)
     local flow = mod_gui.get_frame_flow(player)
     if flow.todo_main_frame then
