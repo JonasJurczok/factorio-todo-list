@@ -115,12 +115,13 @@ function todo.update_current_task_label(player)
     for _, task in ipairs(global.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
-            todo.get_maximize_button(player).caption = {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
+            todo.get_maximize_button(player).caption = 
+                {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
             return
         end
     end
-    
-    todo.get_maximize_button(player).caption = {"todo.todo_maximize_button_caption", {"todo.todo_list"}, {"todo.nothing_todo"}}
+    todo.get_maximize_button(player).caption = 
+        {"todo.todo_maximize_button_caption", {"todo.todo_list"}, {"todo.nothing_todo"}}
 end
 
 function todo.refresh_task_table(player)
