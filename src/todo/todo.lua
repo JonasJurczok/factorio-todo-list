@@ -105,7 +105,28 @@ function todo.update_task_table()
     end
 end
 
+function todo.update_current_task_label(player)
+    if not todo.get_maximize_button(player) then
+        return
+    end
+
+    -- we may update the button label
+    todo.log("updating button label")
+    for _, task in ipairs(global.todo.open) do
+        if task.assignee == player.name then
+            todo.log(serpent.block(task))
+            todo.get_maximize_button(player).caption =
+                {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
+            return
+        end
+    end
+    todo.get_maximize_button(player).caption =
+        {"todo.todo_maximize_button_caption", {"todo.todo_list"}, {"todo.nothing_todo"}}
+end
+
 function todo.refresh_task_table(player)
+
+    todo.update_current_task_label(player)
 
     -- if the player has the UI minimized do nothing
     local main_frame = todo.get_main_frame(player)
