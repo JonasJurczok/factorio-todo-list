@@ -39,13 +39,22 @@ end
 function todo.minimize(player)
     todo.log("Minimizing UI for player " .. player.name)
 
-    todo.get_main_frame(player).destroy()
+    local frame = todo.get_main_frame(player)
+    if frame then
+        frame.destroy()
+        return true
+    end
+    return false
 end
 
 function todo.maximize(player)
     todo.log("Maximizing UI for player " .. player.name)
 
-    todo.create_maximized_frame(player)
+    if not todo.get_main_frame(player) then
+        todo.create_maximized_frame(player)
+        return true
+    end
+    return false
 end
 
 function todo.persist(element)
