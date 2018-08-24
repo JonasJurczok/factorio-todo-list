@@ -114,7 +114,7 @@ function todo.filter_table_by_id(source, exclude_id, destination)
     destination = destination or {}
     local i = #destination
 
-    for index, task in pairs(source) do
+    for _, task in pairs(source) do
         if (task.id ~= exclude_id) then
             i = i + 1
             destination[i] = task

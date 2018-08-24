@@ -57,16 +57,24 @@ function todo.maximize(player)
     return false
 end
 
-function todo.persist(element)
-    local frame = element.parent.parent
-
-    local task, should_add_to_top = todo.get_task_from_add_frame(frame)
+function todo.save_task(task, should_add_to_top)
     local add_index = #global.todo.open + 1
     if should_add_to_top then
         add_index = 1
     end
 
-    table.insert(global.todo.open, add_index, todo.create_task(task.task, task.assignee))
+    table.insert(global.todo.open, add_index, task)
+
+    return task
+end
+
+function todo.persist(element)
+    local frame = element.parent.parent
+
+    local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
+    local task = todo.create_task(task_spec.task, task_spec.assignee)
+
+    todo.save_task(task, should_add_to_top)
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
@@ -250,7 +258,7 @@ end
 
 function todo.move_bottom(id)
     local task = todo.get_task_by_id(id)
-    new_list = todo.filter_table_by_id(global.todo.open, id)
+    local new_list = todo.filter_table_by_id(global.todo.open, id)
     new_list[#new_list + 1] = task
     global.todo.open = new_list
 end
