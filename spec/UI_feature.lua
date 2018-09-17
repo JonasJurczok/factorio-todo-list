@@ -35,7 +35,7 @@ feature("Testing the UI", function()
 
         assert(button ~= nil, "Maximize button not found!")
 
-        -- replade the 'show_button' mock
+        -- replace the 'show_button' mock
         todo.show_button = temp
     end)
 
