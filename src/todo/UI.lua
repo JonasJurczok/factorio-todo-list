@@ -97,14 +97,14 @@ function todo.create_task_table(frame, player)
     table.add({
         type = "label",
         style = "todo_label_default",
-        name = "todo_title_up",
+        name = "todo_title_top",
         caption = ""
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
-        name = "todo_title_top",
+        name = "todo_title_up",
         caption = ""
     })
 
@@ -272,26 +272,26 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     if (is_first) then
         table.add({
             type = "label",
-            name = "todo_item_firstup_" .. id,
+            name = "todo_item_firsttop_" .. id,
             caption = ""
         })
         table.add({
             type = "label",
-            name = "todo_item_firsttop_" .. id,
+            name = "todo_item_firstup_" .. id,
             caption = ""
         })
     else
         table.add({
             type = "button",
             style = "todo_button_default",
-            name = "todo_item_up_" .. id,
-            caption = "↑"
+            name = "todo_item_top_" .. id,
+            caption = "↟"
         })
         table.add({
             type = "button",
             style = "todo_button_default",
-            name = "todo_item_top_" .. id,
-            caption = "↟"
+            name = "todo_item_up_" .. id,
+            caption = "↑"
         })
     end
 
