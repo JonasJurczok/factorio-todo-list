@@ -39,21 +39,42 @@ end
 function todo.minimize(player)
     todo.log("Minimizing UI for player " .. player.name)
 
-    todo.get_main_frame(player).destroy()
+    local frame = todo.get_main_frame(player)
+    if frame then
+        frame.destroy()
+        return true
+    end
+    return false
 end
 
 function todo.maximize(player)
     todo.log("Maximizing UI for player " .. player.name)
 
-    todo.create_maximized_frame(player)
+    if not todo.get_main_frame(player) then
+        todo.create_maximized_frame(player)
+        return true
+    end
+    return false
+end
+
+function todo.save_task(task, should_add_to_top)
+    local add_index = #global.todo.open + 1
+    if should_add_to_top then
+        add_index = 1
+    end
+
+    table.insert(global.todo.open, add_index, task)
+
+    return task
 end
 
 function todo.persist(element)
     local frame = element.parent.parent
 
-    local task = todo.get_task_from_add_frame(frame)
+    local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
+    local task = todo.create_task(task_spec.task, task_spec.assignee)
 
-    table.insert(global.todo.open, todo.create_task(task.task, task.assignee))
+    todo.save_task(task, should_add_to_top)
 
     todo.log(serpent.block(global.todo))
     frame.destroy()
@@ -61,7 +82,7 @@ end
 
 function todo.update(element, index)
     local frame = element.parent.parent
-    local task = todo.get_task_from_add_frame(frame)
+    local task, _ = todo.get_task_from_add_frame(frame)
 
     local original = todo.get_task_by_id(index)
 
@@ -79,16 +100,26 @@ function todo.get_task_from_add_frame(frame)
     local taskText = frame.todo_add_task_table.children[2].text
 
     local assignees = frame.todo_add_task_table.children[4]
-    local assignee
+    local assignee = nil
     if (assignees.selected_index > 1) then
         assignee = assignees.items[assignees.selected_index]
+    end
+
+    local should_add_to_top = false
+    -- 'Add to Top' control won't exist in an edit dialog
+    local add_top_control = frame.todo_add_button_flow.todo_add_top
+    if add_top_control and add_top_control.state then
+        should_add_to_top = true
     end
 
     local task = {["task"] = taskText, ["assignee"] = assignee}
 
     todo.log("Reading task " .. serpent.block(task))
+    if should_add_to_top then
+        todo.log("Adding it at the top.")
+    end
 
-    return task
+    return task, should_add_to_top
 end
 
 function todo.create_task(text, assignee)
@@ -219,6 +250,19 @@ function todo.move(id, modifier)
     end
 end
 
+function todo.move_top(id)
+    local task = todo.get_task_by_id(id)
+    local new_list = {task}
+    global.todo.open =  todo.filter_table_by_id(global.todo.open, id, new_list)
+end
+
+function todo.move_bottom(id)
+    local task = todo.get_task_by_id(id)
+    local new_list = todo.filter_table_by_id(global.todo.open, id)
+    new_list[#new_list + 1] = task
+    global.todo.open = new_list
+end
+
 function todo.on_gui_click(event)
     local player = game.players[event.player_index]
     local element = event.element
@@ -271,6 +315,16 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_item_down_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_down_")
         todo.move_down(id)
+        todo.update_task_table()
+    elseif (string.find(element.name, "todo_item_top_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_top_")
+        todo.log('Moving task ' .. id .. ' to top.')
+        todo.move_top(id)
+        todo.update_task_table()
+    elseif (string.find(element.name, "todo_item_bottom_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_item_bottom_")
+        todo.log('Moving task ' .. id .. ' to bottom.')
+        todo.move_bottom(id)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
