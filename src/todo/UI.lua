@@ -70,7 +70,7 @@ function todo.create_task_table(frame, player)
         type = "table",
         style = "todo_table_default",
         name = "todo_task_table",
-        column_count = 6
+        column_count = 8,
     })
 
     table.add({
@@ -97,6 +97,13 @@ function todo.create_task_table(frame, player)
     table.add({
         type = "label",
         style = "todo_label_default",
+        name = "todo_title_top",
+        caption = ""
+    })
+
+    table.add({
+        type = "label",
+        style = "todo_label_default",
         name = "todo_title_up",
         caption = ""
     })
@@ -105,6 +112,13 @@ function todo.create_task_table(frame, player)
         type = "label",
         style = "todo_label_default",
         name = "todo_title_down",
+        caption = ""
+    })
+
+    table.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_title_bottom",
         caption = ""
     })
 
@@ -208,6 +222,13 @@ function todo.create_add_edit_frame(player, task)
             name = "todo_persist_button",
             caption = {"todo.persist"}
         })
+        flow.add({
+            type = "checkbox",
+            style = "todo_checkbox_default",
+            name = "todo_add_top",
+            state = false,
+            caption = {"todo.add_top"}
+        })
     end
 end
 
@@ -251,10 +272,21 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     if (is_first) then
         table.add({
             type = "label",
+            name = "todo_item_firsttop_" .. id,
+            caption = ""
+        })
+        table.add({
+            type = "label",
             name = "todo_item_firstup_" .. id,
             caption = ""
         })
     else
+        table.add({
+            type = "button",
+            style = "todo_button_default",
+            name = "todo_item_top_" .. id,
+            caption = "↟"
+        })
         table.add({
             type = "button",
             style = "todo_button_default",
@@ -269,12 +301,23 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
             name = "todo_item_lastdown_" .. id,
             caption = ""
         })
+        table.add({
+            type = "label",
+            name = "todo_item_lastbottom_" .. id,
+            caption = ""
+        })
     else
         table.add({
             type = "button",
             style = "todo_button_default",
             name = "todo_item_down_" .. id,
             caption = "↓"
+        })
+        table.add({
+            type = "button",
+            style = "todo_button_default",
+            name = "todo_item_bottom_" .. id,
+            caption = "↡"
         })
     end
 

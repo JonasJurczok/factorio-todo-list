@@ -1,5 +1,10 @@
 
 function todo.log(message)
+    if type(message) == 'table' then
+        message = serpent.dump(message) .. ' [' .. #message .. ']'
+    end
+    message = "" .. message or '<nil>'
+
     if game then
         for _, p in pairs(game.players) do
             if (todo.show_log(p)) then
@@ -113,4 +118,18 @@ function todo.get_task_by_id(id)
       return task
     end
   end
+end
+
+function todo.filter_table_by_id(source, exclude_id, destination)
+    destination = destination or {}
+    local i = #destination
+
+    for _, task in pairs(source) do
+        if (task.id ~= exclude_id) then
+            i = i + 1
+            destination[i] = task
+        end
+    end
+
+    return destination
 end
