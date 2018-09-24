@@ -67,6 +67,10 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 16.2.0
+* Modifyed UI so the button displays the current assigned task for each players. Thanks Tarrke!
+* Added openning the edit dialog when clicking a task in the list feature. Thanks Tarrke!
+
 ### 16.1.0
 * Added auto assign feature. Thanks Tarrke!
 * Added localization for buttons. Thanks hoylemd!

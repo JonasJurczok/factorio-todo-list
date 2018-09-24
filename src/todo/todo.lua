@@ -287,6 +287,24 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_edit_")
         local task = todo.get_task_by_id(id)
         todo.create_add_edit_frame(player, task)
+    elseif (string.find(element.name, "todo_item_task_")) then
+        local setting_value = settings.get_player_settings(player)["todolist-click-edit-task"].value
+        local setting_button = nil
+        if setting_value == "right-button" then
+            setting_button = defines.mouse_button_type.right
+        elseif setting_value == "middle-button" then
+            setting_button = defines.mouse_button_type.middle
+        end
+        if event.button == setting_button then
+            local add_edit_frame = todo.get_add_edit_frame(player)
+            if add_edit_frame then
+                add_edit_frame.destroy()
+            else
+                local id = todo.get_task_id_from_element_name(element.name, "todo_item_task_")
+                local task = todo.get_task_by_id(id)
+                todo.create_add_edit_frame(player, task)
+            end
+        end
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 
@@ -338,6 +356,8 @@ function todo.on_runtime_mod_setting_changed(player, key)
         todo.log("Updated logging settings for player " .. player.name)
     elseif (key == "todolist-auto-assign") then
         todo.log("Changed auto-assign...")
+    elseif (key == "todolist-click-edit-task") then
+        todo.log("Changed button click to open edit frame...")
     end
 end
 
