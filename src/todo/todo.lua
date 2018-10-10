@@ -147,7 +147,7 @@ function todo.update_current_task_label(player)
         if task.assignee == player.name then
             todo.log(serpent.block(task))
             todo.get_maximize_button(player).caption =
-                {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
+                {"todo.todo_maximize_button_caption", {"todo.todo_list"}, string.gmatch(task.task, "%S+")()}
             return
         end
     end
