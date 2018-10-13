@@ -1,7 +1,5 @@
-
-
-
-describe("UI tests", function() 
+-- currently disabled thanks to new features in faketorio
+describe("UI tests", function()
 
   setup(function()
     require "todo"

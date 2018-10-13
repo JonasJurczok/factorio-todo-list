@@ -1,7 +1,5 @@
-
-
-
-describe("task tests", function() 
+-- currently disabled thanks to new features in faketorio
+describe("task tests", function()
 
   setup(function()
     require "todo"

@@ -147,7 +147,9 @@ function todo.update_current_task_label(player)
         if task.assignee == player.name then
             todo.log(serpent.block(task))
             todo.get_maximize_button(player).caption =
-                {"todo.todo_maximize_button_caption", {"todo.todo_list"}, task.task}
+                {"todo.todo_maximize_button_caption",
+                 {"todo.todo_list"},
+                 string.match(task.task, "[^\r\n]+")}
             return
         end
     end
@@ -187,17 +189,16 @@ end
 
 function todo.mark_complete(id)
     todo.log("Marking task [" .. id .. "] as completed.")
-    local t
     for i, task in ipairs(global.todo.open) do
         if (task.id == id) then
-            t = table.remove(global.todo.open, i)
+            local t = table.remove(global.todo.open, i)
             todo.log("Removed task from open list.")
+
+            todo.log("Adding task [" .. t.id .. "] to done list.")
+            table.insert(global.todo.done, t)
             break
         end
     end
-
-    todo.log("Adding task [" .. t.id .. "] to done list.")
-    table.insert(global.todo.done, t)
 end
 
 function todo.mark_open(id)
