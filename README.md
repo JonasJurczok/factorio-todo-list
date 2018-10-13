@@ -67,6 +67,10 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 16.3.0
+* The button now only shows the first line of the task. Not everything.
+* Added russian translation
+
 ### 16.2.0
 * Modifyed UI so the button displays the current assigned task for each players. Thanks Tarrke!
 * Added openning the edit dialog when clicking a task in the list feature. Thanks Tarrke!
