@@ -67,7 +67,7 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
-### 16.3.0
+### 16.4.0
 * The button now only shows the first line of the task. Not everything.
 * Added russian translation
 
