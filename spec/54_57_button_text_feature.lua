@@ -22,14 +22,15 @@ feature("#54 #57 button text behaviour", function()
 
         local button = todo.get_maximize_button(player)
         assert(button.caption[1] == "")
-        assert(button.caption[2] == {"todo.todo_list"})
-        assert(button.caption[3] == ":")
+        assert(button.caption[2] == "")
+        assert(button.caption[3][1] == "todo.todo_list")
+        assert(button.caption[4] == ": ")
 
-        local text = button.caption[4]
+        local text = button.caption[5]
 
         faketorio.log.info("Found text %s.", {text})
 
-        assert(string.find(text, "Test"))
+        assert(string.find(text, task.task))
     end)
 
     scenario("Multi line text should only show first line.", function()
@@ -45,10 +46,11 @@ feature("#54 #57 button text behaviour", function()
 
         local button = todo.get_maximize_button(player)
         assert(button.caption[1] == "")
-        assert(button.caption[2] == {"todo.todo_list"})
-        assert(button.caption[3] == ":")
+        assert(button.caption[2] == "")
+        assert(button.caption[3][1] == "todo.todo_list")
+        assert(button.caption[4] == ": ")
 
-        local text = button.caption[4]
+        local text = button.caption[5]
 
         faketorio.log.info("Found text %s.", {text})
 
@@ -64,11 +66,13 @@ feature("#54 #57 button text behaviour", function()
         todo.refresh_task_table(player)
 
         local button = todo.get_maximize_button(player)
+        faketorio.log.info("Found button %s", {serpent.dump(button.caption)})
 
         assert(button.caption[1] == "")
-        assert(button.caption[2] == {"todo.todo_list"})
-        assert(button.caption[3] == ":")
-        assert(button.caption[4] == {"todo.tasks_available"})
+        assert(button.caption[2] == "")
+        assert(button.caption[3][1] == "todo.todo_list")
+        assert(button.caption[4] == ": ")
+        assert(button.caption[5][1] == "todo.tasks_available")
     end)
 
     scenario("No tasks available", function()
@@ -76,8 +80,9 @@ feature("#54 #57 button text behaviour", function()
         todo.refresh_task_table(player)
 
         local button = todo.get_maximize_button(player)
+        faketorio.log.info("Found button %s", {serpent.dump(button.caption)})
 
-        assert(button.caption[1] == {"todo.todo_list"})
+        assert(button.caption[1] == "todo.todo_list")
         assert(button.caption[2] == nil)
         assert(button.caption[3] == nil)
     end)

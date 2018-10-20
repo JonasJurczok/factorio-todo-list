@@ -67,9 +67,16 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 16.5.0
+* The button text now switches between the following states
+  * No tasks available: Todo List
+  * Tasks available: Todo List: X tasks available
+  * Task assigned to player: Todo List: <first line of task>
+* Fixed credits for 16.4.0
+
 ### 16.4.0
 * The button now only shows the first line of the task. Not everything.
-* Added russian translation
+* Added russian translation (thanks TheMrEvgen)
 
 ### 16.2.0
 * Modifyed UI so the button displays the current assigned task for each players. Thanks Tarrke!

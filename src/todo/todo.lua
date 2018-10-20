@@ -143,21 +143,26 @@ function todo.update_current_task_label(player)
 
     -- we may update the button label
     todo.log("updating button label")
-    for _, task in ipairs(global.todo.open) do
+    local count
+    for i, task in ipairs(global.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
             todo.get_maximize_button(player).caption =
                 {"",
                  {"todo.todo_list"},
-                 ":",
+                 ": ",
                  string.match(task.task, "[^\r\n]+")}
             return
         end
+        count = i
     end
-    -- use concatetnation instead of template string
-    -- game.print({"", {"item-name.iron-plate"}, ": ", 60})
-    todo.get_maximize_button(player).caption =
-        {"", {"todo.todo_list"}, ":", {"todo.nothing_todo"}}
+
+    if (count == nil) then
+        todo.get_maximize_button(player).caption = {"todo.todo_list"}
+    else
+        todo.get_maximize_button(player).caption =
+        {"", {"todo.todo_list"}, ": ", {"todo.tasks_available", count}}
+    end
 end
 
 function todo.refresh_task_table(player)
