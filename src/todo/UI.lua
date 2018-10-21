@@ -52,6 +52,14 @@ function todo.create_maximized_frame(player)
             caption = {"todo.minimize"}
         })
     end
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_button",
+        tooltip = {"todo.import"}
+
+    })
 end
 
 function todo.create_task_table(frame, player)
