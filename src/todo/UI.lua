@@ -195,6 +195,30 @@ function todo.create_add_edit_frame(player, task)
         selected_index = assign_index
     })
 
+    if (task) then
+        table.add({
+            type = "label",
+            style = "todo_label_default",
+            name = "todo_delete_label",
+            caption = {"todo.delete"}
+        })
+
+        table.add({
+            type = "button",
+            style = "todo_button_default",
+            name = "todo_delete_button_" .. task.id,
+            caption = {"todo.delete"}
+        })
+    else
+        table.add({
+            type = "checkbox",
+            style = "todo_checkbox_default",
+            name = "todo_add_top",
+            state = false,
+            caption = {"todo.add_top"}
+        })
+    end
+
     local flow = frame.add({
         type = "flow",
         name = "todo_add_button_flow",
@@ -222,14 +246,21 @@ function todo.create_add_edit_frame(player, task)
             name = "todo_persist_button",
             caption = {"todo.persist"}
         })
-        flow.add({
-            type = "checkbox",
-            style = "todo_checkbox_default",
-            name = "todo_add_top",
-            state = false,
-            caption = {"todo.add_top"}
-        })
     end
+end
+
+function todo.create_delete_confirmation_button(element, id)
+    local table = element.parent
+    todo.log(table)
+    element.destroy()
+
+    table.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_confirm_deletion_button_" .. id,
+        caption = {"todo.confirm_deletion"}
+    })
+
 end
 
 function todo.add_task_to_table(table, task, completed, is_first, is_last)

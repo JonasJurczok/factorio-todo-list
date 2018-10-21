@@ -120,6 +120,23 @@ function todo.get_task_by_id(id)
   end
 end
 
+function todo.delete_task(id)
+    for i, task in pairs(global.todo.open) do
+        if (task.id == id) then
+            table.remove(global.todo.open, i)
+            return
+        end
+    end
+
+    for i, task in pairs(global.todo.done) do
+        if (task.id == id) then
+            table.remove(global.todo.done, i)
+            return
+        end
+    end
+end
+
+
 function todo.filter_table_by_id(source, exclude_id, destination)
     destination = destination or {}
     local i = #destination
