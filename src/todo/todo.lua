@@ -100,14 +100,14 @@ function todo.get_task_from_add_frame(frame)
     local taskText = frame.todo_add_task_table.children[2].text
 
     local assignees = frame.todo_add_task_table.children[4]
-    local assignee = nil
+    local assignee
     if (assignees.selected_index > 1) then
         assignee = assignees.items[assignees.selected_index]
     end
 
     local should_add_to_top = false
     -- 'Add to Top' control won't exist in an edit dialog
-    local add_top_control = frame.todo_add_button_flow.todo_add_top
+    local add_top_control = frame.todo_add_task_table.children[5]
     if add_top_control and add_top_control.state then
         should_add_to_top = true
     end
@@ -335,6 +335,16 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_cancel_button") then
         element.parent.parent.destroy()
         todo.refresh_task_table(player)
+    elseif (string.find(element.name, "todo_delete_button")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_delete_button_")
+
+        todo.create_delete_confirmation_button(element, id)
+    elseif (string.find(element.name, "todo_confirm_deletion_button")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_confirm_deletion_button_")
+
+        todo.delete_task(id)
+        element.parent.parent.destroy()
+        todo.update_task_table()
     elseif (string.find(element.name, "todo_item_up_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_up_")
         todo.move_up(id)

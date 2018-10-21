@@ -48,6 +48,14 @@ To get it back to the open list, just click on the `Show completed tasks` button
 
 ![show completed](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/show%20completed.png)
 
+### Editing tasks
+
+Click on the edit button besides a task to bring up a small screen.
+There you can modify the task.
+
+### Deleting tasks
+If you want to remove a task you can do that from the edit screen.
+
 ### Hide the minimized UI?
 
 Is the minimized UI (the "Todo List" button) still taking up your precious
@@ -72,6 +80,7 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
   * No tasks available: Todo List
   * Tasks available: Todo List: X tasks available
   * Task assigned to player: Todo List: <first line of task>
+* It is now possible to delete tasks
 * Fixed credits for 16.4.0
 
 ### 16.4.0
