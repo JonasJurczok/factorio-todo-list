@@ -168,6 +168,7 @@ function todo.update(element, index, player)
     else
         original.assignee = nil
     end
+
     -- Set the last updater
     original.updated_by = player.name
     todo.log("Current player is: " .. original.updated_by)
