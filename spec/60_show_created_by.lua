@@ -20,6 +20,7 @@ feature("#60 Show created/updated by", function()
 
         todo.create_add_edit_frame(player, task)
         local frame = todo.get_add_edit_frame(player)
+
         local created_by = frame["todo_add_task_table"]["todo_created_by_playername"]
         local updated_by = frame["todo_add_task_table"]["todo_updated_by_playername"]
         
@@ -49,4 +50,4 @@ feature("#60 Show created/updated by", function()
         frame = todo.get_add_edit_frame(player)
         assert(frame["todo_add_task_table"]["todo_updated_by_playername"] == player2.name)
     end)
-)
+end)
