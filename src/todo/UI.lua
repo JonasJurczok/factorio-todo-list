@@ -259,7 +259,6 @@ end
 
 function todo.create_delete_confirmation_button(element, id)
     local table = element.parent
-    todo.log(table)
     element.destroy()
 
     table.add({

@@ -333,6 +333,7 @@ function todo.on_gui_click(event)
         todo.toggle_show_completed(player)
         todo.refresh_task_table(player)
     elseif (element.name == "todo_cancel_button") then
+        -- close the edit dialog
         element.parent.parent.destroy()
         todo.refresh_task_table(player)
     elseif (string.find(element.name, "todo_delete_button")) then
@@ -343,6 +344,7 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_confirm_deletion_button_")
 
         todo.delete_task(id)
+        -- close the edit dialog
         element.parent.parent.destroy()
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_up_")) then
