@@ -92,6 +92,10 @@ function todo.update(element, index)
     else
         original.assignee = nil
     end
+    -- Set the last updater
+    local players, _ = todo.get_player_list()
+    original.by = players[2]
+    todo.log("Current player is: " .. original.by)
 
     frame.destroy()
 end
@@ -107,7 +111,7 @@ function todo.get_task_from_add_frame(frame)
 
     local should_add_to_top = false
     -- 'Add to Top' control won't exist in an edit dialog
-    local add_top_control = frame.todo_add_task_table.children[5]
+    local add_top_control = frame.todo_add_task_table["todo_add_top"]
     if add_top_control and add_top_control.state then
         should_add_to_top = true
     end
@@ -127,6 +131,10 @@ function todo.create_task(text, assignee)
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
+    -- Find the current player in multi-player
+    local players, _ = todo.get_player_list()
+    task.by = players[2]
+    todo.log("Current player is: " .. task.by)
     return task
 end
 

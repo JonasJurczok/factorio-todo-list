@@ -199,6 +199,30 @@ function todo.create_add_edit_frame(player, task)
         table.add({
             type = "label",
             style = "todo_label_default",
+            name = "todo_by_label",
+            caption = "Created/modified by"
+        })
+        if (task.by) then
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_by_playername",
+                caption = task.by
+            })
+        else
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_by_playername",
+                caption = "None"
+            })
+        end
+    end
+
+    if (task) then
+        table.add({
+            type = "label",
+            style = "todo_label_default",
             name = "todo_delete_label",
             caption = {"todo.delete"}
         })
