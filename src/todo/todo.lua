@@ -323,7 +323,6 @@ function todo.on_gui_click(event)
         end
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
-        local player = game.players[event.player_index]
 
         todo.update(element, id, player)
         todo.update_task_table()
