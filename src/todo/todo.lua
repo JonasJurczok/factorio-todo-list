@@ -68,11 +68,11 @@ function todo.save_task(task, should_add_to_top)
     return task
 end
 
-function todo.persist(element)
+function todo.persist(element, player)
     local frame = element.parent.parent
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
-    local task = todo.create_task(task_spec.task, task_spec.assignee)
+    local task = todo.create_task(task_spec.task, task_spec.assignee, player)
 
     todo.save_task(task, should_add_to_top)
 
@@ -80,7 +80,7 @@ function todo.persist(element)
     frame.destroy()
 end
 
-function todo.update(element, index)
+function todo.update(element, index, player)
     local frame = element.parent.parent
     local task, _ = todo.get_task_from_add_frame(frame)
 
@@ -93,8 +93,7 @@ function todo.update(element, index)
         original.assignee = nil
     end
     -- Set the last updater
-    local players, _ = todo.get_player_list()
-    original.by = players[2]
+    original.by = player.name
     todo.log("Current player is: " .. original.by)
 
     frame.destroy()
@@ -126,14 +125,13 @@ function todo.get_task_from_add_frame(frame)
     return task, should_add_to_top
 end
 
-function todo.create_task(text, assignee)
+function todo.create_task(text, assignee, player)
     local task = {}
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
     -- Find the current player in multi-player
-    local players, _ = todo.get_player_list()
-    task.by = players[2]
+    task.by = player.name
     todo.log("Current player is: " .. task.by)
     return task
 end
@@ -291,7 +289,8 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_add_button") then
         todo.create_add_edit_frame(player)
     elseif (element.name == "todo_persist_button") then
-        todo.persist(element)
+        todo.log("Createing task by player " .. player.name)
+        todo.persist(element, player)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_assign_self_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_assign_self_")
@@ -324,8 +323,9 @@ function todo.on_gui_click(event)
         end
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
+        local player = game.players[event.player_index]
 
-        todo.update(element, id)
+        todo.update(element, id, player)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_done_")
