@@ -200,7 +200,7 @@ function todo.create_add_edit_frame(player, task)
             type = "label",
             style = "todo_label_default",
             name = "todo_by_label",
-            caption = "Created/modified by"
+            caption = {"todo.created_by"}
         })
         if (task.by) then
             table.add({
