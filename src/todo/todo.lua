@@ -107,7 +107,7 @@ function todo.get_task_from_add_frame(frame)
 
     local should_add_to_top = false
     -- 'Add to Top' control won't exist in an edit dialog
-    local add_top_control = frame.todo_add_task_table.children[5]
+    local add_top_control = frame.todo_add_task_table["todo_add_top"]
     if add_top_control and add_top_control.state then
         should_add_to_top = true
     end
