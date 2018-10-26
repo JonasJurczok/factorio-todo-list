@@ -75,6 +75,9 @@ If you don't have a github account feel free to contact us via mail at `jonasjur
 
 ## Changelog
 
+### 16.5.1
+* Fixed a crash when editing a task (thanks Tarrke)
+
 ### 16.5.0
 * The button text now switches between the following states
   * No tasks available: Todo List
