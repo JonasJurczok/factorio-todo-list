@@ -2,6 +2,8 @@ if not todo then todo = {} end
 
 require "todo/helper"
 require "todo/UI"
+todo.json = require "todo/json"
+todo.base64 = require "todo/base64"
 
 function todo.mod_init()
     todo.log("setting up mod data.")
@@ -65,7 +67,59 @@ function todo.save_task(task, should_add_to_top)
 
     table.insert(global.todo.open, add_index, task)
 
+    todo.update_export_dialog_button_state()
+
     return task
+end
+
+function todo.update_export_dialog_button_state()
+    local task_count = #global.todo.open + #global.todo.done
+
+    for _, player in pairs(game.players) do
+        local main_frame = todo.get_main_frame(player)
+        if (main_frame) then
+            main_frame.todo_main_button_flow.todo_export_dialog_button.enabled = task_count > 0
+        end
+
+    end
+end
+
+function todo.generate_and_show_export_string(player)
+    local dialog = todo.get_export_dialog(player)
+
+    local tasks_table = dialog.todo_export_dialog_scroll_pane.todo_export_dialog_table
+
+    local tasks = {}
+
+    for i, checkbox in ipairs(tasks_table.children) do
+        -- every uneven child is a textbox (lists start at 1)
+        if (i % 2 == 1 and checkbox.state) then
+            local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_dialog_task_checkbox_")
+            local task = todo.get_task_by_id(id)
+            todo.log(tasks)
+            -- TODO: created by/last modified by and others
+            table.insert(tasks, {["task"] = task.task})
+        end
+    end
+
+    -- if no tasks are selected, remove the textbox
+    if (#tasks == 0) then
+        if (dialog.todo_export_dialog_string_flow.todo_export_string_textbox) then
+            dialog.todo_export_dialog_string_flow.todo_export_string_textbox.destroy()
+        end
+        return
+    end
+
+    -- generate string
+    local encoded = todo.base64.encode(todo.json:encode(tasks))
+
+    local textbox = dialog.todo_export_dialog_string_flow.add({
+        type = "text-box",
+        style = "todo_base64_textbox",
+        name = "todo_export_string_textbox",
+        text = encoded
+    })
+    textbox.word_wrap = true
 end
 
 function todo.persist(element)
@@ -346,6 +400,7 @@ function todo.on_gui_click(event)
         todo.delete_task(id)
         -- close the edit dialog
         element.parent.parent.destroy()
+        todo.update_export_dialog_button_state()
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_up_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_up_")
@@ -365,6 +420,13 @@ function todo.on_gui_click(event)
         todo.log('Moving task ' .. id .. ' to bottom.')
         todo.move_bottom(id)
         todo.update_task_table()
+    elseif (element.name == "todo_export_dialog_button") then
+        todo.create_export_dialog(player)
+    elseif (element.name == "todo_export_button") then
+        todo.generate_and_show_export_string(player)
+    elseif (element.name == "todo_export_cancel_button") then
+        -- close the export dialog
+        element.parent.parent.destroy()
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
