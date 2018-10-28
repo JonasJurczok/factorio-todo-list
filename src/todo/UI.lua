@@ -54,19 +54,19 @@ function todo.create_maximized_frame(player)
     end
 
     flow.add({
-        type = "button",
-        style = "todo_button_default",
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
         name = "todo_export_dialog_button",
-        caption = {"todo.export"},
+        sprite = "utility/export_slot",
         tooltip = {"todo.export"}
     })
     todo.update_export_dialog_button_state()
 
     flow.add({
-        type = "button",
-        style = "todo_button_default",
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
         name = "todo_import_dialog_button",
-        caption = {"todo.import"},
+        sprite = "utility/import_slot",
         tooltip = {"todo.import"}
     })
 
