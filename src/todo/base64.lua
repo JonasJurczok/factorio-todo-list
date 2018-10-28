@@ -1,3 +1,5 @@
+-- luacheck: push ignore
+
 --[[**************************************************************************]]
 -- base64.lua
 -- Copyright 2014 Ernest R. Ewert
@@ -722,3 +724,5 @@ return
     decode      = decode64,
     alpha       = set_and_get_alphabet,
 }
+
+-- luacheck: pop

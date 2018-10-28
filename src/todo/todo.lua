@@ -125,7 +125,7 @@ function todo.generate_and_show_export_string(player)
     end
 end
 
-function todo.import_tasks(player, dialog)
+function todo.import_tasks(dialog)
     local encoded = dialog.todo_import_string_textbox.text
 
     local tasks = todo.json:decode(todo.base64.decode(encoded))
@@ -454,7 +454,7 @@ function todo.on_gui_click(event)
         todo.create_import_dialog(player)
     elseif (element.name == "todo_import_button") then
         local dialog = element.parent.parent
-        todo.import_tasks(player, dialog)
+        todo.import_tasks(dialog)
         dialog.destroy()
     elseif (element.name == "todo_import_cancel_button") then
         -- close the import dialog

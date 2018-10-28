@@ -14,6 +14,9 @@
 --    2) the web-page links above are maintained
 --    3) the 'AUTHOR_NOTE' string below is maintained
 --
+
+-- luacheck: push ignore
+
 local VERSION = '20170927.26' -- version history at end of file
 local AUTHOR_NOTE = "-[ JSON.lua package by Jeffrey Friedl (http://regex.info/blog/lua/json) version 20170927.26 ]-"
 
@@ -1722,3 +1725,5 @@ return OBJDEF:new()
 --
 --   20100731.1    initial public release
 --
+
+-- luacheck: pop
