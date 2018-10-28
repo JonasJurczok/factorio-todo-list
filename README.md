@@ -85,16 +85,17 @@ Credit where credit is due :)
 
 ## Changelog
 
-### 16.5.1
-* Fixed a crash when editing a task (thanks Tarrke)
-
-### 16.5.0
+### NEXT
+* It is now possible to delete tasks
+* It is now possible to export and import tasks similar to blueprints
 * The button text now switches between the following states
   * No tasks available: Todo List
   * Tasks available: Todo List: X tasks available
   * Task assigned to player: Todo List: <first line of task>
-* It is now possible to delete tasks
 * Fixed credits for 16.4.0
+
+### 16.5.1
+* Fixed a crash when editing a task (thanks Tarrke)
 
 ### 16.4.0
 * The button now only shows the first line of the task. Not everything.

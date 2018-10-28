@@ -60,8 +60,16 @@ function todo.create_maximized_frame(player)
         caption = {"todo.export"},
         tooltip = {"todo.export"}
     })
-
     todo.update_export_dialog_button_state()
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_dialog_button",
+        caption = {"todo.import"},
+        tooltip = {"todo.import"}
+    })
+
 end
 
 function todo.create_task_table(frame, player)
@@ -178,14 +186,14 @@ function todo.create_export_dialog(player)
         for _, task in pairs(tasks) do
             table.add({
                 type = "checkbox",
-                name = "todo_export_dialog_task_checkbox_".. task.id,
+                name = "todo_export_select_".. task.id,
                 state = false
             })
 
             table.add({
                 type = "label",
                 style = "todo_label_task",
-                name = "todo_export_dialog_task_task_" .. task.id,
+                name = "todo_export_label_" .. task.id,
                 -- TODO: adapt as soon as title and description fields exist
                 caption = string.match(task.task, "[^\r\n]+")
             })
@@ -216,6 +224,49 @@ function todo.create_export_dialog(player)
         style = "todo_button_default",
         name = "todo_export_button",
         caption = {"todo.export"}
+    })
+
+end
+
+function todo.create_import_dialog(player)
+    local gui = player.gui.center
+
+    if (gui.todo_import_dialog ~= nil) then
+        gui.todo_import_dialog.destroy()
+    end
+
+    local frame = gui.add({
+        type = "frame",
+        name = "todo_import_dialog",
+        caption = {"todo.import"},
+        direction = "vertical"
+    })
+
+    local textbox = frame.add({
+        type = "text-box",
+        style = "todo_base64_textbox",
+        name = "todo_import_string_textbox"
+    })
+    textbox.word_wrap = true
+
+    local flow = frame.add({
+        type = "flow",
+        name = "todo_import_dialog_button_flow",
+        direction = "horizontal"
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_cancel_button",
+        caption = {"todo.cancel"}
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_button",
+        caption = {"todo.import"}
     })
 
 end

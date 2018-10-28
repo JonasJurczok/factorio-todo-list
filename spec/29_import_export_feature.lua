@@ -1,4 +1,4 @@
-feature("#28 import and export tasks", function()
+feature("#29 import and export tasks", function()
 
     before_scenario(function()
         when(todo, "show_button"):then_return(true)
@@ -25,21 +25,28 @@ feature("#28 import and export tasks", function()
         faketorio.click("todo_export_dialog_button")
 
         -- select tasks
-        faketorio.find_element_by_id("todo_export_select"..task.id).state = true
+        faketorio.find_element_by_id("todo_export_select_"..task.id, player).state = true
 
         faketorio.click("todo_export_button")
+        -- clicking this button twice should not change anything
+        faketorio.click("todo_export_button")
 
-        local string = faketorio.find_element_by_id("todo_export_string_textbox").text
-        faketorio.click("todo_export_dialog_close_button")
+        local string = faketorio.find_element_by_id("todo_export_string_textbox", player).text
+        faketorio.click("todo_export_cancel_button")
 
         local gui = player.gui.center
-        local frame = gui.todo_export_dialog
-        assert(frame == nil, "Expected export frame to be destroyed but it was found.")
+        local export_dialog = gui.todo_export_dialog
+        assert(export_dialog == nil, "Expected export frame to be destroyed but it was found.")
 
         -- import same string
         faketorio.click("todo_import_dialog_button")
-        faketorio.find_element_by_id("todo_import_string_textbox").text = string
+        faketorio.find_element_by_id("todo_import_string_textbox", player).text = string
         faketorio.click("todo_import_button")
+
+        local import_dialog = gui.todo_import_dialog
+        assert(import_dialog == nil, "Expected export frame to be destroyed but it was found.")
+
+        faketorio.log.info(serpent.dump(global.todo.open))
 
         -- check task duplication
         assert(global.todo.open[2] ~= nil)
@@ -64,14 +71,14 @@ feature("#28 import and export tasks", function()
         faketorio.click("todo_export_dialog_button")
 
         -- select tasks
-        faketorio.find_element_by_id("todo_export_select".. task1.id).state = true
-        faketorio.find_element_by_id("todo_export_select".. task2.id).state = true
+        faketorio.find_element_by_id("todo_export_select_".. task1.id, player).state = true
+        faketorio.find_element_by_id("todo_export_select_".. task2.id, player).state = true
 
         faketorio.click("todo_export_button")
 
-        local string = faketorio.find_element_by_id("todo_export_string_textbox").text
+        local string = faketorio.find_element_by_id("todo_export_string_textbox", player).text
 
-        faketorio.click("todo_export_dialog_close_button")
+        faketorio.click("todo_export_cancel_button")
 
         local gui = player.gui.center
         local frame = gui.todo_export_dialog
@@ -79,7 +86,7 @@ feature("#28 import and export tasks", function()
 
         -- import same string
         faketorio.click("todo_import_dialog_button")
-        faketorio.find_element_by_id("todo_import_string_textbox").text = string
+        faketorio.find_element_by_id("todo_import_string_textbox", player).text = string
         faketorio.click("todo_import_button")
 
         -- check task duplication
@@ -110,17 +117,21 @@ feature("#28 import and export tasks", function()
         faketorio.click("todo_export_dialog_button")
         faketorio.click("todo_export_button")
 
-        local flow = faketorio.find_element_by_id("todo_export_dialog_string_flow")
+        local flow = faketorio.find_element_by_id("todo_export_dialog_string_flow", player)
 
         assert(flow.todo_export_string_textbox == nil)
 
-        faketorio.click("todo_export_dialog_close_button")
+        faketorio.click("todo_export_cancel_button")
     end)
 
     scenario("No tasks available should not enable export", function()
         local player = game.players[1]
 
+        todo.update_export_dialog_button_state()
+
         local button = faketorio.find_element_by_id("todo_export_dialog_button", player)
+
+        faketorio.log.info("Export dialog button state is %s.", {button.enabled})
 
         assert(button.enabled == false)
     end)
@@ -131,6 +142,8 @@ feature("#28 import and export tasks", function()
         local task = todo.create_task("Test")
         task.assignee = player.name
         todo.save_task(task)
+
+        todo.update_task_table()
 
         local id = task.id
         faketorio.click('todo_item_edit_' .. id)

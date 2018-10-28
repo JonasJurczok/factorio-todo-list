@@ -94,9 +94,8 @@ function todo.generate_and_show_export_string(player)
     for i, checkbox in ipairs(tasks_table.children) do
         -- every uneven child is a textbox (lists start at 1)
         if (i % 2 == 1 and checkbox.state) then
-            local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_dialog_task_checkbox_")
+            local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_select_")
             local task = todo.get_task_by_id(id)
-            todo.log(tasks)
             -- TODO: created by/last modified by and others
             table.insert(tasks, {["task"] = task.task})
         end
@@ -113,13 +112,37 @@ function todo.generate_and_show_export_string(player)
     -- generate string
     local encoded = todo.base64.encode(todo.json:encode(tasks))
 
-    local textbox = dialog.todo_export_dialog_string_flow.add({
-        type = "text-box",
-        style = "todo_base64_textbox",
-        name = "todo_export_string_textbox",
-        text = encoded
-    })
-    textbox.word_wrap = true
+    if (dialog.todo_export_dialog_string_flow.todo_export_string_textbox) then
+        dialog.todo_export_dialog_string_flow.todo_export_string_textbox.text = encoded
+    else
+        local textbox = dialog.todo_export_dialog_string_flow.add({
+            type = "text-box",
+            style = "todo_base64_textbox",
+            name = "todo_export_string_textbox",
+            text = encoded
+        })
+        textbox.word_wrap = true
+    end
+end
+
+function todo.import_tasks(player, dialog)
+    local encoded = dialog.todo_import_string_textbox.text
+
+    local tasks = todo.json:decode(todo.base64.decode(encoded))
+
+    todo.log("Importing tasks:")
+    todo.log(tasks)
+
+    for _, task_to_import in pairs(tasks) do
+        local task = todo.create_task(task_to_import.task)
+        -- TODO: update modified by/created_by
+        todo.log(task)
+        todo.save_task(task)
+    end
+
+    todo.log("Imported " .. #tasks .. " tasks.")
+
+    todo.update_task_table()
 end
 
 function todo.persist(element)
@@ -426,6 +449,15 @@ function todo.on_gui_click(event)
         todo.generate_and_show_export_string(player)
     elseif (element.name == "todo_export_cancel_button") then
         -- close the export dialog
+        element.parent.parent.destroy()
+    elseif (element.name == "todo_import_dialog_button") then
+        todo.create_import_dialog(player)
+    elseif (element.name == "todo_import_button") then
+        local dialog = element.parent.parent
+        todo.import_tasks(player, dialog)
+        dialog.destroy()
+    elseif (element.name == "todo_import_cancel_button") then
+        -- close the import dialog
         element.parent.parent.destroy()
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
