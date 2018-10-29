@@ -30,6 +30,15 @@ default_gui["todo_button_default"] = {
     vertical_align = "center"
 }
 
+default_gui["todo_sprite_button_default"] = {
+    type = "button_style",
+    parent = "icon_button",
+    font = "todo_font_default",
+    align = "center",
+    vertical_align = "center",
+    height = 36
+}
+
 default_gui["todo_label_default"] = {
     type = "label_style",
     font = "todo_font_default",
@@ -46,6 +55,14 @@ default_gui["todo_textbox_default"] = {
     font = "todo_font_default",
     minimal_width = 300,
     minimal_height = 100,
+}
+
+default_gui["todo_base64_textbox"] = {
+    type = "textbox_style",
+    font = "todo_font_default",
+    minimal_width = 300,
+    minimal_height = 100,
+    maximal_width = 500
 }
 
 default_gui["todo_dropdown_default"] = {

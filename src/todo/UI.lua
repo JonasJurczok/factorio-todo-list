@@ -52,6 +52,24 @@ function todo.create_maximized_frame(player)
             caption = {"todo.minimize"}
         })
     end
+
+    flow.add({
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
+        name = "todo_export_dialog_button",
+        sprite = "utility/export_slot",
+        tooltip = {"todo.export"}
+    })
+    todo.update_export_dialog_button_state()
+
+    flow.add({
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
+        name = "todo_import_dialog_button",
+        sprite = "utility/import_slot",
+        tooltip = {"todo.import"}
+    })
+
 end
 
 function todo.create_task_table(frame, player)
@@ -130,6 +148,127 @@ function todo.create_task_table(frame, player)
     })
 
     return table
+end
+
+function todo.create_export_dialog(player)
+    local gui = player.gui.center
+
+    if (gui.todo_export_dialog ~= nil) then
+        gui.todo_export_dialog.destroy()
+    end
+
+    local frame = gui.add({
+        type = "frame",
+        name = "todo_export_dialog",
+        caption = {"todo.export"},
+        direction = "vertical"
+    })
+
+    local scroll = frame.add({
+        type = "scroll-pane",
+        name = "todo_export_dialog_scroll_pane"
+    })
+
+    scroll.vertical_scroll_policy = "auto"
+    scroll.horizontal_scroll_policy = "never"
+    scroll.style.maximal_height = todo.get_window_height(player) / 2
+    scroll.style.minimal_height = scroll.style.maximal_height
+
+    local table = scroll.add({
+        type = "table",
+        style = "todo_table_default",
+        name = "todo_export_dialog_table",
+        column_count = 2
+    })
+
+    -- fill table
+    for _, tasks in pairs({global.todo.open, global.todo.done}) do
+        for _, task in pairs(tasks) do
+            table.add({
+                type = "checkbox",
+                name = "todo_export_select_".. task.id,
+                state = false
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_task",
+                name = "todo_export_label_" .. task.id,
+                -- TODO: adapt as soon as title and description fields exist
+                caption = string.match(task.task, "[^\r\n]+")
+            })
+        end
+    end
+
+    frame.add({
+        type = "flow",
+        name = "todo_export_dialog_string_flow",
+        direction = "horizontal"
+    })
+
+    local flow = frame.add({
+        type = "flow",
+        name = "todo_export_dialog_button_flow",
+        direction = "horizontal"
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_export_cancel_button",
+        caption = {"todo.cancel"}
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_export_button",
+        caption = {"todo.export"}
+    })
+
+end
+
+function todo.create_import_dialog(player)
+    local gui = player.gui.center
+
+    if (gui.todo_import_dialog ~= nil) then
+        gui.todo_import_dialog.destroy()
+    end
+
+    local frame = gui.add({
+        type = "frame",
+        name = "todo_import_dialog",
+        caption = {"todo.import"},
+        direction = "vertical"
+    })
+
+    local textbox = frame.add({
+        type = "text-box",
+        style = "todo_base64_textbox",
+        name = "todo_import_string_textbox"
+    })
+    textbox.word_wrap = true
+
+    local flow = frame.add({
+        type = "flow",
+        name = "todo_import_dialog_button_flow",
+        direction = "horizontal"
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_cancel_button",
+        caption = {"todo.cancel"}
+    })
+
+    flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_import_button",
+        caption = {"todo.import"}
+    })
+
 end
 
 function todo.create_add_edit_frame(player, task)
@@ -275,7 +414,6 @@ end
 
 function todo.create_delete_confirmation_button(element, id)
     local table = element.parent
-    todo.log(table)
     element.destroy()
 
     table.add({

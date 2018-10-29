@@ -1,4 +1,3 @@
-
 function todo.log(message)
     if type(message) == 'table' then
         message = serpent.dump(message) .. ' [' .. #message .. ']'
@@ -12,13 +11,13 @@ function todo.log(message)
             end
         end
     else
-        error(serpent.dump(message, {compact = false, nocode = true, indent = ' '}))
+        error(serpent.dump(message, { compact = false, nocode = true, indent = ' ' }))
     end
 
 end
 
 function todo.get_player_list()
-    local result = { {"todo.unassigned"} }
+    local result = { { "todo.unassigned" } }
 
     local count = 0
     for _, player in pairs(game.players) do
@@ -75,6 +74,13 @@ function todo.get_task_table(player)
     end
 end
 
+function todo.get_export_dialog(player)
+    local center = player.gui.center
+    if (center.todo_export_dialog) then
+        return center.todo_export_dialog
+    end
+end
+
 function todo.show_button(player)
     return settings.get_player_settings(player)["todolist-show-button"].value
 end
@@ -98,26 +104,26 @@ function todo.get_task_id_from_element_name(name, pattern)
 end
 
 function todo.generate_id()
-  if not global.todo.next_id then
-    global.todo.next_id = 1
-  end
+    if not global.todo.next_id then
+        global.todo.next_id = 1
+    end
 
-  global.todo.next_id = global.todo.next_id + 1
-  return global.todo.next_id - 1
+    global.todo.next_id = global.todo.next_id + 1
+    return global.todo.next_id - 1
 end
 
 function todo.get_task_by_id(id)
-  for _, task in pairs(global.todo.open) do
-    if (task.id == id) then
-      return task
+    for _, task in pairs(global.todo.open) do
+        if (task.id == id) then
+            return task
+        end
     end
-  end
 
-  for _, task in pairs(global.todo.done) do
-    if (task.id == id) then
-      return task
+    for _, task in pairs(global.todo.done) do
+        if (task.id == id) then
+            return task
+        end
     end
-  end
 end
 
 function todo.delete_task(id)
@@ -135,7 +141,6 @@ function todo.delete_task(id)
         end
     end
 end
-
 
 function todo.filter_table_by_id(source, exclude_id, destination)
     destination = destination or {}

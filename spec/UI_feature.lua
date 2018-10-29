@@ -10,6 +10,19 @@ function add_task(text)
 end
 
 feature("Testing the UI", function()
+
+    before_scenario(function()
+        when(todo, "show_button"):then_return(true)
+    end)
+
+    after_scenario(function()
+        todo.show_button:revert()
+
+        -- clear all tasks
+        global.todo.open = {}
+        global.todo.done = {}
+    end)
+
     scenario("initially the maximize button should be displayed.", function()
         local player = game.players[1]
         local button = faketorio.find_element_by_id("todo_maximize_button", player)

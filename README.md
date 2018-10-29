@@ -73,15 +73,31 @@ an idea for a feature.
 
 If you don't have a github account feel free to contact us via mail at `jonasjurczok+factorio@gmail.com`.
 
+## Attributions
+Credit where credit is due :)
+
+* Tessiema for a lot of ideas and testing
+* Tarrke for a lot of pull requests and ideas
+* hoylemd for a lot of pull requests and ideas
+* Lots of other people for translations, comments and general support :)
+* JSON Encode/Decode in Pure LUA by [Jeffrey Friedl](http://regex.info/blog/lua/json) is licensed under a [Creative Commons Attribution 3.0 Unported License](http://creativecommons.org/licenses/by/3.0/deed.en_US).
+* base64 library is written by [Ernest R. Ewert](https://github.com/ErnieE5/ee5_base64)
+
 ## Changelog
 
-### 16.5.0
+### NEXT
+
+### 16.6.0
+* It is now possible to delete tasks
+* It is now possible to export and import tasks similar to blueprints
 * The button text now switches between the following states
   * No tasks available: Todo List
   * Tasks available: Todo List: X tasks available
   * Task assigned to player: Todo List: <first line of task>
-* It is now possible to delete tasks
 * Fixed credits for 16.4.0
+
+### 16.5.1
+* Fixed a crash when editing a task (thanks Tarrke)
 
 ### 16.4.0
 * The button now only shows the first line of the task. Not everything.
