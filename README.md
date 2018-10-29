@@ -86,6 +86,8 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+
+### 16.6.0
 * It is now possible to delete tasks
 * It is now possible to export and import tasks similar to blueprints
 * The button text now switches between the following states
