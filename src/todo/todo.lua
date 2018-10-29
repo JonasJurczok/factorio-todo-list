@@ -213,7 +213,6 @@ function todo.create_task(text, assignee, creator)
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
-    -- Find the current player in multi-player
     task.created_by = creator
     return task
 end
