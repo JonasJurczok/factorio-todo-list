@@ -11,15 +11,15 @@ describe("UI tests", function()
 	faketorio.initialize_world_busted()
     faketorio.add_default_setting("todolist-show-button", true)
     faketorio.add_default_setting("todolist-show-log", false)
-	todo.mod_init()	
+	todo.mod_init()
   end)
 
   it("Editing a completed task should work", function()
-    
     -- create task
-    local task = _G.todo.create_task("test", nil)
+    local task_template = { ["task"] = "test", ["title"] = "Title", ["assignee"] = "def" }
+    local task = _G.todo.create_task(task_template, nil)
     table.insert(_G.global.todo.done, task)
-	
+
     -- maximize and refresh UI
     local player = _G.game.players[1]
     todo.maximize(player)
@@ -57,7 +57,8 @@ describe("UI tests", function()
   end)
 
   it("should create UI elements with the proper ids", function()
-    table.insert(_G.global.todo.open, todo.create_task("asd", "def"))
+    local task_template = { ["task"] = "asd", ["title"] = "Title", ["assignee"] = "def" }
+    table.insert(_G.global.todo.open, todo.create_task(task_template, "Jonas"))
     local player = _G.game.players[1]
     todo.maximize(player)
     todo.update_task_table()
