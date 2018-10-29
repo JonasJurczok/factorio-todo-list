@@ -63,8 +63,9 @@ feature("#29 import and export tasks", function()
         todo.save_task(task1)
 
         local task2 = todo.create_task("Test2")
-        task1.assignee = player.name
+        task2.assignee = player.name
         todo.save_task(task2)
+        todo.mark_complete(task2.id)
         todo.refresh_task_table(player)
 
         -- export to string
@@ -90,15 +91,15 @@ feature("#29 import and export tasks", function()
         faketorio.click("todo_import_button")
 
         -- check task duplication
-        assert(global.todo.open[3] ~= nil)
-        assert(global.todo.open[3].task == "Test")
-        assert(global.todo.open[3]["assignee"] == nil)
-        assert(global.todo.open[3].id ~= global.todo.open[1].id)
+        assert(global.todo.open[2] ~= nil)
+        assert(global.todo.open[2].task == "Test")
+        assert(global.todo.open[2]["assignee"] == nil)
+        assert(global.todo.open[2].id ~= global.todo.open[1].id)
 
-        assert(global.todo.open[4] ~= nil)
-        assert(global.todo.open[4].task == "Test2")
-        assert(global.todo.open[4]["assignee"] == nil)
-        assert(global.todo.open[4].id ~= global.todo.open[2].id)
+        assert(global.todo.open[3] ~= nil)
+        assert(global.todo.open[3].task == "Test2")
+        assert(global.todo.open[3]["assignee"] == nil)
+        assert(global.todo.open[3].id ~= global.todo.open[2].id)
     end)
 
     scenario("Not selecting tasks to export should not generate export string.", function()
