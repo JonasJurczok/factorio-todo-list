@@ -57,6 +57,12 @@ default_gui["todo_textbox_default"] = {
     minimal_height = 100,
 }
 
+default_gui["todo_textfield_default"] = {
+    type = "textfield_style",
+    font = "todo_font_default",
+    minimal_width = 300
+}
+
 default_gui["todo_base64_textbox"] = {
     type = "textbox_style",
     font = "todo_font_default",
