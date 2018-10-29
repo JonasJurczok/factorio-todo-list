@@ -135,8 +135,11 @@ function todo.import_tasks(dialog, player)
 
     for _, task_to_import in pairs(tasks) do
         local task = todo.create_task(task_to_import.task, "", player)
-        -- TODO: update modified by/created_by
-        task.by = "None"
+        -- Update modified by/created_by
+        task.created_by = player.name
+        task.updated_by = player.name
+        -- Set assignee to nil
+        task.assignee = nil
         todo.log(task)
         todo.save_task(task)
     end
@@ -150,7 +153,9 @@ function todo.persist(element, player)
     local frame = element.parent.parent
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
-    local task = todo.create_task(task_spec.task, task_spec.assignee, player)
+    local task = todo.create_task(task_spec.task, task_spec.assignee, player.name)
+    -- Set the creator as last updator too
+    task.updated_by = task.created_by
 
     todo.save_task(task, should_add_to_top)
 
@@ -171,8 +176,8 @@ function todo.update(element, index, player)
         original.assignee = nil
     end
     -- Set the last updater
-    original.by = player.name
-    todo.log("Current player is: " .. original.by)
+    original.updated_by = player.name
+    todo.log("Current player is: " .. original.updated_by)
 
     frame.destroy()
 end
@@ -203,14 +208,13 @@ function todo.get_task_from_add_frame(frame)
     return task, should_add_to_top
 end
 
-function todo.create_task(text, assignee, player)
+function todo.create_task(text, assignee, creator)
     local task = {}
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
     -- Find the current player in multi-player
-    task.by = player.name
-    todo.log("Current player is: " .. task.by)
+    task.created_by = creator
     return task
 end
 
