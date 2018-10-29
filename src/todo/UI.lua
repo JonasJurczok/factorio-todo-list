@@ -194,8 +194,7 @@ function todo.create_export_dialog(player)
                 type = "label",
                 style = "todo_label_task",
                 name = "todo_export_label_" .. task.id,
-                -- TODO: adapt as soon as title and description fields exist
-                caption = string.match(task.task, "[^\r\n]+")
+                caption = task.title
             })
         end
     end
@@ -293,6 +292,26 @@ function todo.create_add_edit_frame(player, task)
         column_count = 2
     })
 
+    -- Task title field
+    table.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_add_task_title_label",
+        caption = { "todo.add_task_title" }
+    })
+
+    local task_title = ""
+    if task then
+        task_title = task.title
+    end
+    table.add({
+        type = "textfield",
+        style = "todo_textfield_default",
+        name = "todo_new_task_title",
+        text = task_title
+    })
+
+    -- Task description field
     table.add({
         type = "label",
         style = "todo_label_default",
@@ -449,7 +468,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
         type = "label",
         style = "todo_label_task",
         name = "todo_item_task_" .. id,
-        caption = task.task
+        caption = task.title
     })
 
     if (task.assignee) then

@@ -97,7 +97,8 @@ function todo.generate_and_show_export_string(player)
             local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_select_")
             local task = todo.get_task_by_id(id)
             -- TODO: created by/last modified by and others
-            table.insert(tasks, {["task"] = task.task})
+            -- Not sure you wana export the created by and stuff as the cretor may not be in the game at all...
+            table.insert(tasks, { ["task"] = task.task, ["title"] = task.title })
         end
     end
 
@@ -148,10 +149,10 @@ function todo.persist(element, player)
     local frame = element.parent.parent
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
-    local task = todo.create_task(task_spec.task, task_spec.assignee, player.name)
+    local task = todo.create_task(task_spec, player.name)
     -- Set the creator as last updator too
     task.updated_by = task.created_by
-
+    todo.log("Saving task: " .. serpent.block(task))
     todo.save_task(task, should_add_to_top)
 
     todo.log(serpent.block(global.todo))
@@ -164,6 +165,7 @@ function todo.update(element, index, player)
 
     local original = todo.get_task_by_id(index)
 
+    original.title = task.title
     original.task = task.task
     if (task.assignee) then
         original.assignee = task.assignee
@@ -179,9 +181,10 @@ function todo.update(element, index, player)
 end
 
 function todo.get_task_from_add_frame(frame)
-    local taskText = frame.todo_add_task_table.children[2].text
+    local taskText = frame.todo_add_task_table["todo_new_task_textbox"].text
+    local taskTitle = frame.todo_add_task_table["todo_new_task_title"].text
 
-    local assignees = frame.todo_add_task_table.children[4]
+    local assignees = frame.todo_add_task_table["todo_add_assignee_drop_down"]
     local assignee
     if (assignees.selected_index > 1) then
         assignee = assignees.items[assignees.selected_index]
@@ -194,9 +197,9 @@ function todo.get_task_from_add_frame(frame)
         should_add_to_top = true
     end
 
-    local task = {["task"] = taskText, ["assignee"] = assignee}
+    local task = {["title"] = taskTitle, ["task"] = taskText, ["assignee"] = assignee}
 
-    todo.log("Reading task " .. serpent.block(task))
+    todo.log("Reading task: " .. serpent.block(task))
     if should_add_to_top then
         todo.log("Adding it at the top.")
     end
@@ -204,7 +207,11 @@ function todo.get_task_from_add_frame(frame)
     return task, should_add_to_top
 end
 
-function todo.create_task(text, assignee, creator)
+-- Create task from a specification task. Specification task should have:
+-- - a title
+-- - a task field with the description
+-- - an assignee
+function todo.create_task(task_spec, creator)
     local task = {}
     task.id = todo.generate_id()
     task.task = text
@@ -235,7 +242,9 @@ function todo.update_current_task_label(player)
                 {"",
                  {"todo.todo_list"},
                  ": ",
-                 string.match(task.task, "[^\r\n]+")}
+                 -- string.match(task.title, "[^\r\n]+")
+                 task.title
+                }
             return
         end
         count = i
