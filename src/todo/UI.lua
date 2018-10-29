@@ -324,6 +324,7 @@ function todo.create_add_edit_frame(player, task)
     if task and task.assignee then
         assign_index = lookup[task.assignee]
     elseif todo.is_auto_assign(player) and c == 1 then
+        -- TODO: this should be something like assign_index = lookup[player.name] no?
         assign_index = 2
     end
     table.add({
@@ -341,7 +342,6 @@ function todo.create_add_edit_frame(player, task)
             name = "todo_created_by_label",
             caption = {"todo.created_by"}
         })
-
         table.add({
             type = "label",
             style = "todo_label_default",
