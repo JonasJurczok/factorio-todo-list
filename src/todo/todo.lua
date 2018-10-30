@@ -134,12 +134,7 @@ function todo.import_tasks(dialog, player)
     todo.log(tasks)
 
     for _, task_to_import in pairs(tasks) do
-        local task = todo.create_task(task_to_import.task, "", player)
-        -- Update modified by/created_by
-        task.created_by = player.name
-        task.updated_by = player.name
-        -- Set assignee to nil
-        task.assignee = nil
+        local task = todo.create_task(task_to_import.task, nil, player)
         todo.log(task)
         todo.save_task(task)
     end
@@ -213,7 +208,8 @@ function todo.create_task(text, assignee, creator)
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
-    task.created_by = creator
+    task.created_by = creator.name
+    task.updated_by = creator.name
     return task
 end
 
@@ -370,7 +366,7 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_add_button") then
         todo.create_add_edit_frame(player)
     elseif (element.name == "todo_persist_button") then
-        todo.log("Createing task by player " .. player.name)
+        todo.log("Creating task by player " .. player.name)
         todo.persist(element, player)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_assign_self_")) then
