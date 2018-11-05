@@ -149,8 +149,6 @@ function todo.persist(element, player)
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
     local task = todo.create_task(task_spec.task, task_spec.assignee, player)
-    -- Set the creator as last updator too
-    task.updated_by = task.created_by
 
     todo.save_task(task, should_add_to_top)
 
