@@ -141,7 +141,7 @@ function todo.import_tasks(dialog, player)
     todo.log(tasks)
 
     for _, task_to_import in pairs(tasks) do
-        local task = todo.create_task(task_to_import.task, nil, player)
+        local task = todo.create_task(task_to_import, player)
         todo.log(task)
         todo.save_task(task)
     end
@@ -218,16 +218,14 @@ end
    - a title
    - a task field with the description
    - an assignee
-
-   Creator is expected to be a Factorio player object.
 ]]--
-function todo.create_task(task_spec, creator)
+function todo.create_task(task_spec, player)
     local task = {}
     task.id = todo.generate_id()
     task.title = task_spec.title
     task.task = task_spec.task
     task.assignee = task_spec.assignee
-    task.created_by = creator.name
+    task.created_by = player.name
     return task
 end
 
@@ -244,7 +242,7 @@ function todo.update_current_task_label(player)
 
     -- we may update the button label
     todo.log("updating button label")
-    local count
+    local count = 0
     for i, task in ipairs(global.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
@@ -252,15 +250,18 @@ function todo.update_current_task_label(player)
                 {"",
                  {"todo.todo_list"},
                  ": ",
-                 -- string.match(task.title, "[^\r\n]+")
                  task.title
                 }
             return
         end
-        count = i
+
+        -- only count tasks that are assignable
+        if (not task.assignee) then
+            count = count + 1
+        end
     end
 
-    if (count == nil) then
+    if (count == 0) then
         todo.get_maximize_button(player).caption = {"todo.todo_list"}
     else
         todo.get_maximize_button(player).caption =
