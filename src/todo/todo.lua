@@ -166,11 +166,11 @@ function todo.persist(element, player)
     frame.destroy()
 end
 
-function todo.update(element, index, player)
+function todo.update(element, id, player)
     local frame = element.parent.parent
     local task, _ = todo.get_task_from_add_frame(frame)
 
-    local original = todo.get_task_by_id(index)
+    local original = todo.get_task_by_id(id)
 
     original.title = task.title
     original.task = task.task
