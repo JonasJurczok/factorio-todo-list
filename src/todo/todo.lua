@@ -12,20 +12,26 @@ function todo.mod_init()
         global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
     else
         for _, task in ipairs(global.todo.open) do
-            if not task.id then
-                task.id = todo.generate_id()
-            end
+            todo.init_ensure_task_fields(task)
         end
 
         for _, task in ipairs(global.todo.done) do
-            if not task.id then
-                task.id = todo.generate_id()
-            end
+            todo.init_ensure_task_fields(task)
         end
     end
 
     for _, player in pairs(game.players) do
         todo.create_minimized_button(player)
+    end
+end
+
+function todo.init_ensure_task_fields(task)
+    if not task.id then
+        task.id = todo.generate_id()
+    end
+
+    if not task.title then
+        task.title = string.match(task.task, "[^\r\n]+")
     end
 end
 
