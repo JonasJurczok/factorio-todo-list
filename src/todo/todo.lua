@@ -243,7 +243,7 @@ function todo.update_current_task_label(player)
     -- we may update the button label
     todo.log("updating button label")
     local count = 0
-    for i, task in ipairs(global.todo.open) do
+    for _, task in pairs(global.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
             todo.get_maximize_button(player).caption =
