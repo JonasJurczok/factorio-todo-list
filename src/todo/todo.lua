@@ -149,7 +149,8 @@ function todo.persist(element, player)
     local frame = element.parent.parent
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
-    local task = todo.create_task(task_spec, player.name)
+    local task = todo.create_task(task_spec, player)
+
     -- Set the creator as last updator too
     task.updated_by = task.created_by
     todo.log("Saving task: " .. serpent.block(task))
@@ -207,17 +208,20 @@ function todo.get_task_from_add_frame(frame)
     return task, should_add_to_top
 end
 
--- Create task from a specification task. Specification task should have:
--- - a title
--- - a task field with the description
--- - an assignee
+--[[ Create task from a specification task. Specification task should have:
+   - a title
+   - a task field with the description
+   - an assignee
+
+   Creator is expected to be a Factorio player object.
+]]--
 function todo.create_task(task_spec, creator)
     local task = {}
     task.id = todo.generate_id()
-    task.task = text
-    task.assignee = assignee
+    task.title = task_spec.title
+    task.task = task_spec.task
+    task.assignee = task_spec.assignee
     task.created_by = creator.name
-    task.updated_by = creator.name
     return task
 end
 
