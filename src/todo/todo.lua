@@ -125,7 +125,7 @@ function todo.generate_and_show_export_string(player)
     end
 end
 
-function todo.import_tasks(dialog)
+function todo.import_tasks(dialog, player)
     local encoded = dialog.todo_import_string_textbox.text
 
     local tasks = todo.json:decode(todo.base64.decode(encoded))
@@ -134,8 +134,7 @@ function todo.import_tasks(dialog)
     todo.log(tasks)
 
     for _, task_to_import in pairs(tasks) do
-        local task = todo.create_task(task_to_import.task)
-        -- TODO: update modified by/created_by
+        local task = todo.create_task(task_to_import.task, nil, player)
         todo.log(task)
         todo.save_task(task)
     end
@@ -145,11 +144,11 @@ function todo.import_tasks(dialog)
     todo.update_task_table()
 end
 
-function todo.persist(element)
+function todo.persist(element, player)
     local frame = element.parent.parent
 
     local task_spec, should_add_to_top = todo.get_task_from_add_frame(frame)
-    local task = todo.create_task(task_spec.task, task_spec.assignee)
+    local task = todo.create_task(task_spec.task, task_spec.assignee, player)
 
     todo.save_task(task, should_add_to_top)
 
@@ -157,7 +156,7 @@ function todo.persist(element)
     frame.destroy()
 end
 
-function todo.update(element, index)
+function todo.update(element, index, player)
     local frame = element.parent.parent
     local task, _ = todo.get_task_from_add_frame(frame)
 
@@ -169,6 +168,9 @@ function todo.update(element, index)
     else
         original.assignee = nil
     end
+    -- Set the last updater
+    original.updated_by = player.name
+    todo.log("Current player is: " .. original.updated_by)
 
     frame.destroy()
 end
@@ -199,11 +201,13 @@ function todo.get_task_from_add_frame(frame)
     return task, should_add_to_top
 end
 
-function todo.create_task(text, assignee)
+function todo.create_task(text, assignee, creator)
     local task = {}
     task.id = todo.generate_id()
     task.task = text
     task.assignee = assignee
+    task.created_by = creator.name
+    task.updated_by = creator.name
     return task
 end
 
@@ -360,7 +364,8 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_add_button") then
         todo.create_add_edit_frame(player)
     elseif (element.name == "todo_persist_button") then
-        todo.persist(element)
+        todo.log("Creating task by player " .. player.name)
+        todo.persist(element, player)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_assign_self_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_assign_self_")
@@ -394,7 +399,7 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_update_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_update_button_")
 
-        todo.update(element, id)
+        todo.update(element, id, player)
         todo.update_task_table()
     elseif (string.find(element.name, "todo_item_checkbox_done_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_item_checkbox_done_")
@@ -454,7 +459,7 @@ function todo.on_gui_click(event)
         todo.create_import_dialog(player)
     elseif (element.name == "todo_import_button") then
         local dialog = element.parent.parent
-        todo.import_tasks(dialog)
+        todo.import_tasks(dialog, player)
         dialog.destroy()
     elseif (element.name == "todo_import_cancel_button") then
         -- close the import dialog

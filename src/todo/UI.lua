@@ -338,6 +338,36 @@ function todo.create_add_edit_frame(player, task)
         table.add({
             type = "label",
             style = "todo_label_default",
+            name = "todo_created_by_label",
+            caption = {"todo.created_by"}
+        })
+
+        table.add({
+            type = "label",
+            style = "todo_label_default",
+            name = "todo_created_by_playername",
+            caption = task.created_by or { "todo.noone" }
+        })
+
+        table.add({
+            type = "label",
+            style = "todo_label_default",
+            name = "todo_updated_by_label",
+            caption = {"todo.updated_by"}
+        })
+
+        table.add({
+            type = "label",
+            style = "todo_label_default",
+            name = "todo_updated_by_playername",
+            caption = task.updated_by or { "todo.noone" }
+        })
+    end
+
+    if (task) then
+        table.add({
+            type = "label",
+            style = "todo_label_default",
             name = "todo_delete_label",
             caption = {"todo.delete"}
         })
