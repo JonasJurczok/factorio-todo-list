@@ -16,7 +16,8 @@ feature("#29 import and export tasks", function()
     scenario("Exporting and importing single task should work", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test")
+        local task_template = { ["task"] = "Export/Import single task", ["title"] = "single"}
+        local task = todo.create_task(task_template, player)
         task.assignee = player.name
         todo.save_task(task)
         todo.refresh_task_table(player)
@@ -50,7 +51,8 @@ feature("#29 import and export tasks", function()
 
         -- check task duplication
         assert(global.todo.open[2] ~= nil)
-        assert(global.todo.open[2].task == "Test")
+        assert(global.todo.open[2].task == task_template.task)
+        assert(global.todo.open[2].title == task_template.title)
         assert(global.todo.open[2]["assignee"] == nil)
         assert(global.todo.open[2].id ~= global.todo.open[1].id)
     end)
@@ -58,11 +60,13 @@ feature("#29 import and export tasks", function()
     scenario("Exporting and importing multiple tasks should work", function()
         local player = game.players[1]
 
-        local task1 = todo.create_task("Test")
+        local task_template = { ["task"] = "Export/Import multiple task", ["title"] = "first"}
+        local task1 = todo.create_task(task_template, player)
         task1.assignee = player.name
         todo.save_task(task1)
 
-        local task2 = todo.create_task("Test2")
+        task_template.title = "second"
+        local task2 = todo.create_task(task_template, player)
         task2.assignee = player.name
         todo.save_task(task2)
         todo.mark_complete(task2.id)
@@ -92,12 +96,14 @@ feature("#29 import and export tasks", function()
 
         -- check task duplication
         assert(global.todo.open[2] ~= nil)
-        assert(global.todo.open[2].task == "Test")
+        assert(global.todo.open[2].task == task1.task)
+        assert(global.todo.open[2].title == task1.title)
         assert(global.todo.open[2]["assignee"] == nil)
         assert(global.todo.open[2].id ~= global.todo.open[1].id)
 
         assert(global.todo.open[3] ~= nil)
-        assert(global.todo.open[3].task == "Test2")
+        assert(global.todo.open[3].task == task2.task)
+        assert(global.todo.open[3].title == task2.title)
         assert(global.todo.open[3]["assignee"] == nil)
         assert(global.todo.open[3].id ~= global.todo.open[2].id)
     end)
@@ -105,11 +111,13 @@ feature("#29 import and export tasks", function()
     scenario("Not selecting tasks to export should not generate export string.", function()
         local player = game.players[1]
 
-        local task1 = todo.create_task("Test")
+        local task_template = { ["task"] = "Not selecting tasks not generate export string", ["title"] = "first"}
+        local task1 = todo.create_task(task_template, player)
         task1.assignee = player.name
         todo.save_task(task1)
 
-        local task2 = todo.create_task("Test2")
+        task_template.title = "second"
+        local task2 = todo.create_task(task_template, player)
         task1.assignee = player.name
         todo.save_task(task2)
         todo.refresh_task_table(player)
@@ -140,7 +148,8 @@ feature("#29 import and export tasks", function()
     scenario("Creating and deleting task should disable export button again.", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test")
+        local task_template = { ["task"] = "creation/deletion should enable/disable button", ["title"] = "first"}
+        local task = todo.create_task(task_template, player)
         task.assignee = player.name
         todo.save_task(task)
 

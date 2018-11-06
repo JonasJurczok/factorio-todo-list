@@ -15,7 +15,8 @@ feature("#54 #57 button text behaviour", function()
     scenario("Single line text should show up fully.", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test")
+        local task_template = { ["task"] = "Single line", ["title"] = "first"}
+        local task = todo.create_task(task_template, player)
         task.assignee = player.name
         todo.save_task(task)
         todo.refresh_task_table(player)
@@ -30,38 +31,14 @@ feature("#54 #57 button text behaviour", function()
 
         faketorio.log.info("Found text %s.", {text})
 
-        assert(string.find(text, task.task))
-    end)
-
-    scenario("Multi line text should only show first line.", function()
-        local player = game.players[1]
-
-        local task_text = [[Test
-        line two]]
-
-        local task = todo.create_task(task_text)
-        task.assignee = player.name
-        todo.save_task(task)
-        todo.refresh_task_table(player)
-
-        local button = todo.get_maximize_button(player)
-        assert(button.caption[1] == "")
-        assert(button.caption[2] == "")
-        assert(button.caption[3][1] == "todo.todo_list")
-        assert(button.caption[4] == ": ")
-
-        local text = button.caption[5]
-
-        faketorio.log.info("Found text %s.", {text})
-
-        assert(string.find(text, "Test"))
-        assert(not string.find(text, "two"))
+        assert(text == task.title)
     end)
 
     scenario("None assigned but tasks available", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test")
+        local task_template = { ["task"] = "Single line", ["title"] = "first"}
+        local task = todo.create_task(task_template, player)
         todo.save_task(task)
         todo.refresh_task_table(player)
 

@@ -14,7 +14,10 @@ feature("#60 Show created/updated by", function()
     scenario("A task has a creator and a modifier", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test", nil, player)
+        local task_template = { ["task"] = "Test", ["title"] = "Title", ["assignee"] = "def" }
+        local task = todo.create_task(task_template, {["name"] = "Tarrke"})
+        task.updated_by = player.name
+
         todo.save_task(task)
         todo.refresh_task_table(player)
 
@@ -35,8 +38,9 @@ feature("#60 Show created/updated by", function()
         local player = game.players[1]
         local player1 = { ["name"] = "Tarrke" }
         local player2 = { ["name"] = "Jonas" }
-        
-        local task = todo.create_task("Test", nil, player1)
+
+        local task_template = { ["task"] = "Test", ["title"] = "Title", ["assignee"] = "def" }
+        local task = todo.create_task(task_template, nil, player1)
         todo.save_task(task)
         todo.refresh_task_table(player)
 
