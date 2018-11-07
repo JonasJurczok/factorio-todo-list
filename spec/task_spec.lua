@@ -24,8 +24,8 @@ describe("task tests", function()
   end)
 
   it("should generate ids for existing tasks", function()
-    table.insert(_G.global.todo.open, {task = "asd", assignee = nil})
-    table.insert(_G.global.todo.done, {task = "asd2", assignee = nil})
+    table.insert(_G.global.todo.open, {task = "asd", title = "Task 1", assignee = nil})
+    table.insert(_G.global.todo.done, {task = "asd2", title = "Task 2", assignee = nil})
 
     todo.mod_init()
 
@@ -34,19 +34,22 @@ describe("task tests", function()
   end)
 
   it("should create a complete task", function()
-    local task = todo.create_task("asd", "def")
+    local template_task = { ["task"] = "asd", ["title"] = "Title", ["assignee"] = "def" }
+    local task = todo.create_task(template_task, "Jonas")
 
     assert.is_equal(1, task.id)
     assert.is_equal("asd", task.task)
     assert.is_equal("def", task.assignee)
+    assert.is_equal("Title", task.title)
+    assert.is_equal("Jonas", task.created_by)
   end)
 
   it("should fetch a task by id", function()
-    table.insert(_G.global.todo.open, todo.create_task("asd1", "def1"))
-    table.insert(_G.global.todo.open, todo.create_task("asd2", "def2"))    
+    table.insert(_G.global.todo.open, todo.create_task({ ["task"] = "asd1", ["title"] = "Title", ["assignee"] = "def1" }, "Jonas"))
+    table.insert(_G.global.todo.open, todo.create_task({ ["task"] = "asd2", ["title"] = "Title", ["assignee"] = "def2" }, "Jonas"))
 
-    table.insert(_G.global.todo.done, todo.create_task("asd3", "def3"))    
-    table.insert(_G.global.todo.done, todo.create_task("asd4", "def4"))    
+    table.insert(_G.global.todo.done, todo.create_task({ ["task"] = "asd3", ["title"] = "Title", ["assignee"] = "def3" }, "Jonas"))
+    table.insert(_G.global.todo.done, todo.create_task({ ["task"] = "asd4", ["title"] = "Title", ["assignee"] = "def4" }, "Jonas"))
 
     local task = todo.get_task_by_id(1)
     assert.is_equal("asd1", task.task)

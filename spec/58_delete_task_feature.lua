@@ -44,7 +44,8 @@ feature("#58 delete tasks", function()
     scenario("delete single open task.", function()
         local player = game.players[1]
 
-        local task = todo.create_task("Test")
+        local task_template = { ["task"] = "delete single open task", ["title"] = "single"}
+        local task = todo.create_task(task_template, player)
         todo.save_task(task)
         todo.refresh_task_table(player)
 
@@ -55,19 +56,25 @@ feature("#58 delete tasks", function()
     scenario("delete second of three open tasks", function()
         local player = game.players[1]
 
-        todo.save_task(todo.create_task("First"))
-        local task = todo.save_task(todo.create_task("Second"))
-        todo.save_task(todo.create_task("Third"))
+        local task_template = { ["task"] = "delete second of three open task", ["title"] = "first"}
+
+        todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "second"
+        local task = todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "third"
+        todo.save_task(todo.create_task(task_template, player))
         todo.refresh_task_table(player)
 
         faketorio.confirm_task_deletion(player, task.id)
-
     end)
 
     scenario("delete completed task", function()
         local player = game.players[1]
 
-        local task = todo.save_task(todo.create_task("Test"))
+        local task_template = { ["task"] = "delete completed task", ["title"] = "completed"}
+        local task = todo.save_task(todo.create_task(task_template, player))
         todo.mark_complete(task.id)
         todo.refresh_task_table(player)
 
@@ -77,9 +84,15 @@ feature("#58 delete tasks", function()
     scenario("delete second of three completed tasks.", function()
         local player = game.players[1]
 
-        local first = todo.save_task(todo.create_task("First"))
-        local second = todo.save_task(todo.create_task("Second"))
-        local third = todo.save_task(todo.create_task("Third"))
+        local task_template = { ["task"] = "delete second of three completed task", ["title"] = "first"}
+        local first = todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "second"
+        local second = todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "third"
+        local third = todo.save_task(todo.create_task(task_template, player))
+
         todo.mark_complete(first.id)
         todo.mark_complete(second.id)
         todo.mark_complete(third.id)
@@ -91,9 +104,15 @@ feature("#58 delete tasks", function()
     scenario("delete with mixed completed/uncompleted tasks.", function()
         local player = game.players[1]
 
-        todo.save_task(todo.create_task("First"))
-        local second = todo.save_task(todo.create_task("Second"))
-        local third = todo.save_task(todo.create_task("Third"))
+        local task_template = { ["task"] = "delete mixed open/completed task", ["title"] = "first"}
+        todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "second"
+        local second = todo.save_task(todo.create_task(task_template, player))
+
+        task_template.title = "third"
+        local third = todo.save_task(todo.create_task(task_template, player))
+
         todo.mark_complete(second.id)
         todo.mark_complete(third.id)
         todo.refresh_task_table(player)

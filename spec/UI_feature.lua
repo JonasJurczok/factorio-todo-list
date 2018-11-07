@@ -2,8 +2,8 @@ local task_num = 1
 function add_task(text)
     text = text or 'this is a task ' .. task_num
     task_num = task_num + 1
-
-    local task = todo.create_task(text)
+    local task_template = { ["task"] = text, ["title"] = "Title", ["assignee"] = "def" }
+    local task = todo.create_task(task_template, "Jonas")
     todo.save_task(task)
 
     return task
