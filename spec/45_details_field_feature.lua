@@ -1,12 +1,12 @@
 feature("#45 details field", function()
 
     before_scenario(function()
-        when(todo, "show_button"):then_return(true)
-        todo.maximize(game.players[1])
+        when(todo, "is_show_maximize_button"):then_return(true)
+        todo.maximize_main_frame(game.players[1])
     end)
 
     after_scenario(function()
-        todo.show_button:revert()
+        todo.is_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}
@@ -17,25 +17,25 @@ feature("#45 details field", function()
         local player = game.players[1]
 
         local task_template = {["title"] = "single"}
-        local task = todo.create_task(task_template, player)
-        todo.save_task(task)
+        local task = todo.assemble_task(task_template, player)
+        todo.save_task_to_open_list(task)
         todo.refresh_task_table(player)
 
-        faketorio.click("todo_item_assign_self_" .. task.id)
+        faketorio.click("todo_take_task_button_" .. task.id)
 
         todo.refresh_task_table(player)
 
         assert(todo.get_task_by_id(task.id).assignee == player.name)
 
         -- export to string
-        faketorio.click("todo_export_dialog_button")
+        faketorio.click("todo_main_open_export_dialog_button")
 
         -- select tasks
-        faketorio.find_element_by_id("todo_export_select_"..task.id, player).state = true
+        faketorio.find_element_by_id("todo_export_select_task_checkbox_"..task.id, player).state = true
 
-        faketorio.click("todo_export_button")
+        faketorio.click("todo_export_generate_export_string_button")
         -- clicking this button twice should not change anything
-        faketorio.click("todo_export_button")
+        faketorio.click("todo_export_generate_export_string_button")
 
         local string = faketorio.find_element_by_id("todo_export_string_textbox", player).text
         faketorio.click("todo_export_cancel_button")
@@ -45,9 +45,9 @@ feature("#45 details field", function()
         assert(export_dialog == nil, "Expected export frame to be destroyed but it was found.")
 
         -- import same string
-        faketorio.click("todo_import_dialog_button")
+        faketorio.click("todo_main_open_import_dialog_button")
         faketorio.find_element_by_id("todo_import_string_textbox", player).text = string
-        faketorio.click("todo_import_button")
+        faketorio.click("todo_import_import_tasks_button")
 
         local import_dialog = gui.todo_import_dialog
         assert(import_dialog == nil, "Expected export frame to be destroyed but it was found.")
@@ -66,21 +66,21 @@ feature("#45 details field", function()
         local player = game.players[1]
 
         local task_template = {["title"] = "single"}
-        local task = todo.create_task(task_template, player)
-        todo.save_task(task)
+        local task = todo.assemble_task(task_template, player)
+        todo.save_task_to_open_list(task)
         todo.refresh_task_table(player)
 
-        faketorio.click("todo_item_assign_self_" .. task.id)
+        faketorio.click("todo_take_task_button_" .. task.id)
 
         todo.refresh_task_table(player)
 
-        faketorio.click("todo_item_edit_" .. task.id)
+        faketorio.click("todo_open_edit_dialog_button_" .. task.id)
 
-        faketorio.assert_element_exists("todo_add_frame", player)
+        faketorio.assert_element_exists("todo_add_dialog", player)
 
         faketorio.enter_text("todo_new_task_textbox", "Test", player)
 
-        faketorio.click("todo_update_button_" .. task.id, player)
+        faketorio.click("todo_edit_save_changes_button_" .. task.id, player)
 
         local updated_task = todo.get_task_by_id(task.id)
 

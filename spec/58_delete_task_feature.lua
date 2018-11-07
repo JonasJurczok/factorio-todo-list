@@ -1,13 +1,13 @@
 feature("#58 delete tasks", function()
 
     before_scenario(function()
-        when(todo, "show_button"):then_return(true)
-        todo.maximize(game.players[1])
+        when(todo, "is_show_maximize_button"):then_return(true)
+        todo.maximize_main_frame(game.players[1])
         todo.toggle_show_completed(game.players[1])
     end)
 
     after_scenario(function()
-        todo.show_button:revert()
+        todo.is_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}
@@ -16,28 +16,27 @@ feature("#58 delete tasks", function()
     end)
 
     faketorio.confirm_task_deletion = function(player, id)
-        faketorio.click('todo_item_edit_' .. id)
+        faketorio.click('todo_open_edit_dialog_button_' .. id)
 
         local label = faketorio.find_element_by_id("todo_delete_label", player)
         assert(label ~= nil)
         assert(label.caption[1] == "todo.delete")
 
-        local button = faketorio.find_element_by_id("todo_delete_button_" .. id, player)
+        local button = faketorio.find_element_by_id("todo_edit_delete_button_" .. id, player)
         assert(button ~= nil)
         assert(button.caption[1] == "todo.delete")
 
-        faketorio.click("todo_delete_button_" .. id)
+        faketorio.click("todo_edit_delete_button_" .. id)
 
-        local confirm_button = faketorio.find_element_by_id("todo_confirm_deletion_button_" .. id, player)
+        local confirm_button = faketorio.find_element_by_id("todo_edit_confirm_deletion_button_" .. id, player)
         assert(confirm_button ~= nil)
         assert(confirm_button.caption[1] == "todo.confirm_deletion")
 
-        faketorio.click("todo_confirm_deletion_button_" .. id)
+        faketorio.click("todo_edit_confirm_deletion_button_" .. id)
 
         assert(todo.get_task_by_id(id) == nil)
 
-        local gui = player.gui.center
-        local frame = gui.todo_add_frame
+        local frame = todo.get_edit_dialog(player)
         assert(frame == nil, "Expected edit frame to be destroyed but it was found.")
     end
 
@@ -45,8 +44,8 @@ feature("#58 delete tasks", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "delete single open task", ["title"] = "single"}
-        local task = todo.create_task(task_template, player)
-        todo.save_task(task)
+        local task = todo.assemble_task(task_template, player)
+        todo.save_task_to_open_list(task)
         todo.refresh_task_table(player)
 
         faketorio.confirm_task_deletion(player, task.id)
@@ -58,13 +57,13 @@ feature("#58 delete tasks", function()
 
         local task_template = { ["task"] = "delete second of three open task", ["title"] = "first"}
 
-        todo.save_task(todo.create_task(task_template, player))
+        todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "second"
-        local task = todo.save_task(todo.create_task(task_template, player))
+        local task = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "third"
-        todo.save_task(todo.create_task(task_template, player))
+        todo.save_task_to_open_list(todo.assemble_task(task_template, player))
         todo.refresh_task_table(player)
 
         faketorio.confirm_task_deletion(player, task.id)
@@ -74,7 +73,7 @@ feature("#58 delete tasks", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "delete completed task", ["title"] = "completed"}
-        local task = todo.save_task(todo.create_task(task_template, player))
+        local task = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
         todo.mark_complete(task.id)
         todo.refresh_task_table(player)
 
@@ -85,13 +84,13 @@ feature("#58 delete tasks", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "delete second of three completed task", ["title"] = "first"}
-        local first = todo.save_task(todo.create_task(task_template, player))
+        local first = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "second"
-        local second = todo.save_task(todo.create_task(task_template, player))
+        local second = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "third"
-        local third = todo.save_task(todo.create_task(task_template, player))
+        local third = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         todo.mark_complete(first.id)
         todo.mark_complete(second.id)
@@ -105,13 +104,13 @@ feature("#58 delete tasks", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "delete mixed open/completed task", ["title"] = "first"}
-        todo.save_task(todo.create_task(task_template, player))
+        todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "second"
-        local second = todo.save_task(todo.create_task(task_template, player))
+        local second = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         task_template.title = "third"
-        local third = todo.save_task(todo.create_task(task_template, player))
+        local third = todo.save_task_to_open_list(todo.assemble_task(task_template, player))
 
         todo.mark_complete(second.id)
         todo.mark_complete(third.id)

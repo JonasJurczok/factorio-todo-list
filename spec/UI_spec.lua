@@ -17,14 +17,14 @@ describe("UI tests", function()
   it("Editing a completed task should work", function()
     -- create task
     local task_template = { ["task"] = "test", ["title"] = "Title", ["assignee"] = "def" }
-    local task = _G.todo.create_task(task_template, nil)
+    local task = _G.todo.assemble_task(task_template, nil)
     table.insert(_G.global.todo.done, task)
 
     -- maximize and refresh UI
     local player = _G.game.players[1]
-    todo.maximize(player)
+    todo.maximize_main_frame(player)
     todo.toggle_show_completed(player)
-    todo.update_task_table()
+    todo.update_main_task_list_for_everyone()
 
     -- click edit
     local event = {}
@@ -32,7 +32,7 @@ describe("UI tests", function()
     local table = player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.todo_task_table
 
     for _, element in pairs(table.children) do
-      if (element.name == "todo_item_edit_1") then
+      if (element.name == "todo_open_edit_dialog_button_1") then
         event.element = element
       end
     end
@@ -40,7 +40,7 @@ describe("UI tests", function()
     todo.on_gui_click(event)
 
     -- change text
-    local textbox = player.gui.center.todo_add_frame.todo_add_task_table.children[2]
+    local textbox = player.gui.center.todo_add_dialog.todo_add_task_table.children[2]
     assert.is_equal("test", textbox.text)
     textbox.text = "bestanden"
 
@@ -58,16 +58,16 @@ describe("UI tests", function()
 
   it("should create UI elements with the proper ids", function()
     local task_template = { ["task"] = "asd", ["title"] = "Title", ["assignee"] = "def" }
-    table.insert(_G.global.todo.open, todo.create_task(task_template, "Jonas"))
+    table.insert(_G.global.todo.open, todo.assemble_task(task_template, "Jonas"))
     local player = _G.game.players[1]
-    todo.maximize(player)
-    todo.update_task_table()
+    todo.maximize_main_frame(player)
+    todo.update_main_task_list_for_everyone()
 
     local elements = player.gui.left.mod_gui_flow.mod_gui_frame_flow.todo_main_frame.todo_task_table.children
 
     for name, child in pairs(elements) do
 --      require"pl.pretty".dump(child.name..":"..child.caption)
-      if (child.name == "todo_item_task_1") then
+      if (child.name == "todo_main_task_title_1") then
         assert.is_equal("asd", child.caption)
         return
       end
