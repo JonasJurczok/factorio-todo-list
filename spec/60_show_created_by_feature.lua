@@ -27,7 +27,7 @@ feature("#60 Show created/updated by", function()
 
         local created_by = dialog["todo_edit_task_table"]["todo_edit_created_by_playername"]
         local updated_by = dialog["todo_edit_task_table"]["todo_edit_updated_by_playername"]
-        
+
         faketorio.log.info("Creator: %s", {created_by.caption})
         assert(created_by.caption == player.name)
 

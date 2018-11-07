@@ -154,7 +154,11 @@ end
 
 -- TODO: is this the right place?
 function todo.on_show_maximize_button_changed(player)
+<<<<<<< HEAD
     if todo.should_show_maximize_button(player) then
+=======
+    if todo.is_show_maximize_button(player) then
+>>>>>>> first version of the big refactoring
         todo.log("Showing minimized button.")
         if not todo.get_maximize_button(player) then
             todo.create_maximize_button(player)
