@@ -52,7 +52,7 @@ function todo.create_edit_task_dialog(player, id)
         type = "text-box",
         style = "todo_textbox_default",
         name = "todo_edit_task_textbox",
-        text = task.text
+        text = task.task
     })
 
     table.add({

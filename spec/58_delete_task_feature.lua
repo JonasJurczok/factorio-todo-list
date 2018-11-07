@@ -18,7 +18,7 @@ feature("#58 delete tasks", function()
     faketorio.confirm_task_deletion = function(player, id)
         faketorio.click('todo_open_edit_dialog_button_' .. id)
 
-        local label = faketorio.find_element_by_id("todo_delete_label", player)
+        local label = faketorio.find_element_by_id("todo_edit_delete_label", player)
         assert(label ~= nil)
         assert(label.caption[1] == "todo.delete")
 

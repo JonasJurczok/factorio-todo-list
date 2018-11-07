@@ -84,7 +84,7 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_main_task_title_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_main_task_title_")
 
-        todo.on_main_task_title_click(player, id)
+        todo.on_main_task_title_click(player, id, event.button)
     elseif (string.find(element.name, "todo_edit_save_changes_button_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_edit_save_changes_button_")
 

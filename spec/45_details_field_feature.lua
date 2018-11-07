@@ -76,9 +76,9 @@ feature("#45 details field", function()
 
         faketorio.click("todo_open_edit_dialog_button_" .. task.id)
 
-        faketorio.assert_element_exists("todo_add_dialog", player)
+        faketorio.assert_element_exists("todo_edit_dialog", player)
 
-        faketorio.enter_text("todo_new_task_textbox", "Test", player)
+        faketorio.enter_text("todo_edit_task_textbox", "Test", player)
 
         faketorio.click("todo_edit_save_changes_button_" .. task.id, player)
 

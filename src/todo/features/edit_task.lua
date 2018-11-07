@@ -2,15 +2,14 @@
   Business logic for the edit task feature.
 ]]--
 
-function todo.on_main_task_title_click(player)
+function todo.on_main_task_title_click(player, id, button)
     local button_type = todo.get_click_to_edit_mouse_button(player)
-    if (event.button == button_type) then
+    if (button == button_type) then
         local edit_dialog = todo.get_edit_dialog(player)
         if (edit_dialog ~= nil) then
             edit_dialog.destroy()
         else
-            local task = todo.get_task_by_id(id)
-            todo.create_add_task_dialog(player, task)
+            todo.create_edit_task_dialog(player, id)
         end
     end
 end
@@ -43,7 +42,7 @@ function todo.edit_persist_task_changes(player, id)
     local original = todo.get_task_by_id(id)
 
     original.title = dialog.todo_edit_task_table["todo_edit_task_title"].text
-    original.text = dialog.todo_edit_task_table["todo_edit_task_textbox"].text
+    original.task = dialog.todo_edit_task_table["todo_edit_task_textbox"].text
 
     local assignees = dialog.todo_edit_task_table["todo_edit_assignee_drop_down"]
     if (assignees.selected_index > 1) then
