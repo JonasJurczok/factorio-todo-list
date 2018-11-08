@@ -35,8 +35,6 @@ feature("#60 Show created/updated by", function()
         assert(updated_by.caption == player.name)
     end)
 
-    --[[
-    TODO: this requires a second player now: https://github.com/JonasJurczok/faketorio/issues/64
     scenario("Different player edits task", function()
         local player = game.players[1]
         local player1 = { ["name"] = "Tarrke" }
@@ -64,5 +62,5 @@ feature("#60 Show created/updated by", function()
         assert(dialog["todo_edit_task_table"]["todo_edit_updated_by_playername"].caption == "Wololo")
 
         player.name = original_name
-    end)]]--
+    end)
 end)
