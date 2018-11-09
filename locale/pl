@@ -1,0 +1,54 @@
+[todo]
+todo_list=Lista zadań
+title_done=Gotowe
+title_task=Zadanie
+title_assignee=Przypisz
+title_edit=Edytuj
+
+minimize=Minimalizuj
+add=Dodaj nowe
+add_assignee=Przypisz
+add_task=Zadanie
+add_title=Dodaj noew zadanie
+add_task_title=Tytuł
+add_top=dodaj na góre
+persist=Zapisz
+cancel=Anuluj
+update=Aktualizuj
+delete=Usuń
+confirm_deletion=Potwierdź usuniecie
+
+import=import
+export=eksport
+
+unassigned=Nieprzypisane
+assign_self=Weż
+show_done=Pokaż ukończone zadania
+hide_done=Ukryj ukończone zadania
+
+tasks_available=__1__ Dostępne zadania
+
+created_by=Stworzone przez
+updated_by=Zmodyfikowane przez
+noone=Nikogo
+
+[controls]
+todolist-toggle-ui=Min/Max Liste zadań
+
+[mod-setting-name]
+todolist-show-button=Pokaż przycisk "Lista zadań".
+todolist-show-log=Pokaż logi na czacie (debugging).
+todolist-window-height=Wysokość listy zadań
+todolist-auto-assign=Auto-przypisywanie zadań
+todolist-click-edit-task=Edytuj zadanie klikając środkowym przyciskiem
+
+[mod-setting-description]
+todolist-show-button=Jeżeli włączone będzie zawsze pokazywało przycisk "Lista zadań" w lewym górnym rogu.\nJeżeli wyłączone lista zadań będzie dostępna tylko przez przypisany klawisz lub kombinacje (domyślnie shift-t).
+todolist-show-log=Jeżeli włączone mod będzie pokazywał wiadomości o debugowaniu na czacie.\nUwaga: Jest ich mnóstwo :)
+todolist-window-height=Wysokość listy zadań. Domyślna to 600.
+todolist-auto-assign=Jeżeli jest tylko jeden gracz, przypisuj zadania do niego.
+todolist-click-edit-task=Jeżeli włączone środkowy przycisk otworzy okno edycji. Domyślnie pod prawym przyciskiem.
+
+[string-mod-setting]
+todolist-click-edit-task-right-button=Prawy przycisk
+todolist-click-edit-task-middle-button=Środkowy przycisk
