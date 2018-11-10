@@ -8,7 +8,7 @@ script.on_init(todo.mod_init)
 -- When a player is joining, create the UI for them
 script.on_event(defines.events.on_player_created, function(event)
     local player = game.players[event.player_index]
-    todo.create_minimized_button(player)
+    todo.create_maximize_button(player)
 end)
 
 -- if the version of the mod or any other version changed
@@ -22,7 +22,7 @@ end)
 
 script.on_event("todolist-toggle-ui", function(event)
     local player = game.players[event.player_index]
-    todo.toggle_ui(player)
+    todo.toggle_main_frame(player)
 end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)

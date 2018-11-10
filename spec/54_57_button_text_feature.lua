@@ -1,11 +1,11 @@
 feature("#54 #57 button text behaviour", function()
 
     before_scenario(function()
-        when(todo, "show_button"):then_return(true)
+        when(todo, "should_show_maximize_button"):then_return(true)
     end)
 
     after_scenario(function()
-        todo.show_button:revert()
+        todo.should_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}
@@ -16,9 +16,9 @@ feature("#54 #57 button text behaviour", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "Single line", ["title"] = "first"}
-        local task = todo.create_task(task_template, player)
+        local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
-        todo.save_task(task)
+        todo.save_task_to_open_list(task)
         todo.refresh_task_table(player)
 
         local button = todo.get_maximize_button(player)
@@ -38,8 +38,8 @@ feature("#54 #57 button text behaviour", function()
         local player = game.players[1]
 
         local task_template = { ["task"] = "Single line", ["title"] = "first"}
-        local task = todo.create_task(task_template, player)
-        todo.save_task(task)
+        local task = todo.assemble_task(task_template, player)
+        todo.save_task_to_open_list(task)
         todo.refresh_task_table(player)
 
         local button = todo.get_maximize_button(player)
