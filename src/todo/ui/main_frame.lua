@@ -262,7 +262,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
         table.add({
             type = "sprite-button",
             style = "todo_sprite_button_default",
-            name = "todo_close_details_button_" .. id,
+            name = "todo_main_close_details_button_" .. id,
             sprite = "utility/speed_up",
             tooltip = { "todo.title_details" }
         })
@@ -278,12 +278,12 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
         table.add({
             type = "label",
             style = "todo_label_task",
-            name = "todo_main_task_text_" .. id,
+            name = "todo_main_expanded_task_label_" .. id,
             caption = task.task
         })
 
         -- fill up the row with empty cells
-        for i in pairs({ 2, 3, 4, 5, 6, 7 }) do
+        for _, i in pairs({ 2, 3, 4, 5, 6, 7, 8 }) do
             table.add({
                 type = "label",
                 style = "todo_label_default",
@@ -295,7 +295,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
         table.add({
             type = "sprite-button",
             style = "todo_sprite_button_default",
-            name = "todo_open_details_button_" .. id,
+            name = "todo_main_open_details_button_" .. id,
             sprite = "utility/speed_down",
             tooltip = { "todo.title_details" }
         })

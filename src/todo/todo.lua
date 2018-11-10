@@ -136,6 +136,14 @@ function todo.on_gui_click(event)
         todo.on_import_tasks_click(player)
     elseif (element.name == "todo_import_cancel_button") then
         todo.on_import_cancel_click(player)
+    elseif (string.find(element.name, "todo_main_open_details_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_open_details_button_")
+
+        todo.on_show_task_details_click(player, id)
+    elseif (string.find(element.name, "todo_main_close_details_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_close_details_button_")
+
+        todo.on_hide_task_details_click(player, id)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
@@ -155,11 +163,7 @@ end
 
 -- TODO: is this the right place?
 function todo.on_show_maximize_button_changed(player)
-<<<<<<< HEAD
     if todo.should_show_maximize_button(player) then
-=======
-    if todo.is_show_maximize_button(player) then
->>>>>>> first version of the big refactoring
         todo.log("Showing minimized button.")
         if not todo.get_maximize_button(player) then
             todo.create_maximize_button(player)

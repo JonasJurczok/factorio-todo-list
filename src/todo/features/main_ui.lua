@@ -57,14 +57,14 @@ function todo.refresh_task_table(player)
 
     local open_length = #global.todo.open
     for i, task in ipairs(global.todo.open) do
-        local expanded = todo.is_show_task_details(player, task.id)
+        local expanded = todo.should_show_task_details(player, task.id)
         todo.add_task_to_table(table, task, false, i == 1, i == open_length, expanded)
     end
 
     if (todo.show_completed_tasks(player)) then
         for _, task in ipairs(global.todo.done) do
             -- we don't want ordering for completed tasks
-            local expanded = todo.is_show_task_details(player, task.id)
+            local expanded = todo.should_show_task_details(player, task.id)
             todo.add_task_to_table(table, task, true, true, true, expanded)
         end
     end
