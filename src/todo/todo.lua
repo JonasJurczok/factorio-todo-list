@@ -7,6 +7,7 @@ if not todo then todo = {} end
 -- features
 require("todo/features/add_task")
 require("todo/features/delete_task")
+require("todo/features/details_view")
 require("todo/features/edit_task")
 require("todo/features/export_task")
 require("todo/features/import_task")
