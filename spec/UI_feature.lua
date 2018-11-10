@@ -14,11 +14,11 @@ end
 feature("Testing the UI", function()
 
     before_scenario(function()
-        when(todo, "is_show_maximize_button"):then_return(true)
+        when(todo, "should_show_maximize_button"):then_return(true)
     end)
 
     after_scenario(function()
-        todo.is_show_maximize_button:revert()
+        todo.should_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}
@@ -37,9 +37,9 @@ feature("Testing the UI", function()
         local player = game.players[1]
         todo.minimize_main_frame(player)
 
-        -- Mock out the 'is_show_maximize_button' function
-        local temp = todo.is_show_maximize_button
-        todo.is_show_maximize_button = function()
+        -- Mock out the 'should_show_maximize_button' function
+        local temp = todo.should_show_maximize_button
+        todo.should_show_maximize_button = function()
             return false
         end
 
@@ -50,8 +50,8 @@ feature("Testing the UI", function()
 
         assert(button ~= nil, "Maximize button not found!")
 
-        -- replace the 'is_show_maximize_button' mock
-        todo.is_show_maximize_button = temp
+        -- replace the 'should_show_maximize_button' mock
+        todo.should_show_maximize_button = temp
     end)
 
     scenario('Clicking the double up button moves that task to the top', function()

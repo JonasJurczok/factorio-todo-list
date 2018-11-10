@@ -1,13 +1,13 @@
 feature("#58 delete tasks", function()
 
     before_scenario(function()
-        when(todo, "is_show_maximize_button"):then_return(true)
+        when(todo, "should_show_maximize_button"):then_return(true)
         todo.maximize_main_frame(game.players[1])
         todo.toggle_show_completed(game.players[1])
     end)
 
     after_scenario(function()
-        todo.is_show_maximize_button:revert()
+        todo.should_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}

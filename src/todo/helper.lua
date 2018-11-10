@@ -45,7 +45,7 @@ function todo.get_task_by_id(id)
     end
 end
 
-function todo.is_show_maximize_button(player)
+function todo.should_show_maximize_button(player)
     return settings.get_player_settings(player)["todolist-show-button"].value
 end
 

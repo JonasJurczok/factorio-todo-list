@@ -33,7 +33,7 @@ function todo.get_task_from_add_dialog(dialog)
     local add_top_checkbox = dialog.todo_add_task_table["todo_add_top"]
     local should_add_to_top = add_top_checkbox.state
 
-    local task = { ["title"] = title, ["task"] = text, ["assignee"] = assignee}
+    local task = { ["title"] = title, ["task"] = text, ["assignee"] = assignee }
 
     todo.log("Reading task: " .. serpent.block(task))
     if should_add_to_top then

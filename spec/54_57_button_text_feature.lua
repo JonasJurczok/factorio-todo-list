@@ -1,11 +1,11 @@
 feature("#54 #57 button text behaviour", function()
 
     before_scenario(function()
-        when(todo, "is_show_maximize_button"):then_return(true)
+        when(todo, "should_show_maximize_button"):then_return(true)
     end)
 
     after_scenario(function()
-        todo.is_show_maximize_button:revert()
+        todo.should_show_maximize_button:revert()
 
         -- clear all tasks
         global.todo.open = {}

@@ -5,7 +5,7 @@ function todo.create_maximize_button(player)
 
     if (not todo.get_maximize_button(player)
             and not todo.get_main_frame(player)
-            and todo.is_show_maximize_button(player) ) then
+            and todo.should_show_maximize_button(player) ) then
         mod_gui.get_button_flow(player).add({
             type = "button",
             style = "todo_button_default",
@@ -45,7 +45,7 @@ function todo.create_maximized_frame(player)
         caption = {"todo.show_done"}
     })
 
-    if todo.is_show_maximize_button(player) then
+    if todo.should_show_maximize_button(player) then
         flow.add({
             type = "button",
             style = "todo_button_default",
