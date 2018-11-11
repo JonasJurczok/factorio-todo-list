@@ -89,7 +89,7 @@ Credit where credit is due :)
 * Tasks are now separated in title and details. (Thanks Tarrke)
   * Title is a one line textfield
   * Details is multiline
-  * Currently details can only be viewed in the edit screen!
+  * Details can be viewed in the main UI after clicking the "show details" button (down arrows)
 * Tasks now display created by and modified by in the edit screen. (Thanks Tarrke)
 
 ### 16.6.0

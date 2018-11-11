@@ -10,7 +10,7 @@ function todo.create_maximize_button(player)
             type = "button",
             style = "todo_button_default",
             name = "todo_maximize_button",
-            caption = {"todo.todo_list"},
+            caption = { "todo.todo_list" },
         })
     end
 end
@@ -19,7 +19,7 @@ function todo.create_maximized_frame(player)
     local frame = mod_gui.get_frame_flow(player).add({
         type = "frame",
         name = "todo_main_frame",
-        caption = {"todo.todo_list"},
+        caption = { "todo.todo_list" },
         direction = "vertical"
     })
 
@@ -35,14 +35,14 @@ function todo.create_maximized_frame(player)
         type = "button",
         style = "todo_button_default",
         name = "todo_open_add_dialog_button",
-        caption = {"todo.add"}
+        caption = { "todo.add" }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_toggle_show_completed_button",
-        caption = {"todo.show_done"}
+        caption = { "todo.show_done" }
     })
 
     if todo.should_show_maximize_button(player) then
@@ -50,7 +50,7 @@ function todo.create_maximized_frame(player)
             type = "button",
             style = "todo_button_default",
             name = "todo_minimize_button",
-            caption = {"todo.minimize"}
+            caption = { "todo.minimize" }
         })
     end
 
@@ -59,7 +59,7 @@ function todo.create_maximized_frame(player)
         style = "todo_sprite_button_default",
         name = "todo_main_open_export_dialog_button",
         sprite = "utility/export_slot",
-        tooltip = {"todo.export"}
+        tooltip = { "todo.export" }
     })
     todo.update_export_dialog_button_state()
 
@@ -68,7 +68,7 @@ function todo.create_maximized_frame(player)
         style = "todo_sprite_button_default",
         name = "todo_main_open_import_dialog_button",
         sprite = "utility/import_slot",
-        tooltip = {"todo.import"}
+        tooltip = { "todo.import" }
     })
 
 end
@@ -89,35 +89,37 @@ function todo.create_task_table(frame, player)
         type = "table",
         style = "todo_table_default",
         name = "todo_task_table",
-        column_count = 8,
+        column_count = 9,
+        -- TODO: put this behind an option?
+        draw_horizontal_line_after_headers = true
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
         name = "todo_title_done",
-        caption = {"", {"todo.title_done"}, "   "}
+        caption = { "", { "todo.title_done" }, "   " }
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
         name = "todo_title_task",
-        caption = {"todo.title_task"}
+        caption = { "todo.title_task" }
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
         name = "todo_title_assignee",
-        caption = {"todo.title_assignee"}
+        caption = { "todo.title_assignee" }
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
         name = "todo_title_top",
-        caption = ""
+        caption = "Sort"
     })
 
     table.add({
@@ -145,13 +147,20 @@ function todo.create_task_table(frame, player)
         type = "label",
         style = "todo_label_default",
         name = "todo_title_edit",
-        caption = ""
+        caption = { "todo.title_edit" }
+    })
+
+    table.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_title_details",
+        caption = { "todo.title_details" }
     })
 
     return table
 end
 
-function todo.add_task_to_table(table, task, completed, is_first, is_last)
+function todo.add_task_to_table(table, task, completed, is_first, is_last, expanded)
     local id = task.id
 
     local checkbox_name
@@ -177,7 +186,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
         table.add({
             type = "label",
             style = "todo_label_default",
-            name = "todo_item_assignee_" .. id,
+            name = "todo_main_task_assignee_" .. id,
             caption = task.assignee
         })
     else
@@ -185,7 +194,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
             type = "button",
             style = "todo_button_default",
             name = "todo_take_task_button_" .. id,
-            caption = {"todo.assign_self"}
+            caption = { "todo.assign_self" }
         })
     end
 
@@ -242,11 +251,55 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last)
     end
 
     table.add({
-        type = "button",
-        style = "todo_button_default",
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
         name = "todo_open_edit_dialog_button_" .. id,
-        caption = {"todo.title_edit"}
+        sprite = "utility/rename_icon_normal",
+        tooltip = { "todo.title_edit" }
     })
+
+    if (expanded) then
+        table.add({
+            type = "sprite-button",
+            style = "todo_sprite_button_default",
+            name = "todo_main_close_details_button_" .. id,
+            sprite = "utility/speed_up",
+            tooltip = { "todo.title_details" }
+        })
+
+        -- details view is a new row
+        table.add({
+            type = "label",
+            style = "todo_label_default",
+            name = "todo_main_expanded_1_" .. id,
+            caption = ""
+        })
+
+        table.add({
+            type = "label",
+            style = "todo_label_task",
+            name = "todo_main_expanded_task_label_" .. id,
+            caption = task.task
+        })
+
+        -- fill up the row with empty cells
+        for _, i in pairs({ 2, 3, 4, 5, 6, 7, 8 }) do
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_main_expanded_" .. i .. "_" .. id,
+                caption = ""
+            })
+        end
+    else
+        table.add({
+            type = "sprite-button",
+            style = "todo_sprite_button_default",
+            name = "todo_main_open_details_button_" .. id,
+            sprite = "utility/speed_down",
+            tooltip = { "todo.title_details" }
+        })
+    end
 end
 
 function todo.get_main_frame(player)
