@@ -86,11 +86,14 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+
+### 16.7.0
 * Tasks are now separated in title and details. (Thanks Tarrke)
   * Title is a one line textfield
   * Details is multiline
   * Details can be viewed in the main UI after clicking the "show details" button (down arrows)
 * Tasks now display created by and modified by in the edit screen. (Thanks Tarrke)
+* Added polish translation. (Thanks Virtual0txt)
 
 ### 16.6.0
 * It is now possible to delete tasks
