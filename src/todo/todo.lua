@@ -7,6 +7,7 @@ if not todo then todo = {} end
 -- features
 require("todo/features/add_task")
 require("todo/features/delete_task")
+require("todo/features/details_view")
 require("todo/features/edit_task")
 require("todo/features/export_task")
 require("todo/features/import_task")
@@ -135,6 +136,14 @@ function todo.on_gui_click(event)
         todo.on_import_tasks_click(player)
     elseif (element.name == "todo_import_cancel_button") then
         todo.on_import_cancel_click(player)
+    elseif (string.find(element.name, "todo_main_open_details_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_open_details_button_")
+
+        todo.on_show_task_details_click(player, id)
+    elseif (string.find(element.name, "todo_main_close_details_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_close_details_button_")
+
+        todo.on_hide_task_details_click(player, id)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
