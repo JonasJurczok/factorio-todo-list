@@ -87,6 +87,9 @@ Credit where credit is due :)
 
 ### NEXT
 
+### 16.7.1
+* Fixed that tasks are invisible after opening the main UI with the button (#79). (Thanks Omnifarious)
+
 ### 16.7.0
 * Tasks are now separated in title and details. (Thanks Tarrke)
   * Title is a one line textfield

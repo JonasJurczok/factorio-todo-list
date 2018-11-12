@@ -22,6 +22,12 @@ function todo.minimize_main_frame(player)
     return false
 end
 
+function todo.on_maximize_button_click(player)
+    todo.maximize_main_frame(player)
+
+    todo.refresh_task_table(player)
+end
+
 function todo.maximize_main_frame(player)
     todo.log("Maximizing UI for player " .. player.name)
 
