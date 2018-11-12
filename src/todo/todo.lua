@@ -65,7 +65,7 @@ function todo.on_gui_click(event)
     local element = event.element
 
     if (element.name == "todo_maximize_button") then
-        todo.maximize_main_frame(player)
+        todo.on_maximize_button_click(player)
     elseif (element.name == "todo_minimize_button") then
         todo.minimize_main_frame(player)
     elseif (element.name == "todo_open_add_dialog_button") then
