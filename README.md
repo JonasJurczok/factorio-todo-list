@@ -86,6 +86,8 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+
+### 16.7.2
 * Fixed a bug that the main button does not hide the UI anymore (#81)
 * Fixed polish translation. (Thanks Virtual0txt)
 
