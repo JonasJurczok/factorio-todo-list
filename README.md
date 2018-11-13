@@ -87,6 +87,10 @@ Credit where credit is due :)
 
 ### NEXT
 
+### 16.7.2
+* Fixed a bug that the main button does not hide the UI anymore (#81)
+* Fixed polish translation. (Thanks Virtual0txt)
+
 ### 16.7.1
 * Fixed that tasks are invisible after opening the main UI with the button (#79). (Thanks Omnifarious)
 
