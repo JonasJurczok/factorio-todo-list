@@ -7,6 +7,7 @@ feature("#81 minimize main frame", function()
 
     after_scenario(function()
         todo.should_show_maximize_button:revert()
+        todo.minimize_main_frame(game.players[1])
 
         -- clear all tasks
         global.todo.open = {}

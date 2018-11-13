@@ -23,7 +23,11 @@ function todo.minimize_main_frame(player)
 end
 
 function todo.on_maximize_button_click(player)
-    todo.maximize_main_frame(player)
+    if (todo.get_main_frame(player)) then
+        todo.minimize_main_frame(player)
+    else
+        todo.maximize_main_frame(player)
+    end
 
     todo.refresh_task_table(player)
 end
@@ -87,11 +91,10 @@ function todo.update_current_task_label(player)
     for _, task in pairs(global.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
-            todo.get_maximize_button(player).caption =
-            {"",
-             {"todo.todo_list"},
-             ": ",
-             task.title
+            todo.get_maximize_button(player).caption = { "",
+                                                         { "todo.todo_list" },
+                                                         ": ",
+                                                         task.title
             }
             return
         end
@@ -103,10 +106,9 @@ function todo.update_current_task_label(player)
     end
 
     if (count == 0) then
-        todo.get_maximize_button(player).caption = {"todo.todo_list"}
+        todo.get_maximize_button(player).caption = { "todo.todo_list" }
     else
-        todo.get_maximize_button(player).caption =
-        {"", {"todo.todo_list"}, ": ", {"todo.tasks_available", count}}
+        todo.get_maximize_button(player).caption = { "", { "todo.todo_list" }, ": ", { "todo.tasks_available", count } }
     end
 end
 
@@ -125,9 +127,9 @@ function todo.toggle_show_completed(player)
 
     local frame = todo.get_main_frame(player)
     if (global.todo.settings[player.name].show_completed) then
-        frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = {"todo.hide_done"}
+        frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = { "todo.hide_done" }
     else
-        frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = {"todo.show_done"}
+        frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = { "todo.show_done" }
     end
 end
 
