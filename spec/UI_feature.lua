@@ -75,8 +75,6 @@ feature("Testing the UI", function()
     end)
 
      scenario("Checking 'Add to top' when creating a task should add it to the top of the list", function()
-         local player = game.players[1]
-
          add_task()
          add_task()
          add_task()
