@@ -25,11 +25,26 @@ function todo.get_player_list()
     return result, lookup, count
 end
 
+--[[
+  Retains everything after the pattern.
+  If the remaining string contains a _ it will be split at this point.
+
+  @return the task id as a number
+  @return the subtask id as a number, if present
+]]--
 function todo.get_task_id_from_element_name(name, pattern)
     local _, start = string.find(name, pattern)
-    local index = tonumber(string.sub(name, start + 1))
-    return index
+    local id_text = string.sub(name, start + 1)
+
+    local subtask_delimiter_position = string.find(name, "_")
+
+    if (subtask_delimiter_position) then
+        return tonumber((string.sub(id_text, 1, subtask_delimiter_position))), tonumber(string.sub(id_text, subtask_delimiter_position + 1))
+    else
+        return tonumber(id_text)
+    end
 end
+
 
 function todo.get_task_by_id(id)
     for _, task in pairs(global.todo.open) do
@@ -41,6 +56,25 @@ function todo.get_task_by_id(id)
     for _, task in pairs(global.todo.done) do
         if (task.id == id) then
             return task
+        end
+    end
+end
+
+--[[
+  Find a subtask in a task by its id.
+  @return the subtask if found, nil otherwise
+  @return false if subtask is open, true if completed
+]]--
+function todo.get_subtask_by_id(task, id)
+    for _, subtask in pairs(task.subtasks.open) do
+        if (subtask.id == id) then
+            return subtask, false
+        end
+    end
+
+    for _, subtask in pairs(subtask.subtasks.done) do
+        if (subtask.id == id) then
+            return subtask, true
         end
     end
 end
