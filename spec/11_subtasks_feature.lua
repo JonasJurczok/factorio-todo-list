@@ -160,6 +160,7 @@ feature("#11 subtasks", function()
         assert(#imported_task.subtasks.open == 1)
         assert(#imported_task.subtasks.done == 1)
 
+        assert(imported_task.subtasks.open[1].task == subtask.task)
         assert(imported_task.subtasks.done[1].task == subtask2.task)
     end)
 

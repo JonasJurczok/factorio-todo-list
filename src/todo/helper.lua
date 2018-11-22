@@ -39,7 +39,9 @@ function todo.get_task_id_from_element_name(name, pattern)
     local subtask_delimiter_position = string.find(name, "_")
 
     if (subtask_delimiter_position) then
-        return tonumber((string.sub(id_text, 1, subtask_delimiter_position))), tonumber(string.sub(id_text, subtask_delimiter_position + 1))
+        local task_id = tonumber((string.sub(id_text, 1, subtask_delimiter_position)))
+        local subtask_id = tonumber(string.sub(id_text, subtask_delimiter_position + 1))
+        return task_id, subtask_id
     else
         return tonumber(id_text)
     end
@@ -72,7 +74,7 @@ function todo.get_subtask_by_id(task, id)
         end
     end
 
-    for _, subtask in pairs(subtask.subtasks.done) do
+    for _, subtask in pairs(task.subtasks.done) do
         if (subtask.id == id) then
             return subtask, true
         end
