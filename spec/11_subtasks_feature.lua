@@ -65,20 +65,17 @@ feature("#11 subtasks", function()
         local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
         todo.save_task_to_open_list(task)
+
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
+
         todo.refresh_task_table(player)
 
         -- click expand details
         faketorio.click("todo_main_open_details_button_" .. task.id)
 
-        -- TODO: programmatically create subtasks. Going through the UI all the time is not necessary and confusing.
-        faketorio.enter_text("todo_main_subtask_new_text_" .. task.id, "New Subtask")
-        faketorio.click("todo_main_subtask_save_new_button_" .. task.id)
-        local subtask = task.subtasks.done[1]
-
         -- because of https://github.com/JonasJurczok/faketorio/issues/66 we click the checkbox after checking it
         faketorio.check("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
         faketorio.click("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
-
 
         assert(#task.subtasks.open == 0)
         assert(#task.subtasks.done == 1)
@@ -95,17 +92,13 @@ feature("#11 subtasks", function()
         local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
         todo.save_task_to_open_list(task)
+
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
+        todo.mark_subtask_complete(task, subtask.id)
+
         todo.refresh_task_table(player)
 
         faketorio.click("todo_main_open_details_button_" .. task.id)
-        faketorio.enter_text("todo_main_subtask_new_text_" .. task.id, "New Subtask")
-        faketorio.click("todo_main_subtask_save_new_button_" .. task.id)
-        local subtask = task.subtasks.done[1]
-
-        -- because of https://github.com/JonasJurczok/faketorio/issues/66 we click the checkbox after checking it
-        faketorio.check("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
-        faketorio.click("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
-
         faketorio.assert_checked("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
 
         faketorio.uncheck("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
@@ -113,7 +106,8 @@ feature("#11 subtasks", function()
 
         assert(#task.subtasks.done == 0)
         assert(#task.subtasks.open == 1)
-        assert(task.subtasks.open[1] == "New Subtask")
+        assert(task.subtasks.open[1].task == subtask.task)
+        assert(task.subtasks.open[1].id == subtask.id)
 
         todo.refresh_task_table(player)
         faketorio.assert_unchecked("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
@@ -126,17 +120,14 @@ feature("#11 subtasks", function()
         local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
         todo.save_task_to_open_list(task)
+
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
+        todo.mark_subtask_complete(task, subtask.id)
+
         todo.refresh_task_table(player)
 
         -- click expand details
         faketorio.click("todo_main_open_details_button_" .. task.id)
-        faketorio.enter_text("todo_main_subtask_new_text_" .. task.id, "New Subtask")
-        faketorio.click("todo_main_subtask_save_new_button_" .. task.id)
-
-        -- because of https://github.com/JonasJurczok/faketorio/issues/66 we click the checkbox after checking it
-        local subtask = task.subtasks.done[1]
-        faketorio.check("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
-        faketorio.click("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
 
         faketorio.click("todo_main_subtask_delete_button_" .. task.id .. "_" .. subtask.id)
 
@@ -152,16 +143,82 @@ feature("#11 subtasks", function()
         local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
         todo.save_task_to_open_list(task)
+
+        todo.save_subtask_to_task(task, "New Subtask")
+        local subtask2 = todo.save_subtask_to_task(task, "New Subtask 2")
+        todo.mark_subtask_complete(task, subtask2.id)
+
+        local encoded = todo.encode_task_list_for_export({task})
+
+        todo.import_tasks(encoded, player)
+
         todo.refresh_task_table(player)
 
-        -- programmatically add subtask
-        -- TODO: refactor exporting/importing to be callable from tests
+        assert(#global.todo.open == 2)
+        local imported_task = global.todo.open[2]
+
+        assert(#imported_task.subtasks.open == 1)
+        assert(#imported_task.subtasks.done == 1)
+
+        assert(imported_task.subtasks.done[1].task == subtask2.task)
     end)
 
     -- importing old task without subtasks should work
+    scenario("Import old task without subtasks", function()
+        -- Test is left out.
+        -- Importing tests verify that imported tasks behave like freshly created ones.
+        -- The tests here proof that freshly created tasks work correctly.
+        assert(true == false)
+    end)
 
     -- editing subtasks
+    scenario("Editing subtasks should work.", function()
+        local player = game.players[1]
+
+        local task_template = { ["task"] = "Editing subtasks", ["title"] = "single subtask"}
+        local task = todo.assemble_task(task_template, player)
+        task.assignee = player.name
+        todo.save_task_to_open_list(task)
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
+        todo.refresh_task_table(player)
+
+        -- click expand details
+        faketorio.click("todo_main_open_details_button_" .. task.id)
+
+        -- edit subtasks
+        faketorio.click(string.format("todo_main_subtask_edit_button_%i_%i", task.id, subtask.id))
+        faketorio.enter_text(string.format("todo_edit_subtask_text_%i_%i", task.id, subtask.id), "Edited Subtask")
+        faketorio.click(string.format("todo_edit_subtask_save_button_%i_%i", task.id, subtask.id))
+
+        assert(subtask.task == "Edited Subtask")
+        local checkbox = faketorio.assert_element_exists(string.format("todo_main_subtask_checkbox_%i_%i", task.id, subtask.id), player)
+        assert(checkbox.caption == subtask.task)
+
+    end)
 
     -- sorting subtasks
+    scenario("Sorting subtasks should work.", function()
+        local player = game.players[1]
 
+        local task_template = { ["task"] = "Sort subtasks", ["title"] = "Sort subtasks"}
+        local task = todo.assemble_task(task_template, player)
+        task.assignee = player.name
+        todo.save_task_to_open_list(task)
+        local first = todo.save_subtask_to_task(task, "First")
+        local second = todo.save_subtask_to_task(task, "Second")
+        todo.refresh_task_table(player)
+
+        -- verify move down
+        faketorio.click(string.format("todo_main_subtask_move_down_%i_%i", task.id, first.id))
+
+        assert(task.subtasks.open[1].id == second.id)
+        assert(task.subtasks.open[2].id == first.id)
+
+        -- verify move up
+        faketorio.click(string.format("todo_main_subtask_move_up_%i_%i", task.id, first.id))
+
+        assert(task.subtasks.open[1].id == first.id)
+        assert(task.subtasks.open[2].id == second.id)
+
+    end)
 end)

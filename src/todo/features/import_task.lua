@@ -8,15 +8,15 @@ function todo.on_import_tasks_click(player)
         return
     end
 
-    todo.import_tasks(dialog, player)
+    local encoded = dialog.todo_import_string_textbox.text
+    todo.import_tasks(encoded, player)
 
     dialog.destroy()
 
     todo.update_main_task_list_for_everyone()
 end
 
-function todo.import_tasks(dialog, player)
-    local encoded = dialog.todo_import_string_textbox.text
+function todo.import_tasks(encoded, player)
 
     local tasks = todo.json:decode(todo.base64.decode(encoded))
 

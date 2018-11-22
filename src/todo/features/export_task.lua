@@ -25,9 +25,7 @@ function todo.generate_and_show_export_string(player)
         if (i % 2 == 1 and checkbox.state) then
             local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_select_task_checkbox_")
             local task = todo.get_task_by_id(id)
-            table.insert(tasks, { ["task"] = task.task,
-                                  ["title"] = task.title ,
-                                  ["created_by"] = task.created_by})
+            table.insert(tasks, task)
         end
     end
 
@@ -40,7 +38,7 @@ function todo.generate_and_show_export_string(player)
     end
 
     -- generate string
-    local encoded = todo.base64.encode(todo.json:encode(tasks))
+    local encoded = todo.encode_task_list_for_export(tasks)
 
     if (dialog.todo_export_dialog_string_flow.todo_export_string_textbox) then
         dialog.todo_export_dialog_string_flow.todo_export_string_textbox.text = encoded
@@ -53,6 +51,23 @@ function todo.generate_and_show_export_string(player)
         })
         textbox.word_wrap = true
     end
+end
+
+--[[ expects a list of tasks.
+    Will clean up the tasks and prepare them for export.
+    @return encoded string
+]]--
+function todo.encode_task_list_for_export(tasks)
+
+    local to_encode = {}
+
+    for _, task in pairs(tasks) do
+    table.insert(to_encode, { ["task"] = task.task,
+                          ["title"] = task.title ,
+                          ["created_by"] = task.created_by})
+
+    end
+    return todo.base64.encode(todo.json:encode(to_encode))
 end
 
 function todo.on_export_cancel_click(player)

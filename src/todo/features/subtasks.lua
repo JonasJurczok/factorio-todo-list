@@ -27,6 +27,8 @@ function todo.save_subtask_to_task(task, text)
     task.next_id = task.next_id + 1
 
     table.insert(task.subtasks.open, subtask)
+
+    return subtask
 end
 
 function todo.on_subtask_checkbox_click(player, task_id, subtask_id)
