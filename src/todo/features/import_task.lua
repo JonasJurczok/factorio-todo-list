@@ -26,6 +26,11 @@ function todo.import_tasks(encoded, player)
     for _, task_to_import in pairs(tasks) do
         local task = todo.assemble_task(task_to_import, player)
         task.created_by = task_to_import.created_by
+
+        if (task_to_import.subtasks) then
+            task.subtasks = task_to_import.subtasks
+        end
+
         todo.log(serpent.block(task))
         todo.save_task_to_open_list(task)
     end

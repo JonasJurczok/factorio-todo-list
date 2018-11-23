@@ -36,11 +36,12 @@ function todo.get_task_id_from_element_name(name, pattern)
     local _, start = string.find(name, pattern)
     local id_text = string.sub(name, start + 1)
 
-    local subtask_delimiter_position = string.find(name, "_")
+    local subtask_delimiter_position = string.find(id_text, "_")
 
     if (subtask_delimiter_position) then
-        local task_id = tonumber((string.sub(id_text, 1, subtask_delimiter_position)))
+        local task_id = tonumber(string.sub(id_text, 1, subtask_delimiter_position - 1))
         local subtask_id = tonumber(string.sub(id_text, subtask_delimiter_position + 1))
+
         return task_id, subtask_id
     else
         return tonumber(id_text)

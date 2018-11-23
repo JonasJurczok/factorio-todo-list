@@ -341,7 +341,9 @@ function todo.add_subtasks_to_task_table(table, task)
 
 end
 
-function todo.add_subtask_to_main_table(table, task_id, subtask, subtask_id, subtask_count, done)
+function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_last, done)
+    -- TODO: use is_first, is_last for sorting
+
     -- if not provided we assume tasks are open
     done = done or false
     -- This is done everywhere again to serve as readable reference to how the table is laid out.
@@ -352,8 +354,8 @@ function todo.add_subtask_to_main_table(table, task_id, subtask, subtask_id, sub
         type = "checkbox",
         style = "todo_checkbox_default",
         name = string.format("todo_main_subtask_checkbox_%i_%i", task_id, subtask_id),
-        state = false,
-        caption = subtask
+        state = done,
+        caption = subtask.task
     }
 
     -- completed subtasks cannot be sorted or edited

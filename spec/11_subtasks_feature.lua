@@ -113,6 +113,27 @@ feature("#11 subtasks", function()
         faketorio.assert_unchecked("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id)
     end)
 
+    scenario("Deleting open subtasks should work", function()
+        local player = game.players[1]
+
+        local task_template = { ["task"] = "Deleting subtasks", ["title"] = "single subtask"}
+        local task = todo.assemble_task(task_template, player)
+        task.assignee = player.name
+        todo.save_task_to_open_list(task)
+
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
+        todo.refresh_task_table(player)
+
+        -- click expand details
+        faketorio.click("todo_main_open_details_button_" .. task.id)
+
+        faketorio.click("todo_main_subtask_delete_button_" .. task.id .. "_" .. subtask.id)
+
+        faketorio.assert_element_not_exists("todo_main_subtask_checkbox_" .. task.id .. "_" .. subtask.id, player)
+        assert(#task.subtasks.open == 0)
+        assert(#task.subtasks.done == 0)
+    end)
+
     scenario("Deleting completed subtasks should work", function()
         local player = game.players[1]
 
@@ -144,7 +165,7 @@ feature("#11 subtasks", function()
         task.assignee = player.name
         todo.save_task_to_open_list(task)
 
-        todo.save_subtask_to_task(task, "New Subtask")
+        local subtask = todo.save_subtask_to_task(task, "New Subtask")
         local subtask2 = todo.save_subtask_to_task(task, "New Subtask 2")
         todo.mark_subtask_complete(task, subtask2.id)
 
@@ -169,7 +190,6 @@ feature("#11 subtasks", function()
         -- Test is left out.
         -- Importing tests verify that imported tasks behave like freshly created ones.
         -- The tests here proof that freshly created tasks work correctly.
-        assert(true == false)
     end)
 
     -- editing subtasks

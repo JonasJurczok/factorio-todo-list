@@ -62,10 +62,16 @@ function todo.encode_task_list_for_export(tasks)
     local to_encode = {}
 
     for _, task in pairs(tasks) do
-    table.insert(to_encode, { ["task"] = task.task,
-                          ["title"] = task.title ,
-                          ["created_by"] = task.created_by})
+        local export_task = {}
+        export_task.task = task.task
+        export_task.title = task.title
+        export_task.created_by = task.created_by
 
+        if (task.subtasks) then
+            export_task.subtasks = task.subtasks
+        end
+
+        table.insert(to_encode, export_task)
     end
     return todo.base64.encode(todo.json:encode(to_encode))
 end

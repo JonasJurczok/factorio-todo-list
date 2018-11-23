@@ -153,9 +153,12 @@ function todo.on_gui_click(event)
         todo.on_save_new_subtask_click(player, id)
     elseif (string.find(element.name, "todo_main_subtask_checkbox_")) then
         local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_checkbox_")
-        todo.log(task_id)
-        todo.log(subtask_id)
-        todo.on_subtask_checkbox_click(player, task_id, subtask_id)
+
+        todo.on_subtask_checkbox_click(task_id, subtask_id)
+    elseif (string.find(element.name, "todo_main_subtask_delete_button_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_delete_button_")
+
+        todo.on_subtask_delete_click(task_id, subtask_id)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
