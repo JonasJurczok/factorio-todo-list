@@ -33,6 +33,39 @@ function todo.save_subtask_to_task(task, text)
     return subtask
 end
 
+function todo.on_edit_subtask_click(player, task_id, subtask_id)
+    local task = todo.get_task_by_id(task_id)
+    local subtask = todo.get_subtask_by_id(task, subtask_id)
+
+    todo.create_edit_subtask_dialog(player, task.id, subtask)
+end
+
+function todo.on_edit_subtask_cancel_click(player)
+    local dialog = todo.get_edit_subtask_dialog(player)
+    if (dialog) then
+        dialog.destroy()
+    end
+end
+
+function todo.on_edit_subtask_save_click(player, task_id, subtask_id)
+    local dialog = todo.get_edit_subtask_dialog(player)
+
+    local new_text = dialog.todo_edit_subtask_text.text
+
+    todo.update_subtask(task_id, subtask_id, new_text)
+
+    dialog.destroy()
+
+    todo.update_main_task_list_for_everyone()
+end
+
+function todo.update_subtask(task_id, subtask_id, new_text)
+    local task = todo.get_task_by_id(task_id)
+    local subtask = todo.get_subtask_by_id(task, subtask_id)
+
+    subtask.task = new_text
+end
+
 function todo.on_subtask_checkbox_click(task_id, subtask_id)
     local task = todo.get_task_by_id(task_id)
     local _, is_completed = todo.get_subtask_by_id(task, subtask_id)
@@ -67,6 +100,30 @@ function todo.mark_subtask_open(task, subtask_id)
 
             todo.log("Adding task [" .. t.id .. "] to open list.")
             table.insert(task.subtasks.open, t)
+            break
+        end
+    end
+end
+
+function todo.on_main_subtask_move_up_click(task_id, subtask_id)
+    todo.move_subtask(task_id, subtask_id, -1)
+
+    todo.update_main_task_list_for_everyone()
+end
+
+function todo.on_main_subtask_move_down_click(task_id, subtask_id)
+    todo.move_subtask(task_id, subtask_id, 1)
+
+    todo.update_main_task_list_for_everyone()
+end
+
+function todo.move_subtask(task_id, subtask_id, modifier)
+    local task = todo.get_task_by_id(task_id)
+    for i, subtask in pairs(task.subtasks.open) do
+        if (subtask.id == subtask_id) then
+            local copy = task.subtasks.open[i + modifier]
+            task.subtasks.open[i + modifier] = subtask
+            task.subtasks.open[i] = copy
             break
         end
     end

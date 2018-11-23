@@ -309,7 +309,7 @@ function todo.add_subtasks_to_task_table(table, task)
     if (task.subtasks) then
         local open_subtask_count = #task.subtasks.open
         for i, subtask in ipairs(task.subtasks.open) do
-            todo.add_subtask_to_main_table(table, task.id, subtask, i, open_subtask_count)
+            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == open_subtask_count)
         end
 
         local done_subtask_count = #task.subtasks.done
@@ -317,7 +317,7 @@ function todo.add_subtasks_to_task_table(table, task)
             -- completed subtasks have ids that are "after" the open list.
             -- With this information it is possible to distinguish open from done tasks without
             -- transferring this information accross the functions
-            todo.add_subtask_to_main_table(table, task.id, subtask, i + open_subtask_count, done_subtask_count, true)
+            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == done_subtask_count, true)
         end
     end
 
@@ -342,10 +342,11 @@ function todo.add_subtasks_to_task_table(table, task)
 end
 
 function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_last, done)
-    -- TODO: use is_first, is_last for sorting
 
     -- if not provided we assume tasks are open
     done = done or false
+    local subtask_id = subtask.id
+
     -- This is done everywhere again to serve as readable reference to how the table is laid out.
     -- The downside is that you have to change this everywhere should the table change. But.. readability :)
     local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
@@ -360,7 +361,7 @@ function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_la
 
     -- completed subtasks cannot be sorted or edited
     if (not done) then
-        if (subtask_id > 1) then
+        if (not is_first) then
             row[5] = {
                 type = "button",
                 style = "todo_button_default",
@@ -369,7 +370,7 @@ function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_la
             }
         end
 
-        if (subtask_id < subtask_count) then
+        if (not is_last) then
             row[6] = {
                 type = "button",
                 style = "todo_button_default",

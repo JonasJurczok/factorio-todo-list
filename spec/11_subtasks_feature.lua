@@ -208,8 +208,10 @@ feature("#11 subtasks", function()
 
         -- edit subtasks
         faketorio.click(string.format("todo_main_subtask_edit_button_%i_%i", task.id, subtask.id))
-        faketorio.enter_text(string.format("todo_edit_subtask_text_%i_%i", task.id, subtask.id), "Edited Subtask")
+        faketorio.enter_text("todo_edit_subtask_text", "Edited Subtask")
         faketorio.click(string.format("todo_edit_subtask_save_button_%i_%i", task.id, subtask.id))
+
+        faketorio.assert_element_not_exists("todo_edit_subtask_dialog", player)
 
         assert(subtask.task == "Edited Subtask")
         local checkbox = faketorio.assert_element_exists(string.format("todo_main_subtask_checkbox_%i_%i", task.id, subtask.id), player)
@@ -228,6 +230,9 @@ feature("#11 subtasks", function()
         local first = todo.save_subtask_to_task(task, "First")
         local second = todo.save_subtask_to_task(task, "Second")
         todo.refresh_task_table(player)
+
+        -- click expand details
+        faketorio.click("todo_main_open_details_button_" .. task.id)
 
         -- verify move down
         faketorio.click(string.format("todo_main_subtask_move_down_%i_%i", task.id, first.id))
