@@ -5,7 +5,7 @@ function todo.create_maximize_button(player)
 
     if (not todo.get_maximize_button(player)
             and not todo.get_main_frame(player)
-            and todo.should_show_maximize_button(player) ) then
+            and todo.should_show_maximize_button(player)) then
         mod_gui.get_button_flow(player).add({
             type = "button",
             style = "todo_button_default",
@@ -291,6 +291,8 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
                 caption = ""
             })
         end
+
+        todo.add_subtasks_to_task_table(table, task)
     else
         table.add({
             type = "sprite-button",
@@ -300,6 +302,101 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
             tooltip = { "todo.title_details" }
         })
     end
+end
+
+function todo.add_subtasks_to_task_table(table, task)
+    -- for each subtask
+    if (task.subtasks) then
+        local open_subtask_count = #task.subtasks.open
+        for i, subtask in ipairs(task.subtasks.open) do
+            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == open_subtask_count)
+        end
+
+        local done_subtask_count = #task.subtasks.done
+        for i, subtask in ipairs(task.subtasks.done) do
+            -- completed subtasks have ids that are "after" the open list.
+            -- With this information it is possible to distinguish open from done tasks without
+            -- transferring this information accross the functions
+            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == done_subtask_count, true)
+        end
+    end
+
+    -- add new subtask
+    local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
+
+    row[2] = {
+        type = "textfield",
+        style = "todo_textfield_default",
+        name = "todo_main_subtask_new_text_" .. task.id
+    }
+
+    row[8] = {
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
+        name = "todo_main_subtask_save_new_button_" .. task.id,
+        sprite = "utility/add",
+        tooltip = { "todo.add_subtask" }
+    }
+    todo.add_row_to_main_table(table, row)
+
+end
+
+function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_last, done)
+
+    -- if not provided we assume tasks are open
+    done = done or false
+    local subtask_id = subtask.id
+
+    -- This is done everywhere again to serve as readable reference to how the table is laid out.
+    -- The downside is that you have to change this everywhere should the table change. But.. readability :)
+    local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
+
+    row[2] = {
+        type = "checkbox",
+        style = "todo_checkbox_default",
+        name = string.format("todo_main_subtask_checkbox_%i_%i", task_id, subtask_id),
+        state = done,
+        caption = subtask.task
+    }
+
+    -- completed subtasks cannot be sorted or edited
+    if (not done) then
+        if (not is_first) then
+            row[5] = {
+                type = "button",
+                style = "todo_button_default",
+                name = string.format("todo_main_subtask_move_up_%i_%i", task_id, subtask_id),
+                caption = "↑"
+            }
+        end
+
+        if (not is_last) then
+            row[6] = {
+                type = "button",
+                style = "todo_button_default",
+                name = string.format("todo_main_subtask_move_down_%i_%i", task_id, subtask_id),
+                caption = "↓"
+            }
+        end
+
+        row[8] = {
+            type = "sprite-button",
+            style = "todo_sprite_button_default",
+            name = string.format("todo_main_subtask_edit_button_%i_%i", task_id, subtask_id),
+            sprite = "utility/rename_icon_normal",
+            tooltip = { "todo.title_edit" }
+        }
+    end
+
+    row[9] = {
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
+        name = string.format("todo_main_subtask_delete_button_%i_%i", task_id, subtask_id),
+        sprite = "utility/remove",
+        tooltip = { "todo.delete_subtask" }
+    }
+
+    todo.add_row_to_main_table(table, row)
 end
 
 function todo.get_main_frame(player)
@@ -318,4 +415,33 @@ function todo.get_task_table(player)
     elseif (main_frame.todo_scroll_pane.todo_task_table) then
         return main_frame.todo_scroll_pane.todo_task_table
     end
+end
+
+function todo.add_row_to_main_table(table, values)
+    local index = 1
+    for i, value in ipairs(values) do
+        index = i
+
+        if (type(value) == "string") then
+            table.add(todo.main_create_filler_element(#table.children))
+        else
+            todo.log(string.format("Adding child with name [%s]", value.name))
+            table.add(value)
+        end
+    end
+
+    for i = index + 1, table.column_count do
+        table.add(todo.main_create_filler_element(#table.children))
+    end
+end
+
+function todo.main_create_filler_element(count)
+    local name = string.format("todo_main_filler_%i", count + 1)
+    todo.log(string.format("Creating filler with name [%s].", name))
+    return {
+        type = "label",
+        style = "todo_label_default",
+        name = name,
+        caption = ""
+    }
 end

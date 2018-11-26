@@ -2,7 +2,9 @@
   Main entry point for the mod.
   This file holds all general event handlers.
 ]]--
-if not todo then todo = {} end
+if not todo then
+    todo = {}
+end
 
 -- features
 require("todo/features/add_task")
@@ -15,11 +17,13 @@ require("todo/features/main_ui")
 require("todo/features/mark_complete")
 require("todo/features/mark_open")
 require("todo/features/sort_tasks")
+require("todo/features/subtasks")
 require("todo/features/take_task")
 
 -- UIs
 require("todo/ui/add_dialog")
 require("todo/ui/edit_dialog")
+require("todo/ui/edit_subtask_dialog")
 require("todo/ui/export_dialog")
 require("todo/ui/import_dialog")
 require("todo/ui/main_frame")
@@ -34,7 +38,7 @@ function todo.mod_init()
     todo.log("setting up mod data.")
 
     if not global.todo then
-        global.todo = {["open"] = {}, ["done"] = {}, ["settings"] = {}}
+        global.todo = { ["open"] = {}, ["done"] = {}, ["settings"] = {} }
     else
         for _, task in ipairs(global.todo.open) do
             todo.init_ensure_task_fields(task)
@@ -144,6 +148,34 @@ function todo.on_gui_click(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_main_close_details_button_")
 
         todo.on_hide_task_details_click(player, id)
+    elseif (string.find(element.name, "todo_main_subtask_save_new_button_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_save_new_button_")
+
+        todo.on_save_new_subtask_click(player, id)
+    elseif (string.find(element.name, "todo_main_subtask_edit_button_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_edit_button_")
+
+        todo.on_edit_subtask_click(player, task_id, subtask_id)
+    elseif (element.name == "todo_edit_subtask_cancel_button") then
+        todo.on_edit_subtask_cancel_click(player)
+    elseif (string.find(element.name, "todo_edit_subtask_save_button_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_edit_subtask_save_button_")
+
+        todo.on_edit_subtask_save_click(player, task_id, subtask_id)
+    elseif (string.find(element.name, "todo_main_subtask_checkbox_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_checkbox_")
+
+        todo.on_subtask_checkbox_click(task_id, subtask_id)
+    elseif (string.find(element.name, "todo_main_subtask_move_up_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_move_up_")
+        todo.on_main_subtask_move_up_click(task_id, subtask_id)
+    elseif (string.find(element.name, "todo_main_subtask_move_down_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_move_down_")
+        todo.on_main_subtask_move_down_click(task_id, subtask_id)
+    elseif (string.find(element.name, "todo_main_subtask_delete_button_")) then
+        local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_delete_button_")
+
+        todo.on_subtask_delete_click(task_id, subtask_id)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end

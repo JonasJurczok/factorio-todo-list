@@ -163,7 +163,6 @@ feature("#29 import and export tasks", function()
         local button = faketorio.find_element_by_id("todo_main_open_export_dialog_button", player)
 
         assert(button.enabled == false)
-
     end)
 
     scenario("Adding/removing tasks while export dialog open is ignored.", function()

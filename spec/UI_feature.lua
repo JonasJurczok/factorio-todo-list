@@ -15,6 +15,7 @@ feature("Testing the UI", function()
 
     before_scenario(function()
         when(todo, "should_show_maximize_button"):then_return(true)
+        todo.minimize_main_frame(game.players[1])
     end)
 
     after_scenario(function()
@@ -35,7 +36,6 @@ feature("Testing the UI", function()
     scenario("The maximize button should persist when the UI is toggled", function()
         -- Ensure the UI is closed
         local player = game.players[1]
-        todo.minimize_main_frame(player)
 
         -- Mock out the 'should_show_maximize_button' function
         local temp = todo.should_show_maximize_button
@@ -75,8 +75,6 @@ feature("Testing the UI", function()
     end)
 
      scenario("Checking 'Add to top' when creating a task should add it to the top of the list", function()
-         local player = game.players[1]
-
          add_task()
          add_task()
          add_task()
