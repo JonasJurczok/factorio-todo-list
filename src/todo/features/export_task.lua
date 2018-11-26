@@ -8,7 +8,10 @@ function todo.update_export_dialog_button_state()
     for _, player in pairs(game.players) do
         local main_frame = todo.get_main_frame(player)
         if (main_frame) then
-            main_frame.todo_main_button_flow.todo_main_open_export_dialog_button.enabled = task_count > 0
+            local export_button = main_frame.todo_main_button_flow.todo_main_open_export_dialog_button
+            if (export_button) then
+                export_button.enabled = task_count > 0
+            end
         end
     end
 end
