@@ -67,7 +67,8 @@ default_gui["todo_base64_textbox"] = {
     font = "todo_font_default",
     minimal_width = 300,
     minimal_height = 100,
-    maximal_width = 500
+    maximal_width = 500,
+    maximal_height = 400
 }
 
 default_gui["todo_dropdown_default"] = {
