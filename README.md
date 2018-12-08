@@ -89,6 +89,7 @@ Credit where credit is due :)
 
 ### 16.8.1
 * Bugfix: export/import dialogs don't grow outside the screen anymore when working with long strings.
+* Updated polish translations. (Thanks Virtual0txt)
 
 ### 16.8.0
 * It is now possible to add subtasks to tasks
