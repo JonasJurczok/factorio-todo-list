@@ -87,6 +87,9 @@ Credit where credit is due :)
 
 ### NEXT
 
+### 16.8.1
+* Bugfix: export/import dialogs don't grow outside the screen anymore when working with long strings.
+
 ### 16.8.0
 * It is now possible to add subtasks to tasks
   * Open the details view to add subtasks
