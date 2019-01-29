@@ -87,6 +87,10 @@ Credit where credit is due :)
 
 ### NEXT
 
+### 16.8.2
+* Updated russian translation. (Thanks MasterLogick)
+* Updated chinese translation. (Thanks 笑脸)
+
 ### 16.8.1
 * Bugfix: export/import dialogs don't grow outside the screen anymore when working with long strings.
 * Updated polish translations. (Thanks Virtual0txt)
