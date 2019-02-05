@@ -61,6 +61,8 @@ feature("#60 Show created/updated by", function()
         dialog = todo.get_edit_dialog(player)
         assert(dialog["todo_edit_task_table"]["todo_edit_updated_by_playername"].caption == "Wololo")
 
+        dialog.destroy()
+
         player.name = original_name
     end)
 end)
