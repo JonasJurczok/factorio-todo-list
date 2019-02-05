@@ -29,6 +29,10 @@ function todo.import_tasks(encoded, player)
 
         if (task_to_import.subtasks) then
             task.subtasks = task_to_import.subtasks
+
+            for _, subtask in pairs(task.subtasks.done) do
+                todo.mark_subtask_open(task, subtask.id)
+            end
         end
 
         todo.log(serpent.block(task))

@@ -2,17 +2,18 @@ feature("#58 delete tasks", function()
 
     before_scenario(function()
         when(todo, "should_show_maximize_button"):then_return(true)
+        when(todo, "show_completed_tasks"):then_return(true)
+
         todo.maximize_main_frame(game.players[1])
-        todo.toggle_show_completed(game.players[1])
     end)
 
     after_scenario(function()
         todo.should_show_maximize_button:revert()
+        todo.show_completed_tasks:revert()
 
         -- clear all tasks
         global.todo.open = {}
         global.todo.done = {}
-        todo.toggle_show_completed(game.players[1])
     end)
 
     faketorio.confirm_task_deletion = function(player, id)

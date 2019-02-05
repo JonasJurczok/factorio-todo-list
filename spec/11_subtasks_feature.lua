@@ -160,7 +160,7 @@ feature("#11 subtasks", function()
     scenario("Exporting and importing subtasks should work", function()
         local player = game.players[1]
 
-        local task_template = { ["task"] = "Deleting subtasks", ["title"] = "single subtask"}
+        local task_template = { ["task"] = "Importing subtasks", ["title"] = "single subtask"}
         local task = todo.assemble_task(task_template, player)
         task.assignee = player.name
         todo.save_task_to_open_list(task)
@@ -178,11 +178,11 @@ feature("#11 subtasks", function()
         assert(#global.todo.open == 2)
         local imported_task = global.todo.open[2]
 
-        assert(#imported_task.subtasks.open == 1)
-        assert(#imported_task.subtasks.done == 1)
+        assert(#imported_task.subtasks.open == 2)
+        assert(#imported_task.subtasks.done == 0)
 
         assert(imported_task.subtasks.open[1].task == subtask.task)
-        assert(imported_task.subtasks.done[1].task == subtask2.task)
+        assert(imported_task.subtasks.open[2].task == subtask2.task)
     end)
 
     -- importing old task without subtasks should work

@@ -86,6 +86,8 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+* Fixed bug. Imported subtasks are always open now.
+* Fixed german translation. (Thanks Kingmax007)
 
 ### 16.8.2
 * Updated russian translation. (Thanks MasterLogick)
