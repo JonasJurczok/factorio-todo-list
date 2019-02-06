@@ -34,5 +34,13 @@ data:extend({
 		allowed_values = {"right-button", "middle-button"},
 		default_value = "right-button",
 		per_user = true,
+	},
+	{
+		name = "todolist-translation-mode",
+		setting_type = "runtime-per-user",
+		type = "string-setting",
+		allowed_values = {"default", "quest"},
+		default_value = "default",
+		per_user = true,
 	}
 })

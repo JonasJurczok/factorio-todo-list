@@ -13,7 +13,7 @@ function todo.create_edit_task_dialog(player, id)
     local dialog = gui.add({
         type = "frame",
         name = "todo_edit_dialog",
-        caption = { "todo.edit_title" },
+        caption = { todo.translate(player, "edit_title") },
         direction = "vertical"
     })
 
@@ -30,7 +30,7 @@ function todo.create_edit_task_dialog(player, id)
         style = "todo_label_default",
         name = "todo_edit_task_title_label",
         -- we are reusing the add translations. As soon as they diverge we will change that.
-        caption = { "todo.add_task_title" }
+        caption = { todo.translate(player, "add_task_title") }
     })
 
     table.add({
@@ -45,7 +45,7 @@ function todo.create_edit_task_dialog(player, id)
         type = "label",
         style = "todo_label_default",
         name = "todo_edit_task_label",
-        caption = { "todo.add_task" }
+        caption = { todo.translate(player, "add_task") }
     })
 
     table.add({
@@ -59,10 +59,10 @@ function todo.create_edit_task_dialog(player, id)
         type = "label",
         style = "todo_label_default",
         name = "todo_edit_assignee_label",
-        caption = { "todo.add_assignee" }
+        caption = { todo.translate(player, "add_assignee") }
     })
 
-    local players, lookup, c = todo.get_player_list()
+    local players, lookup, c = todo.get_player_list(player)
 
     local assign_index = 1
     if task and task.assignee then
@@ -82,7 +82,7 @@ function todo.create_edit_task_dialog(player, id)
         type = "label",
         style = "todo_label_default",
         name = "todo_edit_created_by_label",
-        caption = { "todo.created_by" }
+        caption = { todo.translate(player, "created_by") }
     })
     table.add({
         type = "label",
@@ -95,7 +95,7 @@ function todo.create_edit_task_dialog(player, id)
         type = "label",
         style = "todo_label_default",
         name = "todo_edit_updated_by_label",
-        caption = { "todo.updated_by" }
+        caption = { todo.translate(player, "updated_by") }
     })
 
     table.add({
@@ -109,14 +109,14 @@ function todo.create_edit_task_dialog(player, id)
         type = "label",
         style = "todo_label_default",
         name = "todo_edit_delete_label",
-        caption = { "todo.delete" }
+        caption = { todo.translate(player, "delete") }
     })
 
     table.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_edit_delete_button_" .. task.id,
-        caption = { "todo.delete" }
+        caption = { todo.translate(player, "delete") }
     })
 
     local flow = dialog.add({
@@ -129,14 +129,14 @@ function todo.create_edit_task_dialog(player, id)
         type = "button",
         style = "todo_button_default",
         name = "todo_edit_cancel_button",
-        caption = { "todo.cancel" }
+        caption = { todo.translate(player, "cancel") }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_edit_save_changes_button_" .. task.id,
-        caption = { "todo.update" }
+        caption = { todo.translate(player, "update") }
     })
 end
 

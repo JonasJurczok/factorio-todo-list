@@ -99,7 +99,7 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_edit_delete_button")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_edit_delete_button_")
 
-        todo.create_delete_confirmation_button(element, id)
+        todo.create_delete_confirmation_button(player, element, id)
     elseif (string.find(element.name, "todo_edit_confirm_deletion_button")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_edit_confirm_deletion_button_")
 

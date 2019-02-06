@@ -9,7 +9,7 @@ function todo.create_export_dialog(player)
     local dialog = gui.add({
         type = "frame",
         name = "todo_export_dialog",
-        caption = {"todo.export"},
+        caption = { todo.translate(player, "export") },
         direction = "vertical"
     })
 
@@ -64,14 +64,14 @@ function todo.create_export_dialog(player)
         type = "button",
         style = "todo_button_default",
         name = "todo_export_cancel_button",
-        caption = {"todo.cancel"}
+        caption = { todo.translate(player, "cancel") }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_export_generate_export_string_button",
-        caption = {"todo.export"}
+        caption = { todo.translate(player, "export") }
     })
 
 end

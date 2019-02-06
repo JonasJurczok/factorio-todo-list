@@ -14,7 +14,7 @@ function todo.create_edit_subtask_dialog(player, task_id, subtask)
     local dialog = gui.add({
         type = "frame",
         name = "todo_edit_subtask_dialog",
-        caption = { "todo.edit_subtask" },
+        caption = { todo.translate(player, "edit_subtask") },
         direction = "vertical"
     })
 
@@ -35,14 +35,14 @@ function todo.create_edit_subtask_dialog(player, task_id, subtask)
         type = "button",
         style = "todo_button_default",
         name = "todo_edit_subtask_cancel_button",
-        caption = { "todo.cancel" }
+        caption = { todo.translate(player, "cancel") }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = string.format("todo_edit_subtask_save_button_%i_%i", task_id, subtask.id),
-        caption = { "todo.update" }
+        caption = { todo.translate(player, "update") }
     })
 end
 

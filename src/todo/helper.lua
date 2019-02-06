@@ -5,8 +5,8 @@
   - used in multiple places
 ]]--
 
-function todo.get_player_list()
-    local result = { { "todo.unassigned" } }
+function todo.get_player_list(player)
+    local result = { { todo.translate(player, "unassigned") } }
 
     local count = 0
     for _, player in pairs(game.players) do
@@ -96,4 +96,17 @@ end
 
 function todo.show_completed_tasks(player)
     return global.todo.settings[player.name] and global.todo.settings[player.name].show_completed
+end
+
+function todo.get_player_translation_mode(player)
+    return settings.get_player_settings(player)["todolist-translation-mode"].value
+end
+
+function todo.translate(player, input)
+    local mode = todo.get_player_translation_mode(player)
+    if (mode == "quest") then
+        return "todo.quest_"..input
+    else
+        return "todo."..input
+    end
 end
