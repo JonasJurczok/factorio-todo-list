@@ -5,8 +5,8 @@
   - used in multiple places
 ]]--
 
-function todo.get_player_list(player)
-    local result = { { todo.translate(player, "unassigned") } }
+function todo.get_player_list(current_player)
+    local result = { { todo.translate(current_player, "unassigned") } }
 
     local count = 0
     for _, player in pairs(game.players) do
