@@ -86,6 +86,8 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+
+### 16.9.0
 * Questlog mode. There is a setting to transform the todo list to a questlog (#74).
 * Fixed bug. Imported subtasks are always open now (#92).
 * Fixed german translation. (Thanks Kingmax007)

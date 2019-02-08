@@ -104,9 +104,11 @@ end
 
 function todo.translate(player, input)
     local mode = todo.get_player_translation_mode(player)
+
+    local prefix = "todo."
     if (mode == "quest") then
-        return "todo.quest_"..input
-    else
-        return "todo."..input
+        prefix = prefix.."quest_"
     end
+
+    return prefix..input
 end
