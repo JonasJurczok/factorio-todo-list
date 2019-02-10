@@ -9,7 +9,7 @@ function todo.create_add_task_dialog(player)
     local dialog = gui.add({
         type = "frame",
         name = "todo_add_dialog",
-        caption = { "todo.add_title" },
+        caption = { todo.translate(player, "add_title") },
         direction = "vertical"
     })
 
@@ -24,7 +24,7 @@ function todo.create_add_task_dialog(player)
         type = "label",
         style = "todo_label_default",
         name = "todo_add_task_title_label",
-        caption = { "todo.add_task_title" }
+        caption = { todo.translate(player, "add_task_title") }
     })
 
     table.add({
@@ -38,7 +38,7 @@ function todo.create_add_task_dialog(player)
         type = "label",
         style = "todo_label_default",
         name = "todo_add_task_label",
-        caption = { "todo.add_task" }
+        caption = { todo.translate(player, "add_task") }
     })
 
     table.add({
@@ -51,10 +51,10 @@ function todo.create_add_task_dialog(player)
         type = "label",
         style = "todo_label_default",
         name = "todo_add_assignee_label",
-        caption = { "todo.add_assignee" }
+        caption = { todo.translate(player, "add_assignee") }
     })
 
-    local players, lookup, c = todo.get_player_list()
+    local players, lookup, c = todo.get_player_list(player)
 
     local assign_index = 1
     if todo.is_auto_assign(player) and c == 1 then
@@ -86,14 +86,14 @@ function todo.create_add_task_dialog(player)
         type = "button",
         style = "todo_button_default",
         name = "todo_add_cancel_button",
-        caption = { "todo.cancel" }
+        caption = { todo.translate(player, "cancel") }
     })
 
     button_flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_save_new_task_button",
-        caption = { "todo.persist" }
+        caption = { todo.translate(player, "persist") }
     })
 end
 

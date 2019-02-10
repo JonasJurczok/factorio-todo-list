@@ -9,7 +9,7 @@ function todo.create_import_dialog(player)
     local dialog = gui.add({
         type = "frame",
         name = "todo_import_dialog",
-        caption = {"todo.import"},
+        caption = { todo.translate(player, "import") },
         direction = "vertical"
     })
 
@@ -30,14 +30,14 @@ function todo.create_import_dialog(player)
         type = "button",
         style = "todo_button_default",
         name = "todo_import_cancel_button",
-        caption = {"todo.cancel"}
+        caption = { todo.translate(player, "cancel") }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_import_import_tasks_button",
-        caption = {"todo.import"}
+        caption = { todo.translate(player, "import") }
     })
 end
 

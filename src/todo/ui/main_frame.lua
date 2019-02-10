@@ -10,7 +10,7 @@ function todo.create_maximize_button(player)
             type = "button",
             style = "todo_button_default",
             name = "todo_maximize_button",
-            caption = { "todo.todo_list" },
+            caption = { todo.translate(player, "todo_list")},
         })
     end
 end
@@ -19,7 +19,7 @@ function todo.create_maximized_frame(player)
     local frame = mod_gui.get_frame_flow(player).add({
         type = "frame",
         name = "todo_main_frame",
-        caption = { "todo.todo_list" },
+        caption = { todo.translate(player, "todo_list") },
         direction = "vertical"
     })
 
@@ -35,14 +35,14 @@ function todo.create_maximized_frame(player)
         type = "button",
         style = "todo_button_default",
         name = "todo_open_add_dialog_button",
-        caption = { "todo.add" }
+        caption = { todo.translate(player, "add") }
     })
 
     flow.add({
         type = "button",
         style = "todo_button_default",
         name = "todo_toggle_show_completed_button",
-        caption = { "todo.show_done" }
+        caption = { todo.translate(player, "show_done") }
     })
 
     if todo.should_show_maximize_button(player) then
@@ -59,7 +59,7 @@ function todo.create_maximized_frame(player)
         style = "todo_sprite_button_default",
         name = "todo_main_open_export_dialog_button",
         sprite = "utility/export_slot",
-        tooltip = { "todo.export" }
+        tooltip = { todo.translate(player, "export") }
     })
     todo.update_export_dialog_button_state()
 
@@ -68,7 +68,7 @@ function todo.create_maximized_frame(player)
         style = "todo_sprite_button_default",
         name = "todo_main_open_import_dialog_button",
         sprite = "utility/import_slot",
-        tooltip = { "todo.import" }
+        tooltip = { todo.translate(player, "import") }
     })
 
 end
@@ -105,14 +105,14 @@ function todo.create_task_table(frame, player)
         type = "label",
         style = "todo_label_default",
         name = "todo_title_task",
-        caption = { "todo.title_task" }
+        caption = { todo.translate(player, "title_task") }
     })
 
     table.add({
         type = "label",
         style = "todo_label_default",
         name = "todo_title_assignee",
-        caption = { "todo.title_assignee" }
+        caption = { todo.translate(player, "title_assignee")}
     })
 
     table.add({
@@ -147,7 +147,7 @@ function todo.create_task_table(frame, player)
         type = "label",
         style = "todo_label_default",
         name = "todo_title_edit",
-        caption = { "todo.title_edit" }
+        caption = { todo.translate(player, "title_edit") }
     })
 
     table.add({
@@ -160,7 +160,7 @@ function todo.create_task_table(frame, player)
     return table
 end
 
-function todo.add_task_to_table(table, task, completed, is_first, is_last, expanded)
+function todo.add_task_to_table(player, table, task, completed, is_first, is_last, expanded)
     local id = task.id
 
     local checkbox_name
@@ -194,7 +194,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
             type = "button",
             style = "todo_button_default",
             name = "todo_take_task_button_" .. id,
-            caption = { "todo.assign_self" }
+            caption = { todo.translate(player, "assign_self") }
         })
     end
 
@@ -255,7 +255,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
         style = "todo_sprite_button_default",
         name = "todo_open_edit_dialog_button_" .. id,
         sprite = "utility/rename_icon_normal",
-        tooltip = { "todo.title_edit" }
+        tooltip = { todo.translate(player, "title_edit") }
     })
 
     if (expanded) then
@@ -292,7 +292,7 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
             })
         end
 
-        todo.add_subtasks_to_task_table(table, task)
+        todo.add_subtasks_to_task_table(player, table, task)
     else
         table.add({
             type = "sprite-button",
@@ -304,12 +304,12 @@ function todo.add_task_to_table(table, task, completed, is_first, is_last, expan
     end
 end
 
-function todo.add_subtasks_to_task_table(table, task)
+function todo.add_subtasks_to_task_table(player, table, task)
     -- for each subtask
     if (task.subtasks) then
         local open_subtask_count = #task.subtasks.open
         for i, subtask in ipairs(task.subtasks.open) do
-            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == open_subtask_count)
+            todo.add_subtask_to_main_table(player, table, task.id, subtask, i == 1, i == open_subtask_count)
         end
 
         local done_subtask_count = #task.subtasks.done
@@ -317,7 +317,7 @@ function todo.add_subtasks_to_task_table(table, task)
             -- completed subtasks have ids that are "after" the open list.
             -- With this information it is possible to distinguish open from done tasks without
             -- transferring this information accross the functions
-            todo.add_subtask_to_main_table(table, task.id, subtask, i == 1, i == done_subtask_count, true)
+            todo.add_subtask_to_main_table(player, table, task.id, subtask, i == 1, i == done_subtask_count, true)
         end
     end
 
@@ -335,13 +335,13 @@ function todo.add_subtasks_to_task_table(table, task)
         style = "todo_sprite_button_default",
         name = "todo_main_subtask_save_new_button_" .. task.id,
         sprite = "utility/add",
-        tooltip = { "todo.add_subtask" }
+        tooltip = { todo.translate(player, "add_subtask") }
     }
     todo.add_row_to_main_table(table, row)
 
 end
 
-function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_last, done)
+function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_first, is_last, done)
 
     -- if not provided we assume tasks are open
     done = done or false
@@ -384,7 +384,7 @@ function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_la
             style = "todo_sprite_button_default",
             name = string.format("todo_main_subtask_edit_button_%i_%i", task_id, subtask_id),
             sprite = "utility/rename_icon_normal",
-            tooltip = { "todo.title_edit" }
+            tooltip = { todo.translate(player, "edit_subtask") }
         }
     end
 
@@ -393,7 +393,7 @@ function todo.add_subtask_to_main_table(table, task_id, subtask, is_first, is_la
         style = "todo_sprite_button_default",
         name = string.format("todo_main_subtask_delete_button_%i_%i", task_id, subtask_id),
         sprite = "utility/remove",
-        tooltip = { "todo.delete_subtask" }
+        tooltip = { todo.translate(player, "delete_subtask") }
     }
 
     todo.add_row_to_main_table(table, row)

@@ -31,7 +31,7 @@ function todo.delete_task(id)
     end
 end
 
-function todo.create_delete_confirmation_button(element, id)
+function todo.create_delete_confirmation_button(player, element, id)
     local table = element.parent
     element.destroy()
 
@@ -39,6 +39,6 @@ function todo.create_delete_confirmation_button(element, id)
         type = "button",
         style = "todo_button_default",
         name = "todo_edit_confirm_deletion_button_" .. id,
-        caption = { "todo.confirm_deletion" }
+        caption = { todo.translate(player, "confirm_deletion") }
     })
 end
