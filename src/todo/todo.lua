@@ -31,7 +31,6 @@ require("todo/ui/main_frame")
 -- convenience
 require("todo/helper")
 require("todo/logging")
-todo.json = require("lib/json")
 todo.base64 = require("lib/base64")
 
 function todo.mod_init()

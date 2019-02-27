@@ -76,7 +76,7 @@ function todo.encode_task_list_for_export(tasks)
 
         table.insert(to_encode, export_task)
     end
-    return todo.base64.encode(todo.json:encode(to_encode))
+    return todo.base64.encode(game.table_to_json(to_encode))
 end
 
 function todo.on_export_cancel_click(player)

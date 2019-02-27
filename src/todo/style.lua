@@ -29,6 +29,14 @@ default_gui["todo_button_default"] = {
     vertical_align = "center"
 }
 
+default_gui["todo_button_sort"] = {
+    type = "button_style",
+    font = "todo_font_default",
+    align = "center",
+    vertical_align = "center",
+    width = 40
+}
+
 default_gui["todo_sprite_button_default"] = {
     type = "button_style",
     parent = "icon_button",
@@ -57,7 +65,7 @@ default_gui["todo_textbox_default"] = {
 }
 
 default_gui["todo_textfield_default"] = {
-    type = "textfield_style",
+    type = "textbox_style",
     font = "todo_font_default",
     minimal_width = 300
 }

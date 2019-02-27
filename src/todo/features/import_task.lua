@@ -18,7 +18,7 @@ end
 
 function todo.import_tasks(encoded, player)
 
-    local tasks = todo.json:decode(todo.base64.decode(encoded))
+    local tasks = game.json_to_table(todo.base64.decode(encoded))
 
     todo.log("Importing tasks:")
     todo.log(serpent.block(tasks))

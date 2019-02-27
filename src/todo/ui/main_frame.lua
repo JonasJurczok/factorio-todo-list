@@ -212,13 +212,13 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
     else
         table.add({
             type = "button",
-            style = "todo_button_default",
+            style = "todo_button_sort",
             name = "todo_main_task_move_top_" .. id,
             caption = "↟"
         })
         table.add({
             type = "button",
-            style = "todo_button_default",
+            style = "todo_button_sort",
             name = "todo_main_task_move_up_" .. id,
             caption = "↑"
         })
@@ -238,13 +238,13 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
     else
         table.add({
             type = "button",
-            style = "todo_button_default",
+            style = "todo_button_sort",
             name = "todo_main_task_move_down_" .. id,
             caption = "↓"
         })
         table.add({
             type = "button",
-            style = "todo_button_default",
+            style = "todo_button_sort",
             name = "todo_main_task_move_bottom_" .. id,
             caption = "↡"
         })
@@ -364,7 +364,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
         if (not is_first) then
             row[5] = {
                 type = "button",
-                style = "todo_button_default",
+                style = "todo_button_sort",
                 name = string.format("todo_main_subtask_move_up_%i_%i", task_id, subtask_id),
                 caption = "↑"
             }
@@ -373,7 +373,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
         if (not is_last) then
             row[6] = {
                 type = "button",
-                style = "todo_button_default",
+                style = "todo_button_sort",
                 name = string.format("todo_main_subtask_move_down_%i_%i", task_id, subtask_id),
                 caption = "↓"
             }
