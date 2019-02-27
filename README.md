@@ -87,6 +87,10 @@ Credit where credit is due :)
 
 ### NEXT
 
+### 17.0.0
+* Switched to 0.17
+* Removed custom JSON encoding
+
 ### 16.9.0
 * Questlog mode. There is a setting to transform the todo list to a questlog (#74).
 * Fixed bug. Imported subtasks are always open now (#92).
