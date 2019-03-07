@@ -7,7 +7,7 @@ LABEL "com.github.actions.color"="gray-dark"
 
 LABEL version="1.0.0"
 
-RUN apt-get update -y && apt-get install -y git luajit luarocks
+RUN apt-get update -y && apt-get install -y git luajit luarocks zlib1g-dev
 
 RUN luarocks install serpent
 RUN luarocks install busted
