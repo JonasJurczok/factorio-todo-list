@@ -20,6 +20,6 @@ RUN luarocks install busted
 RUN luarocks install luacheck
 RUN luarocks install faketorio
 
-COPY "build.sh" "/build.sh"
-RUN chmod +x /build.sh
-ENTRYPOINT ["/build.sh"]
+COPY "run.sh" "/run.sh"
+RUN chmod +x /run.sh
+ENTRYPOINT ["/run.sh"]

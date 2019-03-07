@@ -6,14 +6,21 @@ workflow "Pull Request" {
 
 action "Run Tests" {
   uses = "./.github/lua"
+  args = "run-tests.sh"
 }
 
 # releases
 workflow "Releases" {
   on = "release"
-  resolves = ["Test and Release"]
+  resolves = ["Test"]
 }
 
-action "Test and Release" {
+action "Test" {
   uses = "./.github/lua"
+  resolves = ["Release"]
+}
+
+action "Release" {
+  uses = "./.github/lua"
+  needs = ["Test"]
 }
