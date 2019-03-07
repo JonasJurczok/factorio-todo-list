@@ -4,5 +4,6 @@ set -eu
 
 luacheck ./src/*.lua
 luacheck ./src/todo/*.lua
-pwd
+ls -al
+ls -al .github
 faketorio package -c .faketorio -v
