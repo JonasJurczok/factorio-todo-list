@@ -17,7 +17,6 @@ workflow "Releases" {
 
 action "Test" {
   uses = "./.github/lua"
-  resolves = ["Release"]
 }
 
 action "Release" {
