@@ -1,25 +1,27 @@
-workflow "PR" {
-  on = "push"
-  resolves = ["is pull request?"]
+# pull-requests
+workflow "Pull Request" {
+  on = "pull_request"
+  resolves = ["Run Tests"]
 }
 
-action "is pull request?" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
-  args = "ref refs/pulls/*"
+action "Run Tests" {
+  uses = "./.github/lua"
+  args = ".github/run-tests.sh"
 }
 
-workflow "Build release" {
-  on = "push"
-  resolves = ["is master?"]
+# releases
+workflow "Releases" {
+  on = "release"
+  resolves = ["Release"]
 }
 
-action "is tag?" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
-  args = "tag"
+action "Test" {
+  uses = "./.github/lua"
+  args = ".github/run-tests.sh"
 }
 
-action "is master?" {
-  uses = "actions/bin/filter@d820d56839906464fb7a57d1b4e1741cf5183efa"
-  needs = ["is tag?"]
-  args = "branch master"
+action "Release" {
+  uses = "./.github/lua"
+  args = ".github/release.sh"
+  needs = ["Test"]
 }
