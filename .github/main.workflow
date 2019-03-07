@@ -12,5 +12,5 @@ workflow "Pull Request" {
 
 # Run the magic
 action "Execute" {
-  uses = ""
+  uses = "./.github/lua"
 }
