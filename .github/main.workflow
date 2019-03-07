@@ -1,10 +1,19 @@
 # pull-requests
 workflow "Pull Request" {
   on = "pull_request"
-  resolves = ["Execute"]
+  resolves = ["Run Tests"]
 }
 
-# Run the magic
-action "Execute" {
+action "Run Tests" {
+  uses = "./.github/lua"
+}
+
+# releases
+workflow "Releases" {
+  on = "release"
+  resolves = ["Test and Release"]
+}
+
+action "Test and Release" {
   uses = "./.github/lua"
 }
