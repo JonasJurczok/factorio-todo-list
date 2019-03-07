@@ -7,6 +7,11 @@ LABEL "com.github.actions.color"="gray-dark"
 
 LABEL version="1.0.0"
 
+RUN luarocks install serpent
+RUN luarocks install busted
+RUN luarocks install luacheck
+RUN luarocks install faketorio
+
 COPY "build.sh" "/build.sh"
 RUN chmod +x /build.sh
 ENTRYPOINT ["/build.sh"]
