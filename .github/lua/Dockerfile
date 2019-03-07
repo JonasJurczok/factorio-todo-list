@@ -7,6 +7,8 @@ LABEL "com.github.actions.color"="gray-dark"
 
 LABEL version="1.0.0"
 
+RUN apt-get install -y git
+
 RUN luarocks install serpent
 RUN luarocks install busted
 RUN luarocks install luacheck
