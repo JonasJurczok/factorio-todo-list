@@ -7,7 +7,13 @@ LABEL "com.github.actions.color"="gray-dark"
 
 LABEL version="1.0.0"
 
-RUN apt-get update -y && apt-get install -y git luajit luarocks zlib1g-dev
+RUN apt-get update -y
+RUN apt-get install build-essential curl wget unzip git openssl lua5.2 lua5.2-dev libev-dev libjs-jquery -y
+RUN wget -O /tmp/luarocks.zip https://github.com/keplerproject/luarocks/archive/v3.0.1.zip
+RUN unzip /tmp/luarocks.zip -d /tmp
+RUN (cd /tmp/luarocks-3.0.1 && ./configure --prefix=/usr --lua-version=5.2)
+RUN make -C /tmp/luarocks-3.0.1 build
+RUN make -C /tmp/luarocks-3.0.1 install
 
 RUN luarocks install serpent
 RUN luarocks install busted
