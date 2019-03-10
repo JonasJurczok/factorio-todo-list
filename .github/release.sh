@@ -20,7 +20,6 @@ echo "Found version $VERSION"
 
 # get latest tag
 TAG=$(git tag | tail -n 1)
-
 echo "Found tag $TAG"
 
 if [[ "$VERSION" = "$TAG" ]]; then
@@ -40,7 +39,7 @@ API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 
 # create release
 URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
-RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" -H "$API_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
+RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" -H "$API_HEADER" "$URL" -d "{ \"tag_name\": \"${VERSION}\"}")
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
