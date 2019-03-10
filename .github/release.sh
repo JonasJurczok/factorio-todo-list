@@ -8,9 +8,14 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
   exit 1
 fi
 
+if [[ -z "$GITHUB_REPOSITORY" ]]; then
+	echo "Set the GITHUB_REPOSITORY env variable."
+	exit 1
+fi
+echo "Repository $GITHUB_REPOSITORY"
+
 # Get version from mod
 VERSION=$(jq --raw-output '.version' info.json)
-
 echo "Found version $VERSION"
 
 # get latest tag
@@ -30,12 +35,12 @@ faketorio package -c .github/.faketorio
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
+API_VERSION=v3
+API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 
 # create release
-URL="https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases"
-RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
-
-echo "got response $RESPONSE"
+URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
+RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" -H "$API_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
