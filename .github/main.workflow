@@ -11,11 +11,11 @@ action "Run Tests" {
 
 # releases
 workflow "Releases" {
-  on = "release"
   resolves = [
     "Check for master",
     "Release",
   ]
+  on = "push"
 }
 
 action "Check for master" {
