@@ -50,7 +50,7 @@ fi
 
 echo "Release created"
 
-RELEASE_ID=$(jq --raw-output '.id', "$RESPONSE")
+RELEASE_ID=$(jq --raw-output '.id' "$RESPONSE")
 
 echo "Found release id $RELEASE_ID"
 
