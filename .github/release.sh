@@ -26,13 +26,15 @@ fi
 # We are on a new version
 
 # Build mod
-faketorio package -c .travis/.faketorio -v
+faketorio package -c .github/.faketorio -v
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
 # create release
-RESPONSE=$(curl -sSL -XPOST -H --data "{ \"tag_name\": \"${TAG}\"" "$AUTH_HEADER" "https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases")
+URL="https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases"
+RESPONSE=$(curl -sSL -XPOST -H --data "{ \"tag_name\": \"${TAG}\"}" "$AUTH_HEADER" "$URL")
+
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
 if [[ "$TAG" != "$RELEASE_TAG" ]]; then
