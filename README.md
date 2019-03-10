@@ -84,11 +84,4 @@ Credit where credit is due :)
 * base64 library is written by [Ernest R. Ewert](https://github.com/ErnieE5/ee5_base64)
 
 ## Changelog
-
-### NEXT
-
-### 17.0.1
-* Added thumbnail
-* Added changelog.txt
-
 The full changelog can be found [here](https://github.com/JonasJurczok/factorio-todo-list/blob/master/changelog.txt).
