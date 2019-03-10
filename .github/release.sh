@@ -8,27 +8,39 @@ if [[ -z "$GITHUB_TOKEN" ]]; then
   exit 1
 fi
 
-# Only upload to non-draft releases
-IS_DRAFT=$(jq --raw-output '.release.draft' $GITHUB_EVENT_PATH)
-if [ "$IS_DRAFT" = true ]; then
-  echo "This is a draft, so nothing to do!"
-  exit 0
+# Get version from mod
+VERSION=$(jq --raw-output '.version' info.json)
+
+# get latest tag
+TAG=$(git tag | tail -n 1)
+
+if [[ "$VERSION" -eq "$TAG" ]]; then
+    echo "No new version. Aborting build."
+    exit 78
 fi
 
-# update info.json
-VERSION=$(jq --raw-output '.release.tag_name' $GITHUB_EVENT_PATH)
+# We are on a new version
+# Tag it
+git tag "$VERSION"
+git push --tags
 
-jq '.version = $new' --arg new "$VERSION" info.json > info.tmp
-mv info.tmp info.json
-rm -f info.tmp
-
+# Build mod
 faketorio package -c .travis/.faketorio -v
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 
 # Build the Upload URL from the various pieces
-RELEASE_ID=$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)
+
+RESPONSE=$(curl -sSL -XGET -H "$AUTH_HEADER" "https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases/tags/${TAG}")
+RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
+
+if [[ "$TAG" -ne "$RELEASE_TAG" ]]; then
+    echo "Previously created release does not exist. Cannot upload artifact!"
+    exit -1
+fi
+
+RELEASE_ID=$(jq --raw-output '.id', "$RESPONSE")
 
 # For each matching file
 for file in $(ls target/Todo*.zip); do
