@@ -35,7 +35,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 URL="https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases"
 RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
 
-echo "$RESPONSE"
+echo "got response $RESPONSE"
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
@@ -47,6 +47,8 @@ fi
 echo "Release created"
 
 RELEASE_ID=$(jq --raw-output '.id', "$RESPONSE")
+
+echo "Found release id $RELEASE_ID"
 
 # For each matching file
 for file in $(ls target/Todo*.zip); do
