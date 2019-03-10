@@ -11,10 +11,7 @@ action "Run Tests" {
 
 # releases
 workflow "Releases" {
-  resolves = [
-    "Check for master",
-    "Release",
-  ]
+  resolves = ["Release"]
   on = "push"
 }
 
@@ -39,5 +36,15 @@ action "Release" {
   uses = "./.github/lua"
   args = ".github/release.sh"
   needs = ["Tests"]
+  secrets = ["GITHUB_TOKEN"]
+}
+
+workflow "on pull request merge, delete the branch" {
+  on = "pull_request"
+  resolves = ["branch cleanup"]
+}
+
+action "branch cleanup" {
+  uses = "jessfraz/branch-cleanup-action@master"
   secrets = ["GITHUB_TOKEN"]
 }
