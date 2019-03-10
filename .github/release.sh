@@ -14,7 +14,7 @@ VERSION=$(jq --raw-output '.version' info.json)
 # get latest tag
 TAG=$(git tag | tail -n 1)
 
-if [[ "$VERSION" -eq "$TAG" ]]; then
+if [[ "$VERSION" = "$TAG" ]]; then
     echo "No new version. Aborting build."
     exit 78
 fi
@@ -35,7 +35,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 RESPONSE=$(curl -sSL -XGET -H "$AUTH_HEADER" "https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases/tags/${TAG}")
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
-if [[ "$TAG" -ne "$RELEASE_TAG" ]]; then
+if [[ "$TAG" != "$RELEASE_TAG" ]]; then
     echo "Previously created release does not exist. Cannot upload artifact!"
     exit -1
 fi
