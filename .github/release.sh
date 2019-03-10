@@ -48,6 +48,8 @@ echo "Release created"
 
 RELEASE_ID=$(jq --raw-output '.id', "$RESPONSE")
 
+echo "Found release id $RELEASE_ID"
+
 # For each matching file
 for file in $(ls target/Todo*.zip); do
 
