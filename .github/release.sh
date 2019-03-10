@@ -30,7 +30,7 @@ fi
 # We are on a new version
 
 # Build mod
-faketorio package -c .github/.faketorio
+faketorio package -c .github/.faketorio -v
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
