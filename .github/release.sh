@@ -43,7 +43,7 @@ RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" -H "$API_HEADER" "$URL" -d "{ \"ta
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' <<< "$RESPONSE")
 
-if [[ "$TAG" != "$RELEASE_TAG" ]]; then
+if [[ "$VERSION" != "$RELEASE_TAG" ]]; then
     echo "Creating release failed."
     exit -1
 fi
