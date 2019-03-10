@@ -35,7 +35,7 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 URL="https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases"
 RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
 
-echo "$RESPONSE"
+echo "got response $RESPONSE"
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
