@@ -41,7 +41,7 @@ API_HEADER="Accept: application/vnd.github.${API_VERSION}+json"
 URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/releases"
 RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" -H "$API_HEADER" "$URL" -d "{ \"tag_name\": \"${VERSION}\"}")
 
-RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
+RELEASE_TAG=$(jq --raw-output '.tag_name' <<< "$RESPONSE")
 
 if [[ "$TAG" != "$RELEASE_TAG" ]]; then
     echo "Creating release failed."
@@ -50,7 +50,7 @@ fi
 
 echo "Release created"
 
-RELEASE_ID=$(jq --raw-output '.id' "$RESPONSE")
+RELEASE_ID=$(jq --raw-output '.id' <<< "$RESPONSE")
 
 echo "Found release id $RELEASE_ID"
 
