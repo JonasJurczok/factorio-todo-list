@@ -26,7 +26,7 @@ fi
 # We are on a new version
 
 # Build mod
-faketorio package -c .github/.faketorio -v
+faketorio package -c .github/.faketorio
 
 # Prepare the headers
 AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
@@ -34,6 +34,8 @@ AUTH_HEADER="Authorization: token ${GITHUB_TOKEN}"
 # create release
 URL="https://api.github.com/repos/JonasJurczok/${GITHUB_REPOSITORY}/releases"
 RESPONSE=$(curl -sSL -XPOST -H "$AUTH_HEADER" "$URL" -d "{ \"tag_name\": \"${TAG}\"}")
+
+echo "$RESPONSE"
 
 RELEASE_TAG=$(jq --raw-output '.tag_name' "$RESPONSE")
 
