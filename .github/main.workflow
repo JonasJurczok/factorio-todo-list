@@ -39,4 +39,5 @@ action "Release" {
   uses = "./.github/lua"
   args = ".github/release.sh"
   needs = ["Tests"]
+  secrets = ["GITHUB_TOKEN"]
 }
