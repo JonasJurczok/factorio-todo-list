@@ -86,6 +86,8 @@ Credit where credit is due :)
 ## Changelog
 
 ### NEXT
+
+### 17.0.1
 * Added thumbnail
 * Added changelog.txt
 
