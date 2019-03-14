@@ -20,6 +20,10 @@ script.on_event(defines.events.on_gui_click, function(event)
     todo.on_gui_click(event)
 end)
 
+script.on_event(defines.events.on_lua_shortcut, function(event)
+    todo.on_lua_shortcut(event)
+end)
+
 script.on_event("todolist-toggle-ui", function(event)
     local player = game.players[event.player_index]
     todo.toggle_main_frame(player)
@@ -30,3 +34,4 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
     local key = event.setting
     todo.on_runtime_mod_setting_changed(player, key)
 end)
+

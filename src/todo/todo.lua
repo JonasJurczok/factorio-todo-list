@@ -180,6 +180,16 @@ function todo.on_gui_click(event)
     end
 end
 
+function todo.on_lua_shortcut(event)
+    local player = game.players[event.player_index]
+
+    if (event.prototype_name == "todo-toggle-ui-shortcut") then
+        todo.toggle_main_frame(player)
+    elseif (event.prototype_name == "todo-add-task-shortcut") then
+        todo.create_add_task_dialog(player)
+    end
+end
+
 function todo.on_runtime_mod_setting_changed(player, key)
     if (key == "todolist-show-button") then
         todo.on_show_maximize_button_changed(player)
