@@ -1,8 +1,9 @@
 NEXT
 --------
 
-17.0.2
+17.1.0
 --------
+* Fixed Questlog translations for all languages (#126).
 * Added changelog
 * Added thumbnail
 
