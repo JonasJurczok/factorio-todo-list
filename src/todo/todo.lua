@@ -199,6 +199,10 @@ function todo.on_runtime_mod_setting_changed(player, key)
         todo.log("Changed auto-assign...")
     elseif (key == "todolist-click-edit-task") then
         todo.log("Changed button click to open edit frame...")
+    elseif (key == "todolist-translation-mode") then
+        -- automatically redraw main frame on mode change
+        todo.toggle_main_frame(player)
+        todo.toggle_main_frame(player)
     end
 end
 
