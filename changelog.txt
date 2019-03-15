@@ -1,16 +1,15 @@
 ---------------------------------------------------------------------------------------------------
-Version: NEXT
-Date: 2019.03.01
-  Features:
-    - Updated to 0.17.
-
+Version: 17.2.0
+Date: 2019-03-15
   Bugfixes:
+    - Changing display mode (quest mode) will automatically redraw the UI (closes #130)
     - Fixed thumbnail
+    - Fixed changelog
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 17.1.0
-Date:
+Date: 2019-03-14
   Features:
     - Added toolbar support for UI toggle and task adding (#102).
 
@@ -24,7 +23,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 17.0.0
-Date:
+Date: 2019-02-27
   Features:
     - Switched to 0.17
 
@@ -34,7 +33,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.9.0
-Date:
+Date: 2019-02-10
   Features:
     - Questlog mode. There is a setting to transform the todo list to a questlog (#74).
 
@@ -45,7 +44,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.8.2
-Date:
+Date: 2019-01-29
   Bugfixes:
     - Updated russian translation. (Thanks MasterLogick)
     - Updated chinese translation. (Thanks 笑脸)
@@ -53,7 +52,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.8.1
-Date:
+Date: 2018-12-08
   Bugfixes:
     - export/import dialogs don't grow outside the screen anymore when working with long strings.
     - Updated polish translations. (Thanks Virtual0txt)
@@ -61,14 +60,14 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.8.0
-Date:
+Date: 2018-11-26
   Features:
     - Subtasks can be created in the details view (down arrow) of a task.
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.7.2
-Date:
+Date: 2018-11-14
   Bugfixes:
     - Fixed a bug that the main button does not hide the UI anymore (#81)
     - Fixed polish translation. (Thanks Virtual0txt)
@@ -76,14 +75,14 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.7.1
-Date:
+Date: 2018-11-12
   Bugfixes:
     - Fixed that tasks are invisible after opening the main UI with the button (#79). (Thanks Omnifarious)
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.7.0
-Date:
+Date: 2018-11-11
   Features:
     - Tasks are now separated in title and details. (Thanks Tarrke)
       - Title is a one line textfield
@@ -95,7 +94,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.6.0
-Date:
+Date: 2018-10-29
   Features:
     - It is now possible to delete tasks
     - It is now possible to export and import tasks similar to blueprints
@@ -110,30 +109,26 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.5.1
-Date:
+Date: 2018-10-26
   Bugfixes:
     - Fixed a crash when editing a task (thanks Tarrke)
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.4.0
-Date:
+Date: 2018-10-13
+  Features:
+    - Modifyed UI so the button displays the current assigned task for each players. Thanks Tarrke!
+    - Added openning the edit dialog when clicking a task in the list feature. Thanks Tarrke!
+
   Bugfixes:
     - The button now only shows the first line of the task, not everything.
     - Added russian translation (thanks TheMrEvgen)
 
 
 ---------------------------------------------------------------------------------------------------
-Version: 16.2.0
-Date:
-  Features:
-    - Modifyed UI so the button displays the current assigned task for each players. Thanks Tarrke!
-    - Added openning the edit dialog when clicking a task in the list feature. Thanks Tarrke!
-
-
----------------------------------------------------------------------------------------------------
 Version: 16.1.0
-Date:
+Date: 2018-08-19
   Features:
     - Added auto assign feature. Thanks Tarrke!
     - Added localization for buttons. Thanks hoylemd!
@@ -146,7 +141,7 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.0.3
-Date:
+Date: 2018-02-28
   Features:
     - Added French translation
 
@@ -156,14 +151,12 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.0.2
-Date:
   Features:
     - Added sorting of tasks. Thanks to Tarrke for the reminder, input and code examples
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 16.0.1
-Date:
   Features:
     - Updates are now transferred on demand and not every 250ms anymore. This should improve performance by a lot.
     - Added scrollbar to make it usable with a lot of tasks
@@ -175,14 +168,12 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.4.6
-Date:
   Bugfixes:
     - it was not possible to load old saves that did not contain this mod
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.4.0
-Date:
   Internal changes:
     - Added settings for debug messages (mostly interesting for development)
     - Major code refactoring to make future changes much easier
@@ -190,14 +181,12 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.3.0
-Date:
   Features:
     - Added setting to hide the minimized UI and work only with hotkey
 
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.2.0
-Date:
   Features:
     - Added hotkey shift-t to toggle the UI
     - Add cancel button to add/edit frame
@@ -205,7 +194,6 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.1.0
-Date:
   Features:
     - Added german translation
     - Added pictures to the documentation
@@ -213,7 +201,6 @@ Date:
 
 ---------------------------------------------------------------------------------------------------
 Version: 1.0.0
-Date:
   Features:
     - Minimizable UI
     - Add tasks
