@@ -170,4 +170,14 @@ feature("#29 import and export tasks", function()
         assert(true == true)
     end)
 
+    scenario("Importing string resulting in base64 lib error should not crash the game.", function()
+        local player = game.players[1]
+        -- TODO: implement as soon as faketorio supports crashes in mocks
+    end)
+
+    scenario("Importing string not resulting in table should not crash the game.", function()
+        local player = game.players[1]
+        todo.import_tasks("bjk asfksabf kasb f", player)
+    end)
+
 end)
