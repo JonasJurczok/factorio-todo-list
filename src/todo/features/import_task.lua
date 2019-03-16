@@ -18,10 +18,26 @@ end
 
 function todo.import_tasks(encoded, player)
 
-    local tasks = game.json_to_table(todo.base64.decode(encoded))
+    local status, result = pcall(todo.base64.decode, encoded)
+    if (not status) then
+        local message = "Importing tasks failed for input %s. Result was %s. Please contact the mod author."
+        todo.log(string.format(message, encoded, result))
+        if (not todo.show_log(player)) then
+            player.print("Import failed. Please enable debug output and contact the author.")
+        end
+        return
+    end
+
+    local tasks = game.json_to_table(result)
 
     todo.log("Importing tasks:")
     todo.log(serpent.block(tasks))
+
+    if (type(tasks) ~= "table") then
+        local message = "Importing tasks failed for input %s. Table expected but got %s. Please contact the mod author."
+        todo.log(string.format(message, encoded, tasks))
+        return
+    end
 
     for _, task_to_import in pairs(tasks) do
         local task = todo.assemble_task(task_to_import, player)
