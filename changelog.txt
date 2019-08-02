@@ -1,8 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 17.2.2
-Date: 2019-07-09
+Version: 17.3.0
+Date: 2019-08-02
   Features:
     - Completed dutch translation. Thanks Foxite!
+	- Added brasilian portugeese translation. Thanks brunotdantas!
 
 ---------------------------------------------------------------------------------------------------
 Version: 17.2.1
