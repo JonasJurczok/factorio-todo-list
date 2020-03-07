@@ -392,7 +392,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = string.format("todo_main_subtask_delete_button_%i_%i", task_id, subtask_id),
-        sprite = "utility/remove",
+        sprite = "utility/trash_bin",
         tooltip = { todo.translate(player, "delete_subtask") }
     }
 
