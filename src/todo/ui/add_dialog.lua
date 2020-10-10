@@ -1,17 +1,10 @@
 function todo.create_add_task_dialog(player)
-    local gui = player.gui.center
-
     local old_dialog = todo.get_add_dialog(player)
     if (old_dialog ~= nil) then
         old_dialog.destroy()
     end
 
-    local dialog = gui.add({
-        type = "frame",
-        name = "todo_add_dialog",
-        caption = { todo.translate(player, "add_title") },
-        direction = "vertical"
-    })
+    local dialog = todo.create_frame(player, "todo_add_dialog", { todo.translate(player, "add_title") })
 
     local table = dialog.add({
         type = "table",
@@ -95,10 +88,12 @@ function todo.create_add_task_dialog(player)
         name = "todo_save_new_task_button",
         caption = { todo.translate(player, "persist") }
     })
+
+    dialog.force_auto_center()
 end
 
 function todo.get_add_dialog(player)
-    local gui = player.gui.center
+    local gui = player.gui.screen
     if gui.todo_add_dialog then
         return gui.todo_add_dialog
     else

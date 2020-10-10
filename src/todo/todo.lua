@@ -21,6 +21,7 @@ require("todo/features/subtasks")
 require("todo/features/take_task")
 
 -- UIs
+require("todo/ui/helper")
 require("todo/ui/add_dialog")
 require("todo/ui/edit_dialog")
 require("todo/ui/edit_subtask_dialog")

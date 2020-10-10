@@ -16,12 +16,7 @@ function todo.create_maximize_button(player)
 end
 
 function todo.create_maximized_frame(player)
-    local frame = mod_gui.get_frame_flow(player).add({
-        type = "frame",
-        name = "todo_main_frame",
-        caption = { todo.translate(player, "todo_list") },
-        direction = "vertical"
-    })
+    local frame = todo.create_frame(player, "todo_main_frame", { todo.translate(player, "todo_list") }, "todo_minimize_button")
 
     todo.create_task_table(frame, player)
 
@@ -45,15 +40,6 @@ function todo.create_maximized_frame(player)
         caption = { todo.translate(player, "show_done") }
     })
 
-    if todo.should_show_maximize_button(player) then
-        flow.add({
-            type = "button",
-            style = "todo_button_default",
-            name = "todo_minimize_button",
-            caption = { "todo.minimize" }
-        })
-    end
-
     flow.add({
         type = "sprite-button",
         style = "todo_sprite_button_default",
@@ -71,6 +57,7 @@ function todo.create_maximized_frame(player)
         tooltip = { todo.translate(player, "import") }
     })
 
+    frame.force_auto_center()
 end
 
 function todo.create_task_table(frame, player)
@@ -400,7 +387,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
 end
 
 function todo.get_main_frame(player)
-    local flow = mod_gui.get_frame_flow(player)
+    local flow = player.gui.screen
     if flow.todo_main_frame then
         return flow.todo_main_frame
     else
