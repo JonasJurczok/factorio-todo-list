@@ -1,17 +1,10 @@
 function todo.create_import_dialog(player)
-    local gui = player.gui.center
-
     local old_dialog = todo.get_import_dialog(player)
     if (old_dialog ~= nil) then
         old_dialog.destroy()
     end
 
-    local dialog = gui.add({
-        type = "frame",
-        name = "todo_import_dialog",
-        caption = { todo.translate(player, "import") },
-        direction = "vertical"
-    })
+    local dialog = todo.create_frame(player, "todo_import_dialog", { todo.translate(player, "import") })
 
     local textbox = dialog.add({
         type = "text-box",
@@ -39,10 +32,12 @@ function todo.create_import_dialog(player)
         name = "todo_import_import_tasks_button",
         caption = { todo.translate(player, "import") }
     })
+   
+    dialog.force_auto_center()
 end
 
 function todo.get_import_dialog(player)
-    local gui = player.gui.center
+    local gui = player.gui.screen
     if gui.todo_import_dialog then
         return gui.todo_import_dialog
     else

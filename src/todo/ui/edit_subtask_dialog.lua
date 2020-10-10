@@ -1,7 +1,5 @@
 
 function todo.create_edit_subtask_dialog(player, task_id, subtask)
-    local gui = player.gui.center
-
     if (not subtask or not task_id) then
         return
     end
@@ -11,12 +9,7 @@ function todo.create_edit_subtask_dialog(player, task_id, subtask)
         old_dialog.destroy()
     end
 
-    local dialog = gui.add({
-        type = "frame",
-        name = "todo_edit_subtask_dialog",
-        caption = { todo.translate(player, "edit_subtask") },
-        direction = "vertical"
-    })
+    local dialog = todo.create_frame(player, "todo_edit_subtask_dialog", { todo.translate(player, "edit_subtask") })
 
     dialog.add({
         type = "textfield",
@@ -44,10 +37,12 @@ function todo.create_edit_subtask_dialog(player, task_id, subtask)
         name = string.format("todo_edit_subtask_save_button_%i_%i", task_id, subtask.id),
         caption = { todo.translate(player, "update") }
     })
+
+    dialog.force_auto_center()
 end
 
 function todo.get_edit_subtask_dialog(player)
-    local gui = player.gui.center
+    local gui = player.gui.screen
     if gui.todo_edit_subtask_dialog then
         return gui.todo_edit_subtask_dialog
     else

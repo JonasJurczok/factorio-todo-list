@@ -1,5 +1,4 @@
 function todo.create_edit_task_dialog(player, id)
-    local gui = player.gui.center
     local task = todo.get_task_by_id(id)
     if (not task) then
         return
@@ -9,13 +8,7 @@ function todo.create_edit_task_dialog(player, id)
     if (old_dialog ~= nil) then
         old_dialog.destroy()
     end
-
-    local dialog = gui.add({
-        type = "frame",
-        name = "todo_edit_dialog",
-        caption = { todo.translate(player, "edit_title") },
-        direction = "vertical"
-    })
+    local dialog = todo.create_frame(player, "todo_edit_dialog", { todo.translate(player, "edit_title") })
 
     local table = dialog.add({
         type = "table",
@@ -138,10 +131,12 @@ function todo.create_edit_task_dialog(player, id)
         name = "todo_edit_save_changes_button_" .. task.id,
         caption = { todo.translate(player, "update") }
     })
+
+    dialog.force_auto_center()
 end
 
 function todo.get_edit_dialog(player)
-    local gui = player.gui.center
+    local gui = player.gui.screen
     if gui.todo_edit_dialog then
         return gui.todo_edit_dialog
     else
