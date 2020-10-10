@@ -8,13 +8,13 @@ Version: 18.0.0
 Date: 2020-01-21
   Features:
     - Update for version 0.18.0
-    
+
 ---------------------------------------------------------------------------------------------------
 Version: 17.3.0
 Date: 2019-08-02
   Features:
     - Completed dutch translation. Thanks Foxite!
-	- Added brasilian portugeese translation. Thanks brunotdantas!
+    - Added brasilian portugeese translation. Thanks brunotdantas!
 
 ---------------------------------------------------------------------------------------------------
 Version: 17.2.1
