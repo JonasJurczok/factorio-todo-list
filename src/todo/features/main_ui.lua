@@ -13,6 +13,7 @@ end
 
 function todo.minimize_main_frame(player)
     todo.log("Minimizing UI for player " .. player.name)
+    player.set_shortcut_toggled("todo-toggle-ui-shortcut", false)
 
     local frame = todo.get_main_frame(player)
     if frame then
@@ -34,6 +35,7 @@ end
 
 function todo.maximize_main_frame(player)
     todo.log("Maximizing UI for player " .. player.name)
+    player.set_shortcut_toggled("todo-toggle-ui-shortcut", true)
 
     if not todo.get_main_frame(player) then
         todo.create_maximized_frame(player)

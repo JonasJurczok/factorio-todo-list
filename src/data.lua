@@ -10,6 +10,7 @@ local hotkey = {
 local toggle_ui_shortcut = {
     type = 'shortcut',
     name = 'todo-toggle-ui-shortcut',
+    toggleable = true,
     order = 'a[alt-mode]-b[copy]',
     action = 'lua',
     localised_name = {'todo.shortcut_toggle_ui'},
