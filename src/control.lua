@@ -1,6 +1,7 @@
 
 require "mod-gui"
 require "todo/todo"
+mod_gui = require("mod-gui")
 
 -- when creating a new game, initialize data structure
 script.on_init(todo.mod_init)

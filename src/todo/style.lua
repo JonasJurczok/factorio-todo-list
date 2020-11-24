@@ -39,7 +39,7 @@ default_gui["todo_button_sort"] = {
 
 default_gui["todo_sprite_button_default"] = {
     type = "button_style",
-    parent = "icon_button",
+    parent = "tool_button",
     font = "todo_font_default",
     align = "center",
     vertical_align = "center",
