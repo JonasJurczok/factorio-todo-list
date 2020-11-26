@@ -20,10 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ./luarocks install serpent
-          ./luarocks install busted
-          ./luarocks install luacheck
-          ./luarocks install faketorio
+          luarocks install serpent
+          luarocks install busted
+          luarocks install luacheck
+          luarocks install faketorio
       
       - name: Run tests
         run: |
