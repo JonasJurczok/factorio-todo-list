@@ -1,8 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 19.0.1
+Version: 19.0.2
 Date: 2020-11-28
   Bugfixes:
     - Fixed sprite button -> tool button (Thanks Tastaturtaste)
+    - Fixed mod_gui crash  (Thanks Tastaturtaste)
 ---------------------------------------------------------------------------------------------------
 Version: 19.0.0
 Date: 2020-11-28
