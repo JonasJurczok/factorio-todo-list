@@ -30,8 +30,12 @@ script.on_event("todolist-toggle-ui", function(event)
 end)
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
-    local player = game.players[event.player_index]
-    local key = event.setting
-    todo.on_runtime_mod_setting_changed(player, key)
+    -- This can happen if the event was raised by a script.
+    -- We don't expect this to affect us so we will just ignore it.
+    if (event.player_index) then
+      local player = game.players[event.player_index]
+      local key = event.setting
+      todo.on_runtime_mod_setting_changed(player, key)
+    end
 end)
 
