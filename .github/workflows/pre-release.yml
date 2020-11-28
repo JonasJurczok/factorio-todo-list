@@ -1,16 +1,16 @@
-name: Release
+name: "pre-release"
 
 on:
   push:
-    tags:
-      - '*'
-
-  workflow_dispatch:
+    branches:
+      - "master"
 
 jobs:
-  Release:
-    if: github.event.base_ref == 'refs/heads/master'
-    runs-on: ubuntu-latest
+  pre-release:
+    name: "Pre Release"
+    runs-on: "ubuntu-latest"
+
+    steps:
     steps:
       - uses: actions/checkout@v2
 
@@ -34,8 +34,10 @@ jobs:
           faketorio package -c .github/.faketorio -v
 
       - uses: "marvinpinto/action-automatic-releases@latest"
-          with:
-            repo_token: "${{ secrets.GITHUB_TOKEN }}"
-            prerelease: false
-            files: |
-              target/*.zip
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            target/*.zip
