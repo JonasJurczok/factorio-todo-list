@@ -1,4 +1,24 @@
 ---------------------------------------------------------------------------------------------------
+Version: 18.0.10
+Date: 2020-11-28
+  Major Features:
+    - Reworked release process
+---------------------------------------------------------------------------------------------------
+Version: 18.0.4
+Date: 2020-11-28
+  Other:
+    - Fixed problems with the relase process.
+---------------------------------------------------------------------------------------------------
+Version: 18.0.3
+Date: 2020-11-28
+  Other:
+    - Fixed problems with the relase process.
+---------------------------------------------------------------------------------------------------
+Version: 18.0.2
+Date: 2020-11-28
+  Other:
+    - Added first version of release script.
+---------------------------------------------------------------------------------------------------
 Version: 18.0.1
 Date: 2020-03-7
   Bugfixes:
@@ -8,13 +28,13 @@ Version: 18.0.0
 Date: 2020-01-21
   Features:
     - Update for version 0.18.0
-    
+
 ---------------------------------------------------------------------------------------------------
 Version: 17.3.0
 Date: 2019-08-02
   Features:
     - Completed dutch translation. Thanks Foxite!
-	- Added brasilian portugeese translation. Thanks brunotdantas!
+    - Added brasilian portugeese translation. Thanks brunotdantas!
 
 ---------------------------------------------------------------------------------------------------
 Version: 17.2.1
