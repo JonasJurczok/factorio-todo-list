@@ -1,7 +1,7 @@
 {
   "name": "Todo-List",
-  "version": "19.0.2",
-  "title": "\u00e2\u0153\u201d Todo List",
+  "version": "19.0.3",
+  "title": "\u00e2\u0153\u201c Todo List",
   "author": "Jason Miles, Tessiema, Quis, Tarrke, hoylemd, Dae, veger",
   "contact": "jonasjurczok+factorio@gmail.com",
   "homepage": "https://github.com/JonasJurczok/factorio-todo-list",
@@ -9,5 +9,5 @@
   "dependencies": [
     "base >= 1.1.0"
   ],
-  "description": "\u00e2\u0153\u201d This mod adds a todo list to the single- and multiplayer game to allow players to synchronize their work."
+  "description": "\u00e2\u0153\u201c This mod adds a todo list to the single- and multiplayer game to allow players to synchronize their work."
 }
