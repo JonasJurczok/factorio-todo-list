@@ -33,7 +33,7 @@ jobs:
           luacheck ./src/todo/*.lua
           faketorio package -c .github/.faketorio -v
 
-       - name: Create Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
