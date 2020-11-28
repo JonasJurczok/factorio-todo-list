@@ -1,4 +1,30 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.0.0
+Date: 2020-11-28
+  Major Features:
+    - sample entry
+      Continued
+  Features:
+  Minor Features:
+  Graphics:
+  Sounds:
+  Optimisations:
+  Balancing:
+  Combat Balancing:
+  Circuit Network:
+  Changes:
+  Bugfixes:
+  Modding:
+  Scripting:
+  Gui:
+  Control:
+  Translation:
+  Debug:
+  Ease of use:
+  Info:
+  Locale:
+  Other:
+---------------------------------------------------------------------------------------------------
 Version: 18.0.10
 Date: 2020-11-28
   Major Features:
