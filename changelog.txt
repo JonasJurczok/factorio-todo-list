@@ -2,7 +2,7 @@
 Version: 19.0.0
 Date: 2020-11-28
   Features:
-    - Ready for 1.1
+    - Ready for 1.1 (Thanks Tastaturtaste)
   Bugfixes:
     - Changelog file errors fixed (Thanks veger, Dae)
   Gui:
