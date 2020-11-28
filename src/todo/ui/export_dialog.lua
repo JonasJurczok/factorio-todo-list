@@ -1,18 +1,11 @@
 function todo.create_export_dialog(player)
-    local gui = player.gui.center
-
     local old_dialog = todo.get_export_dialog(player)
     if (old_dialog ~= nil) then
         old_dialog.destroy()
     end
 
-    local dialog = gui.add({
-        type = "frame",
-        name = "todo_export_dialog",
-        caption = { todo.translate(player, "export") },
-        direction = "vertical"
-    })
-
+    local dialog = todo.create_frame(player, "todo_export_dialog", { todo.translate(player, "export") })
+    
     local scroll = dialog.add({
         type = "scroll-pane",
         name = "todo_export_dialog_scroll_pane"
@@ -74,10 +67,11 @@ function todo.create_export_dialog(player)
         caption = { todo.translate(player, "export") }
     })
 
+    dialog.force_auto_center()
 end
 
 function todo.get_export_dialog(player)
-    local gui = player.gui.center
+    local gui = player.gui.screen
     if gui.todo_export_dialog then
         return gui.todo_export_dialog
     else
