@@ -1,34 +1,8 @@
 ---------------------------------------------------------------------------------------------------
 Version: 19.0.5
-Date: 2020-11-29
-# Commits since last tag.
-# Remove all lines with # in the beginning and order the content into the categories below.
-#added unicode checkmark
-#Release version 19.0.4 (#171)
-#  Co-authored-by: Jonas Jurczok <jonas.jurczok@gropyus.com>
-  Major Features:
-    - sample entry
-      Continued
-  Features:
-  Minor Features:
-  Graphics:
-  Sounds:
-  Optimisations:
-  Balancing:
-  Combat Balancing:
-  Circuit Network:
-  Changes:
+Date: 2020-11-28
   Bugfixes:
-  Modding:
-  Scripting:
-  Gui:
-  Control:
-  Translation:
-  Debug:
-  Ease of use:
-  Info:
-  Locale:
-  Other:
+    - Added unicode symbol again manually.
 ---------------------------------------------------------------------------------------------------
 Version: 19.0.4
 Date: 2020-11-28
