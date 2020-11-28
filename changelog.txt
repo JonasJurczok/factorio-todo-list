@@ -1,8 +1,8 @@
 ---------------------------------------------------------------------------------------------------
-Version: 19.0.3
+Version: 19.0.4
 Date: 2020-11-28
   Bugfixes:
-    - Todo List check mark not displayed correctly
+    - Remove unicode symbols from mod name and description because they are not displayed correctly.
 ---------------------------------------------------------------------------------------------------
 Version: 19.0.2
 Date: 2020-11-28
