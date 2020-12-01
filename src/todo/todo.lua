@@ -57,7 +57,7 @@ function todo.mod_init()
     local flow = mod_gui.get_frame_flow(player)
     if flow.todo_main_frame then
         flow.todo_main_frame.destroy()
-    else
+    end
 end
 
 function todo.init_ensure_task_fields(task)
