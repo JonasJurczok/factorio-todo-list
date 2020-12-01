@@ -54,9 +54,11 @@ function todo.mod_init()
     end
 
     -- If there is an old gui, remove it
-    local flow = mod_gui.get_frame_flow(player)
-    if flow.todo_main_frame then
-        flow.todo_main_frame.destroy()
+    for _, player in pairs(game.players) do
+        local flow = mod_gui.get_frame_flow(player)
+        if flow.todo_main_frame then
+            flow.todo_main_frame.destroy()
+        end
     end
 end
 
