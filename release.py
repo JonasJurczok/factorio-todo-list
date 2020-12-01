@@ -40,10 +40,10 @@ elif (action == Action.MAJOR):
 
 new_version = ".".join(split_version)
 print("New version is " + new_version)
-with open('info.json') as f:
+with open('info.json', encoding='utf8') as f:
   data = json.load(f)
   data['version'] = new_version
-  with open('info.json', 'w') as file:
+  with open('info.json', 'w', encoding='utf8') as file:
       json.dump(data, file, indent=2)
 
 # generate changelog
@@ -85,10 +85,10 @@ Date: {today}
 ---------------------------------------------------------------------------------------------------
 """.format(**locals())
 
-with open("changelog.txt") as f:
+with open("changelog.txt", encoding='utf8') as f:
     lines = f.readlines()
 lines[0] = changelog
-with open("changelog.txt", "w") as f:
+with open("changelog.txt", "w", encoding='utf8') as f:
     f.writelines(lines)
 
 # wait for user to edit changelog
