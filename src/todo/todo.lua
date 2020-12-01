@@ -52,6 +52,12 @@ function todo.mod_init()
     for _, player in pairs(game.players) do
         todo.create_maximize_button(player)
     end
+
+    -- If there is an old gui, remove it
+    local flow = mod_gui.get_frame_flow(player)
+    if flow.todo_main_frame then
+        flow.todo_main_frame.destroy()
+    else
 end
 
 function todo.init_ensure_task_fields(task)
