@@ -18,6 +18,26 @@ function todo.minimize_main_frame(player)
     local frame = todo.get_main_frame(player)
     if frame then
         frame.destroy()
+
+        -- just close import/export
+        if (todo.get_import_dialog(player)) then
+            todo.on_import_cancel_click(player)
+        end
+        if (todo.get_export_dialog(player)) then
+            todo.on_export_cancel_click(player)
+        end
+
+        -- if other dialog open, set it to opened
+        local dialog = todo.get_add_dialog(player)
+        if (dialog) then
+            player.opened = dialog
+            return true
+        end
+        dialog = todo.get_edit_dialog(player)
+        if (dialog) then
+            player.opened = dialog
+            return true
+        end
         return true
     end
     return false
