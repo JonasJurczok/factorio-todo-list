@@ -25,7 +25,9 @@ script.on_event(defines.events.on_gui_closed, function(event)
         local player = game.get_player(event.player_index)
         todo.on_add_cancel_click(player)
         todo.on_edit_cancel_click(player)
-        todo.toggle_main_frame(player)
+        todo.on_import_cancel_click(player)
+        todo.on_export_cancel_click(player)
+        todo.minimize_main_frame(player)
     end
 end)
 
