@@ -21,6 +21,26 @@ find a small button in the upper left corner. Just click it or press shift-T :)
 
 ![minimized](https://github.com/JonasJurczok/factorio-todo-list/blob/master/img/minimized.png)
 
+There's also a couple of shortcuts you can add to your quickbar to toggle the
+Todo list UI or bring up the dialog to make a new task.
+
+To close the main frame, you can click the little x in the top-right, or press
+E or Esc to dismiss the ui, just like any other Factorio UI.  This does have a
+few edge cases detailed below:
+
+- If you press E or Esc to open a new dialog (or open a different UI e.g.
+Helmod), with the main todo list UI open, all todo list dialogs and UIs
+will close/minimize.
+- If you close the main ui any other way (x button, shortcut etc), and the add
+or edit dialog is open, the add or edit dialog will remain on screen, in
+case you were working on something. Import/export dialogs and the main
+frame will still close.
+- If you only have the add or edit dialog onscreen (i.e. main ui is minimized),
+they will also respect pressing E or Esc, (as long as a text field isn't
+active, as that will capture the E keystroke, Esc will work as expected)
+- If you only have the add or edit dialog onscreen (i.e. main ui is minimized),
+and you open the main UI, the add or edit dialog will close.
+
 ### Adding tasks
 
 Click the `Add` button to add a new task.
@@ -61,8 +81,8 @@ If you want to remove a task you can do that from the edit screen.
 Is the minimized UI (the "Todo List" button) still taking up your precious
 screen space?
 
-In the settings menu you can disable it. Then you'll only
-be able to use the hotkey (default shift-t) to show/hide the todo list.
+In the settings menu you can disable it. Then you'll only be able to use the
+hotkey (default shift-t) or the shortcut to show/hide the todo list.
 
 ## How to contribute?
 
