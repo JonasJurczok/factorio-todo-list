@@ -59,7 +59,7 @@ function todo.create_maximized_frame(player)
 
     frame.force_auto_center()
 
-	return frame
+    return frame
 end
 
 function todo.create_task_table(frame, player)

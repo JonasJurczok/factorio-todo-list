@@ -91,6 +91,8 @@ function todo.create_add_task_dialog(player)
 
     dialog.force_auto_center()
     title_field.focus()
+
+    return dialog
 end
 
 function todo.get_add_dialog(player)

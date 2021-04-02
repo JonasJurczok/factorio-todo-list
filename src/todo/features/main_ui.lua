@@ -39,7 +39,7 @@ function todo.maximize_main_frame(player)
 
     if not todo.get_main_frame(player) then
         frame = todo.create_maximized_frame(player)
-		player.opened = frame
+        player.opened = frame
         return true
     end
     return false
