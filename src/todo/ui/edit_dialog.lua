@@ -26,7 +26,7 @@ function todo.create_edit_task_dialog(player, id)
         caption = { todo.translate(player, "add_task_title") }
     })
 
-    table.add({
+    local title_field = table.add({
         type = "textfield",
         style = "todo_textfield_default",
         name = "todo_edit_task_title",
@@ -133,6 +133,7 @@ function todo.create_edit_task_dialog(player, id)
     })
 
     dialog.force_auto_center()
+    title_field.focus()
 end
 
 function todo.get_edit_dialog(player)
