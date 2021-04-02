@@ -24,6 +24,7 @@ script.on_event(defines.events.on_gui_closed, function(event)
     if event.element and event.element.name == "todo_main_frame" then
         local player = game.get_player(event.player_index)
         todo.on_add_cancel_click(player)
+        todo.on_edit_cancel_click(player)
         todo.toggle_main_frame(player)
     end
 end)
