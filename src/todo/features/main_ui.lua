@@ -38,7 +38,8 @@ function todo.maximize_main_frame(player)
     player.set_shortcut_toggled("todo-toggle-ui-shortcut", true)
 
     if not todo.get_main_frame(player) then
-        todo.create_maximized_frame(player)
+        frame = todo.create_maximized_frame(player)
+		player.opened = frame
         return true
     end
     return false
