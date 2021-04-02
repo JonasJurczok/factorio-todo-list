@@ -31,6 +31,9 @@ script.on_event(defines.events.on_gui_closed, function(event)
     elseif event.element and event.element.name == "todo_add_dialog" then
         local player = game.get_player(event.player_index)
         todo.on_add_cancel_click(player)
+    elseif event.element and event.element.name == "todo_edit_dialog" then
+        local player = game.get_player(event.player_index)
+        todo.on_edit_cancel_click(player)
     end
 end)
 
