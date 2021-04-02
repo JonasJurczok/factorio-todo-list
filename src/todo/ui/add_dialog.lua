@@ -91,6 +91,11 @@ function todo.create_add_task_dialog(player)
 
     dialog.force_auto_center()
     title_field.focus()
+
+    -- if main frame is not active, set this to player.opened
+    if not todo.get_main_frame(player) then
+        player.opened = dialog
+    end
 end
 
 function todo.get_add_dialog(player)

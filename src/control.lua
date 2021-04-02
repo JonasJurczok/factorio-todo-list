@@ -28,6 +28,9 @@ script.on_event(defines.events.on_gui_closed, function(event)
         todo.on_import_cancel_click(player)
         todo.on_export_cancel_click(player)
         todo.minimize_main_frame(player)
+    elseif event.element and event.element.name == "todo_add_dialog" then
+        local player = game.get_player(event.player_index)
+        todo.on_add_cancel_click(player)
     end
 end)
 
