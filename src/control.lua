@@ -20,6 +20,23 @@ script.on_event(defines.events.on_gui_click, function(event)
     todo.on_gui_click(event)
 end)
 
+script.on_event(defines.events.on_gui_closed, function(event)
+    if event.element and event.element.name == "todo_main_frame" then
+        local player = game.get_player(event.player_index)
+        todo.on_add_cancel_click(player)
+        todo.on_edit_cancel_click(player)
+        todo.on_import_cancel_click(player)
+        todo.on_export_cancel_click(player)
+        todo.minimize_main_frame(player)
+    elseif event.element and event.element.name == "todo_add_dialog" then
+        local player = game.get_player(event.player_index)
+        todo.on_add_cancel_click(player)
+    elseif event.element and event.element.name == "todo_edit_dialog" then
+        local player = game.get_player(event.player_index)
+        todo.on_edit_cancel_click(player)
+    end
+end)
+
 script.on_event(defines.events.on_lua_shortcut, function(event)
     todo.on_lua_shortcut(event)
 end)
