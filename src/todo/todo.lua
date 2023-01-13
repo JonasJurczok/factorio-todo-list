@@ -28,6 +28,7 @@ require("todo/ui/edit_subtask_dialog")
 require("todo/ui/export_dialog")
 require("todo/ui/import_dialog")
 require("todo/ui/main_frame")
+require("todo/ui/clean_dialog")
 
 -- convenience
 require("todo/helper")
@@ -184,6 +185,12 @@ function todo.on_gui_click(event)
         local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_delete_button_")
 
         todo.on_subtask_delete_click(task_id, subtask_id)
+    elseif (string.find(element.name, "todo_open_clean_dialog")) then
+        log("Opening clean button dialog for " .. player.name)
+        todo.create_clean_dialog(player)
+    elseif (string.find(element.name, "todo_minimize_clean")) then
+        log("Destroying clean button dialog for " .. player.name)
+        todo.destroy_clean_dialog(player)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
