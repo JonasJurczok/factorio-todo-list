@@ -188,9 +188,12 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_open_clean_dialog")) then
         log("Opening clean button dialog for " .. player.name)
         todo.create_clean_dialog(player)
-    elseif (string.find(element.name, "todo_minimize_clean")) then
+    elseif (string.find(element.name, "todo_minimize_clean")) or (string.find(element.name, "todo_clean_cancel_button")) then
         log("Destroying clean button dialog for " .. player.name)
         todo.destroy_clean_dialog(player)
+    elseif string.find(element.name, "todo_clean_option_") then
+        log("Clean checkbox checked: " .. element.name)
+        todo.on_clean_checkbox_change(player)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
