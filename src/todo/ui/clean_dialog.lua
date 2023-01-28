@@ -51,7 +51,7 @@ function todo.create_clean_dialog(player)
     })
 
     dialog.force_auto_center()
-    
+
     -- if main frame is not active, set this to player.opened
     if not todo.get_main_frame(player) then
         player.opened = dialog
