@@ -98,3 +98,11 @@ default_gui["todo_radiobutton_default"] = {
     type = "radiobutton_style",
     font = "todo_font_default"
 }
+
+default_gui["todo_clean_confirm_text_label"] = {
+    type = "label_style",
+    font = "todo_font_default",
+    natural_width = 200,
+    maximal_width = 300,
+    single_line = false
+}
