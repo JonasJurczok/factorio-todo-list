@@ -27,6 +27,14 @@ function todo.minimize_main_frame(player)
             todo.on_export_cancel_click(player)
         end
 
+        -- Also close the clean / clean confirmation dialogs
+        if (todo.get_clean_dialog(player)) then
+            todo.destroy_clean_dialog(player)
+        end
+        if (todo.get_clean_confirm_dialog(player)) then
+            todo.destroy_clean_confirm_dialog(player)
+        end
+
         -- if other dialog open, set it to opened
         local dialog = todo.get_add_dialog(player)
         if (dialog) then
