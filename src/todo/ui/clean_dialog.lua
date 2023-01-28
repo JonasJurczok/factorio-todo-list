@@ -74,6 +74,11 @@ function todo.destroy_clean_dialog(player)
     if dialog then
         dialog.destroy()
     end
+
+    -- Also close the clean confirmation dialog in case it is open.
+    -- The clean confirmation dialog needs the checkboxes, so if this dialog is closed the confirmation
+    -- dialog will only no-op.
+    todo.destroy_clean_confirm_dialog(player)
 end
 
 function todo.get_clean_button(player)
