@@ -142,11 +142,5 @@ local done_checkbox, in_progress_checkbox = todo.get_clean_checkboxes(player)
         else
             todo.disable_clean_button(player)
         end
-    else
-        log("something was nil")
-        log("Debug:")
-        log("clean_button: " .. string(clean_button))
-        log("done_checkbox: " .. string(done_checkbox))
-        log("in_progress_checkbox: " .. string(in_progress_checkbox))
     end
 end

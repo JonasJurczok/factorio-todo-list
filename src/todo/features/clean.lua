@@ -7,10 +7,8 @@ function todo.on_clean_confirm(player)
 
     if completed_checkbox and in_progress_checkbox then
         if completed_checkbox.state then
-            log("Cleaning all completed")
             global.todo.done = {}
         elseif in_progress_checkbox.state then
-            log("Cleaning all in progress")
             global.todo.open = {}
         end
     end
