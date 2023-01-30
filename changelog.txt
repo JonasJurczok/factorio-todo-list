@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.3.0
+Date: 2023-01-30
+  Improvements:
+    - Added ability to remove (un-)compelted tasks in bulk. Thanks flamion!
+    - Added Korean locale. Thanks x2605!
+---------------------------------------------------------------------------------------------------
 Version: 19.2.0
 Date: 2021-04-06
   Improvements:
