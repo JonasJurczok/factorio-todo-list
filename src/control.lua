@@ -27,6 +27,8 @@ script.on_event(defines.events.on_gui_closed, function(event)
         todo.on_edit_cancel_click(player)
         todo.on_import_cancel_click(player)
         todo.on_export_cancel_click(player)
+        todo.destroy_clean_dialog(player)
+        todo.destroy_clean_confirm_dialog(player)
         todo.minimize_main_frame(player)
     elseif event.element and event.element.name == "todo_add_dialog" then
         local player = game.get_player(event.player_index)
@@ -55,4 +57,3 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
       todo.on_runtime_mod_setting_changed(player, key)
     end
 end)
-

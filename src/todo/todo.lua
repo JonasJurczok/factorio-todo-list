@@ -19,6 +19,7 @@ require("todo/features/mark_open")
 require("todo/features/sort_tasks")
 require("todo/features/subtasks")
 require("todo/features/take_task")
+require("todo/features/clean")
 
 -- UIs
 require("todo/ui/helper")
@@ -28,6 +29,8 @@ require("todo/ui/edit_subtask_dialog")
 require("todo/ui/export_dialog")
 require("todo/ui/import_dialog")
 require("todo/ui/main_frame")
+require("todo/ui/clean_dialog")
+require("todo/ui/clean_confirm_dialog")
 
 -- convenience
 require("todo/helper")
@@ -184,6 +187,18 @@ function todo.on_gui_click(event)
         local task_id, subtask_id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_delete_button_")
 
         todo.on_subtask_delete_click(task_id, subtask_id)
+    elseif (element.name == "todo_open_clean_dialog") then
+        todo.create_clean_dialog(player)
+    elseif (element.name == "todo_minimize_clean") or (element.name == "todo_clean_cancel_button") then
+        todo.destroy_clean_dialog(player)
+    elseif (string.find(element.name, "todo_clean_option_")) then
+        todo.on_clean_checkbox_change(player)
+    elseif (element.name == "todo_clean_button") then
+        todo.create_clean_confirm_dialog(player)
+    elseif (element.name == "todo_minimize_clean_confirm") or (element.name == "todo_clean_confirm_cancel_button") then
+        todo.destroy_clean_confirm_dialog(player)
+    elseif (element.name == "todo_clean_confirm_button") then
+        todo.on_clean_confirm(player)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end

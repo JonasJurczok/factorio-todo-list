@@ -41,6 +41,13 @@ function todo.create_maximized_frame(player)
     })
 
     flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_open_clean_dialog",
+        caption = { todo.translate(player, "clean") }
+    })
+
+    flow.add({
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_main_open_export_dialog_button",
