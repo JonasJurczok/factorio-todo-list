@@ -58,6 +58,15 @@ function todo.import_tasks(encoded, player)
     todo.log("Imported " .. #tasks .. " tasks.")
 end
 
+function todo.on_import_blueprint_click(player)
+    local dialog = todo.get_import_dialog(player)
+    if (dialog == nil) then
+        return
+    end
+
+    -- TODO: add call to decode and import blueprints as tasks
+end
+
 function todo.on_import_cancel_click(player)
     local dialog = todo.get_import_dialog(player)
     if (dialog) then

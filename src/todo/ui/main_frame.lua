@@ -61,7 +61,7 @@ function todo.create_maximized_frame(player)
         style = "todo_sprite_button_default",
         name = "todo_main_open_import_dialog_button",
         sprite = "utility/import_slot",
-        tooltip = { todo.translate(player, "import") }
+        tooltip = { todo.translate(player, "import_tasks") }
     })
 
     flow.add({

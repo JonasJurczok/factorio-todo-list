@@ -146,9 +146,13 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_export_cancel_button") then
         todo.on_export_cancel_click(player)
     elseif (element.name == "todo_main_open_import_dialog_button") then
-        todo.create_import_dialog(player)
+        todo.create_import_dialog(player, 1)
+    elseif (element.name == "todo_main_open_import_blueprint_dialog_button") then
+        todo.create_import_dialog(player, 2)
     elseif (element.name == "todo_import_import_tasks_button") then
         todo.on_import_tasks_click(player)
+    elseif (element.name == "todo_import_import_blueprint_button") then
+        todo.on_import_blueprint_click(player)
     elseif (element.name == "todo_import_cancel_button") then
         todo.on_import_cancel_click(player)
     elseif (string.find(element.name, "todo_main_open_details_button_")) then
