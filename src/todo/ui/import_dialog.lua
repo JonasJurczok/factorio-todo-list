@@ -4,7 +4,7 @@ function todo.create_import_dialog(player)
         old_dialog.destroy()
     end
 
-    local dialog = todo.create_frame(player, "todo_import_dialog", { todo.translate(player, "import") })
+    local dialog = todo.create_frame(player, "todo_import_dialog", { todo.translate(player, "import") }, "todo_import_cancel_button")
 
     local textbox = dialog.add({
         type = "text-box",
@@ -17,13 +17,6 @@ function todo.create_import_dialog(player)
         type = "flow",
         name = "todo_import_dialog_button_flow",
         direction = "horizontal"
-    })
-
-    flow.add({
-        type = "button",
-        style = "todo_button_default",
-        name = "todo_import_cancel_button",
-        caption = { todo.translate(player, "cancel") }
     })
 
     flow.add({
