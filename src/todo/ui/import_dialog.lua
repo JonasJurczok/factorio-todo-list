@@ -40,6 +40,7 @@ function todo.create_import_dialog(player, import_type)
     })
 
     dialog.force_auto_center()
+    textbox.focus()
 end
 
 function todo.get_import_dialog(player)
