@@ -120,8 +120,7 @@ function todo.import_blueprint(encoded, player)
             end
 
             for _, entity in pairs(entities) do
-                local entity_name = entity.name -- TODO: Lookup the friendly name of the entity instead of the code name
-                todo.save_subtask_to_task(task, entity.count .. "x " .. entity_name)
+                todo.save_subtask_to_task(task, entity.count .. "x [entity=" .. entity.name .. "]")
             end
         end
 
