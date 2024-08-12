@@ -94,18 +94,38 @@ function todo.import_blueprint(encoded, player)
         return
     end
 
-    for _, blueprint_to_import in pairs(blueprint) do
-        local task = {}
-        task.id = todo.next_task_id()
-        task.title = blueprint_to_import.label
-        task.task = blueprint_to_import.description
-        task.assignee = player.name
-        task.created_by = player.name
-        task.updated_by = player.name
+    todo.import_blueprint_rec(blueprint, player)
 
-        if (blueprint_to_import.entities) then
+    todo.log("Imported " .. #blueprint .. " blueprint.")
+end
+
+function todo.import_blueprint_rec(blueprint, player)
+    if (blueprint == nil) then
+        return
+    end
+
+    if (blueprint.blueprint_book) then
+        if (blueprint.blueprint_book.blueprints) then
+            for _, blueprint_to_import in pairs(blueprint.blueprint_book.blueprints) do
+                todo.import_blueprint_rec(blueprint_to_import, player)
+            end
+        end
+
+        return
+    end
+
+    for _, blueprint_to_import_1 in pairs(blueprint) do
+        if (blueprint_to_import_1.entities) then
+            local task = {}
+            task.id = todo.next_task_id()
+            task.title = blueprint_to_import_1.label
+            task.task = blueprint_to_import_1.description
+            task.assignee = player.name
+            task.created_by = player.name
+            task.updated_by = player.name
+            
             local entities = {}
-            for _, blueprint_entity in pairs(blueprint_to_import.entities) do
+            for _, blueprint_entity in pairs(blueprint_to_import_1.entities) do
                 local entity = entities[blueprint_entity.name]
 
                 if (entity == nil) then
@@ -122,13 +142,13 @@ function todo.import_blueprint(encoded, player)
             for _, entity in pairs(entities) do
                 todo.save_subtask_to_task(task, entity.count .. "x [entity=" .. entity.name .. "]")
             end
+
+            todo.log(serpent.block(task))
+            todo.save_task_to_open_list(task)
+            
+            return
         end
-
-        todo.log(serpent.block(task))
-        todo.save_task_to_open_list(task)
     end
-
-    todo.log("Imported " .. #blueprint .. " blueprint.")
 end
 
 function todo.on_import_cancel_click(player)
