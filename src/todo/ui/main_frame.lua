@@ -68,7 +68,7 @@ function todo.create_maximized_frame(player)
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_main_open_import_blueprint_dialog_button",
-        sprite = "utility/import_slot",
+        sprite = "utility/import",
         tooltip = { todo.translate(player, "import_blueprint") }
     })
 
