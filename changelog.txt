@@ -2,7 +2,7 @@
 Version: 19.4.0
 Date: 2024-08-12
   Features:
-    - Added ability to import tasks from blueprints. Thanks Psycic101!
+    - Added ability to import tasks from blueprints and blueprint books. Thanks Psycic101!
 ---------------------------------------------------------------------------------------------------
 Version: 19.3.0
 Date: 2023-01-30
