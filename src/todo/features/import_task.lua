@@ -94,12 +94,12 @@ function todo.import_blueprint(encoded, player)
         return
     end
 
-    todo.import_blueprint_rec(blueprint, player)
+    todo.import_blueprint_rec(blueprint, player, nil)
 
     todo.log("Imported " .. #blueprint .. " blueprint.")
 end
 
-function todo.import_blueprint_rec(blueprint, player)
+function todo.import_blueprint_rec(blueprint, player, prefix)
     if (blueprint == nil) then
         return
     end
@@ -107,25 +107,31 @@ function todo.import_blueprint_rec(blueprint, player)
     if (blueprint.blueprint_book) then
         if (blueprint.blueprint_book.blueprints) then
             for _, blueprint_to_import in pairs(blueprint.blueprint_book.blueprints) do
-                todo.import_blueprint_rec(blueprint_to_import, player)
+                todo.import_blueprint_rec(blueprint_to_import, player, blueprint.blueprint_book.label)
             end
         end
 
         return
     end
 
-    for _, blueprint_to_import_1 in pairs(blueprint) do
-        if (blueprint_to_import_1.entities) then
+    for _, blueprint_to_import in pairs(blueprint) do
+        if (blueprint_to_import.entities) then
+            if (prefix == nil or prefix == "") then
+                prefix = ""
+            else
+                prefix = prefix .. ": "
+            end
+
             local task = {}
             task.id = todo.next_task_id()
-            task.title = blueprint_to_import_1.label
-            task.task = blueprint_to_import_1.description
+            task.title = prefix .. (blueprint_to_import.label or "[item=blueprint]")
+            task.task = blueprint_to_import.description or blueprint_to_import.label or "[item=blueprint]"
             task.assignee = player.name
             task.created_by = player.name
             task.updated_by = player.name
             
             local entities = {}
-            for _, blueprint_entity in pairs(blueprint_to_import_1.entities) do
+            for _, blueprint_entity in pairs(blueprint_to_import.entities) do
                 local entity = entities[blueprint_entity.name]
 
                 if (entity == nil) then
