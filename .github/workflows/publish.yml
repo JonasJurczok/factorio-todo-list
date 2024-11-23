@@ -1,10 +1,8 @@
 name: Publish Factorio Mod
 
 on:
-    push:
-        tags:
-        - 'v*'
-    
+    workflow_dispatch:
+
 jobs:
     publish-mod:
         runs-on: ubuntu-latest
