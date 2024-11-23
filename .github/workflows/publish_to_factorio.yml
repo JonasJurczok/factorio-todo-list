@@ -1,7 +1,10 @@
 name: Publish Factorio Mod
 
 on:
-    workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+  workflow_dispatch:
 
 jobs:
     publish-mod:
