@@ -14,27 +14,9 @@ local toggle_ui_shortcut = {
     order = 'a[alt-mode]-b[copy]',
     action = 'lua',
     localised_name = {'todo.shortcut_toggle_ui'},
-    icon = {
-        filename = '__Todo-List__/graphics/' .. 'toggle-ui.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    },
-    small_icon = {
-        filename = '__Todo-List__/graphics/' .. 'toggle-ui.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    },
-    disabled_small_icon = {
-        filename = '__Todo-List__/graphics/' .. 'toggle-ui-disabled.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    }
+    icon = '__Todo-List__/graphics/toggle-ui.png',
+    small_icon = '__Todo-List__/graphics/' .. 'toggle-ui.png',
+    disabled_small_icon = '__Todo-List__/graphics/' .. 'toggle-ui-disabled.png'
 }
 
 local add_task_shortcut = {
@@ -43,27 +25,9 @@ local add_task_shortcut = {
     order = 'a[alt-mode]-b[copy]',
     action = 'lua',
     localised_name = {'todo.shortcut_add_task'},
-    icon = {
-        filename = '__Todo-List__/graphics/' .. 'add-task.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    },
-    small_icon = {
-        filename = '__Todo-List__/graphics/' .. 'add-task.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    },
-    disabled_small_icon = {
-        filename = '__Todo-List__/graphics/' .. 'add-task-disabled.png',
-        width = 104,
-        height = 144,
-        scale = 1,
-        flags = {'icon'}
-    }
+    icon = '__Todo-List__/graphics/' .. 'add-task.png',
+    small_icon = '__Todo-List__/graphics/' .. 'add-task.png',
+    disabled_small_icon = '__Todo-List__/graphics/' .. 'add-task-disabled.png',
 }
 
 data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut})
