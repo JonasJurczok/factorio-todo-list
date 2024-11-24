@@ -40,6 +40,10 @@ todo.base64 = require("lib/base64")
 function todo.mod_init()
     todo.log("setting up mod data.")
 
+    if not global then
+        global = {}
+    end
+
     if not global.todo then
         global.todo = { ["open"] = {}, ["done"] = {}, ["settings"] = {} }
     else
