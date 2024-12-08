@@ -12,8 +12,8 @@ feature("#58 delete tasks", function()
         todo.show_completed_tasks:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     faketorio.confirm_task_deletion = function(player, id)

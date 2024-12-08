@@ -10,8 +10,8 @@ feature("#11 subtasks", function()
         todo.minimize_main_frame(game.players[1])
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Adding subtask should work", function()
@@ -175,8 +175,8 @@ feature("#11 subtasks", function()
 
         todo.refresh_task_table(player)
 
-        assert(#global.todo.open == 2)
-        local imported_task = global.todo.open[2]
+        assert(#storage.todo.open == 2)
+        local imported_task = storage.todo.open[2]
 
         assert(#imported_task.subtasks.open == 2)
         assert(#imported_task.subtasks.done == 0)

@@ -3,7 +3,7 @@
 ]]--
 
 function todo.update_export_dialog_button_state()
-    local task_count = #global.todo.open + #global.todo.done
+    local task_count = #storage.todo.open + #storage.todo.done
 
     for _, player in pairs(game.players) do
         local main_frame = todo.get_main_frame(player)

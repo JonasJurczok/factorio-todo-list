@@ -55,12 +55,12 @@ function todo.assemble_task(input, player)
 end
 
 function todo.next_task_id()
-    if not global.todo.next_id then
-        global.todo.next_id = 1
+    if not storage.todo.next_id then
+        storage.todo.next_id = 1
     end
 
-    global.todo.next_id = global.todo.next_id + 1
-    return global.todo.next_id - 1
+    storage.todo.next_id = storage.todo.next_id + 1
+    return storage.todo.next_id - 1
 end
 
 function todo.save_task_to_open_list(task, should_add_to_top)
@@ -68,10 +68,10 @@ function todo.save_task_to_open_list(task, should_add_to_top)
 
     local add_index = 1
     if not should_add_to_top then
-        add_index = #global.todo.open + 1
+        add_index = #storage.todo.open + 1
     end
 
-    table.insert(global.todo.open, add_index, task)
+    table.insert(storage.todo.open, add_index, task)
 
     todo.update_export_dialog_button_state()
 

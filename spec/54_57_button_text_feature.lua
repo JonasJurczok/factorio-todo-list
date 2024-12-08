@@ -8,8 +8,8 @@ feature("#54 #57 button text behaviour", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Single line text should show up fully.", function()

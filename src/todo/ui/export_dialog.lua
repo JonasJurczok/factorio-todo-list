@@ -24,7 +24,7 @@ function todo.create_export_dialog(player)
     })
 
     -- fill table
-    for _, task_list in pairs({ global.todo.open, global.todo.done}) do
+    for _, task_list in pairs({ storage.todo.open, storage.todo.done}) do
         for _, task in pairs(task_list) do
             table.add({
                 type = "checkbox",

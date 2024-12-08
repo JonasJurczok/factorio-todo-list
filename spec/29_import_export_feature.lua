@@ -9,8 +9,8 @@ feature("#29 import and export tasks", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Exporting and importing single task should work", function()
@@ -47,14 +47,14 @@ feature("#29 import and export tasks", function()
         local import_dialog = gui.todo_import_dialog
         assert(import_dialog == nil, "Expected export frame to be destroyed but it was found.")
 
-        faketorio.log.info(serpent.dump(global.todo.open))
+        faketorio.log.info(serpent.dump(storage.todo.open))
 
         -- check task duplication
-        assert(global.todo.open[2] ~= nil)
-        assert(global.todo.open[2].task == task_template.task)
-        assert(global.todo.open[2].title == task_template.title)
-        assert(global.todo.open[2]["assignee"] == nil)
-        assert(global.todo.open[2].id ~= global.todo.open[1].id)
+        assert(storage.todo.open[2] ~= nil)
+        assert(storage.todo.open[2].task == task_template.task)
+        assert(storage.todo.open[2].title == task_template.title)
+        assert(storage.todo.open[2]["assignee"] == nil)
+        assert(storage.todo.open[2].id ~= storage.todo.open[1].id)
     end)
 
     scenario("Exporting and importing multiple tasks should work", function()
@@ -95,17 +95,17 @@ feature("#29 import and export tasks", function()
         faketorio.click("todo_import_import_tasks_button")
 
         -- check task duplication
-        assert(global.todo.open[2] ~= nil)
-        assert(global.todo.open[2].task == task1.task)
-        assert(global.todo.open[2].title == task1.title)
-        assert(global.todo.open[2]["assignee"] == nil)
-        assert(global.todo.open[2].id ~= global.todo.open[1].id)
+        assert(storage.todo.open[2] ~= nil)
+        assert(storage.todo.open[2].task == task1.task)
+        assert(storage.todo.open[2].title == task1.title)
+        assert(storage.todo.open[2]["assignee"] == nil)
+        assert(storage.todo.open[2].id ~= storage.todo.open[1].id)
 
-        assert(global.todo.open[3] ~= nil)
-        assert(global.todo.open[3].task == task2.task)
-        assert(global.todo.open[3].title == task2.title)
-        assert(global.todo.open[3]["assignee"] == nil)
-        assert(global.todo.open[3].id ~= global.todo.open[2].id)
+        assert(storage.todo.open[3] ~= nil)
+        assert(storage.todo.open[3].task == task2.task)
+        assert(storage.todo.open[3].title == task2.title)
+        assert(storage.todo.open[3]["assignee"] == nil)
+        assert(storage.todo.open[3].id ~= storage.todo.open[2].id)
     end)
 
     scenario("Not selecting tasks to export should not generate export string.", function()

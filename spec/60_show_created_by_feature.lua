@@ -8,8 +8,8 @@ feature("#60 Show created/updated by", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("A task has a creator and a modifier", function()

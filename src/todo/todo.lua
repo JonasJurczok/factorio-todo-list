@@ -40,18 +40,14 @@ todo.base64 = require("lib/base64")
 function todo.mod_init()
     todo.log("setting up mod data.")
 
-    if not global then
-        global = {}
-    end
-
-    if not global.todo then
-        global.todo = { ["open"] = {}, ["done"] = {}, ["settings"] = {} }
+    if not storage.todo then
+        storage.todo = { ["open"] = {}, ["done"] = {}, ["settings"] = {} }
     else
-        for _, task in ipairs(global.todo.open) do
+        for _, task in ipairs(storage.todo.open) do
             todo.init_ensure_task_fields(task)
         end
 
-        for _, task in ipairs(global.todo.done) do
+        for _, task in ipairs(storage.todo.done) do
             todo.init_ensure_task_fields(task)
         end
     end

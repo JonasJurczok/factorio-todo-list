@@ -11,12 +11,12 @@ end
 function todo.task_mark_open(id)
     todo.log("Marking task [" .. id .. "] as open.")
 
-    for i, completed_task in ipairs(global.todo.done) do
+    for i, completed_task in ipairs(storage.todo.done) do
         if (completed_task.id == id) then
-            local task = table.remove(global.todo.done, i)
+            local task = table.remove(storage.todo.done, i)
 
             todo.log("Adding task [" .. task.id .. "] to open list.")
-            table.insert(global.todo.open, task)
+            table.insert(storage.todo.open, task)
             break
         end
     end

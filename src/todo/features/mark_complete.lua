@@ -10,12 +10,12 @@ end
 
 function todo.mark_complete(id)
     todo.log("Marking task [" .. id .. "] as completed.")
-    for i, task in ipairs(global.todo.open) do
+    for i, task in ipairs(storage.todo.open) do
         if (task.id == id) then
-            local t = table.remove(global.todo.open, i)
+            local t = table.remove(storage.todo.open, i)
 
             todo.log("Adding task [" .. t.id .. "] to done list.")
-            table.insert(global.todo.done, t)
+            table.insert(storage.todo.done, t)
             break
         end
     end

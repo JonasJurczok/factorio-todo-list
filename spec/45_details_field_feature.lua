@@ -9,8 +9,8 @@ feature("#45 details field", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Exporting a task without details should work", function()
@@ -52,14 +52,14 @@ feature("#45 details field", function()
         local import_dialog = gui.todo_import_dialog
         assert(import_dialog == nil, "Expected export frame to be destroyed but it was found.")
 
-        faketorio.log.info(serpent.dump(global.todo.open))
+        faketorio.log.info(serpent.dump(storage.todo.open))
 
         -- check task duplication
-        assert(global.todo.open[2] ~= nil)
-        assert(global.todo.open[2].task == task_template.task)
-        assert(global.todo.open[2].title == task_template.title)
-        assert(global.todo.open[2]["assignee"] == nil)
-        assert(global.todo.open[2].id ~= global.todo.open[1].id)
+        assert(storage.todo.open[2] ~= nil)
+        assert(storage.todo.open[2].task == task_template.task)
+        assert(storage.todo.open[2].title == task_template.title)
+        assert(storage.todo.open[2]["assignee"] == nil)
+        assert(storage.todo.open[2].id ~= storage.todo.open[1].id)
     end)
 
     scenario("Editing a task without details should work", function()

@@ -12,8 +12,8 @@ feature("#74 quest mode", function()
         todo.minimize_main_frame(game.players[1])
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Switching translation mode should change texts", function()

@@ -18,7 +18,7 @@ describe("UI tests", function()
     -- create task
     local task_template = { ["task"] = "test", ["title"] = "Title", ["assignee"] = "def" }
     local task = _G.todo.assemble_task(task_template, nil)
-    table.insert(_G.global.todo.done, task)
+    table.insert(_G.storage.todo.done, task)
 
     -- maximize and refresh UI
     local player = _G.game.players[1]
@@ -58,7 +58,7 @@ describe("UI tests", function()
 
   it("should create UI elements with the proper ids", function()
     local task_template = { ["task"] = "asd", ["title"] = "Title", ["assignee"] = "def" }
-    table.insert(_G.global.todo.open, todo.assemble_task(task_template, "Jonas"))
+    table.insert(_G.storage.todo.open, todo.assemble_task(task_template, "Jonas"))
     local player = _G.game.players[1]
     todo.maximize_main_frame(player)
     todo.update_main_task_list_for_everyone()

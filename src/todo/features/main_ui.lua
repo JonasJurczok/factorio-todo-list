@@ -96,14 +96,14 @@ function todo.refresh_task_table(player)
         end
     end
 
-    local open_length = #global.todo.open
-    for i, task in ipairs(global.todo.open) do
+    local open_length = #storage.todo.open
+    for i, task in ipairs(storage.todo.open) do
         local expanded = todo.should_show_task_details(player, task.id)
         todo.add_task_to_table(player, table, task, false, i == 1, i == open_length, expanded)
     end
 
     if (todo.show_completed_tasks(player)) then
-        for _, task in ipairs(global.todo.done) do
+        for _, task in ipairs(storage.todo.done) do
             -- we don't want ordering for completed tasks
             local expanded = todo.should_show_task_details(player, task.id)
             todo.add_task_to_table(player, table, task, true, true, true, expanded)
@@ -119,7 +119,7 @@ function todo.update_current_task_label(player)
     -- we may update the button label
     todo.log("updating button label")
     local count = 0
-    for _, task in pairs(global.todo.open) do
+    for _, task in pairs(storage.todo.open) do
         if task.assignee == player.name then
             todo.log(serpent.block(task))
             todo.get_maximize_button(player).caption = { "",
@@ -149,15 +149,15 @@ function todo.on_toggle_show_completed_click(player)
 end
 
 function todo.toggle_show_completed(player)
-    if not global.todo.settings[player.name] then
-        global.todo.settings[player.name] = {}
-        global.todo.settings[player.name].show_completed = true
+    if not storage.todo.settings[player.name] then
+        storage.todo.settings[player.name] = {}
+        storage.todo.settings[player.name].show_completed = true
     else
-        global.todo.settings[player.name].show_completed = not global.todo.settings[player.name].show_completed
+        storage.todo.settings[player.name].show_completed = not storage.todo.settings[player.name].show_completed
     end
 
     local frame = todo.get_main_frame(player)
-    if (global.todo.settings[player.name].show_completed) then
+    if (storage.todo.settings[player.name].show_completed) then
         frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = { todo.translate(player, "hide_done") }
     else
         frame.todo_main_button_flow.todo_toggle_show_completed_button.caption = { todo.translate(player, "show_done") }

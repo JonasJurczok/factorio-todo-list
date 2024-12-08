@@ -10,8 +10,8 @@ feature("#81 minimize main frame", function()
         todo.minimize_main_frame(game.players[1])
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Minimize by main button click", function()

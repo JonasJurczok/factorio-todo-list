@@ -24,13 +24,13 @@ describe("task tests", function()
   end)
 
   it("should generate ids for existing tasks", function()
-    table.insert(_G.global.todo.open, {task = "asd", title = "Task 1", assignee = nil})
-    table.insert(_G.global.todo.done, {task = "asd2", title = "Task 2", assignee = nil})
+    table.insert(_G.storage.todo.open, {task = "asd", title = "Task 1", assignee = nil})
+    table.insert(_G.storage.todo.done, {task = "asd2", title = "Task 2", assignee = nil})
 
     todo.mod_init()
 
-    assert.is_equal(1, _G.global.todo.open[1].id)
-    assert.is_equal(2, _G.global.todo.done[1].id)
+    assert.is_equal(1, _G.storage.todo.open[1].id)
+    assert.is_equal(2, _G.storage.todo.done[1].id)
   end)
 
   it("should create a complete task", function()
@@ -45,11 +45,11 @@ describe("task tests", function()
   end)
 
   it("should fetch a task by id", function()
-    table.insert(_G.global.todo.open, todo.assemble_task({ ["task"] = "asd1", ["title"] = "Title", ["assignee"] = "def1" }, "Jonas"))
-    table.insert(_G.global.todo.open, todo.assemble_task({ ["task"] = "asd2", ["title"] = "Title", ["assignee"] = "def2" }, "Jonas"))
+    table.insert(_G.storage.todo.open, todo.assemble_task({ ["task"] = "asd1", ["title"] = "Title", ["assignee"] = "def1" }, "Jonas"))
+    table.insert(_G.storage.todo.open, todo.assemble_task({ ["task"] = "asd2", ["title"] = "Title", ["assignee"] = "def2" }, "Jonas"))
 
-    table.insert(_G.global.todo.done, todo.assemble_task({ ["task"] = "asd3", ["title"] = "Title", ["assignee"] = "def3" }, "Jonas"))
-    table.insert(_G.global.todo.done, todo.assemble_task({ ["task"] = "asd4", ["title"] = "Title", ["assignee"] = "def4" }, "Jonas"))
+    table.insert(_G.storage.todo.done, todo.assemble_task({ ["task"] = "asd3", ["title"] = "Title", ["assignee"] = "def3" }, "Jonas"))
+    table.insert(_G.storage.todo.done, todo.assemble_task({ ["task"] = "asd4", ["title"] = "Title", ["assignee"] = "def4" }, "Jonas"))
 
     local task = todo.get_task_by_id(1)
     assert.is_equal("asd1", task.task)
