@@ -8,6 +8,8 @@ on:
 
 jobs:
     publish-mod:
+        env:
+          MOD-FOLDER: src
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
