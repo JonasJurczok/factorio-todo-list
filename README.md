@@ -3,9 +3,13 @@ Factorio Todo-List
 
 A distributed todo list for Factorio to keep track of all the tasks in your factory.
 
-## Project up for adoption
-Due to life and family I have no time to play Factorio anymore, let alone spend time developing mods.
-If you would like to take over the project and give it the attention it deserves, please contact me via mail (see mod portal) or via issue here in the project.
+## Contribution policy
+The project is live again and maintained. 
+However, due to time restrictions our own active contributions may be limited. 
+This said, all new ideas and contributions are welcome: feel free to leave an issue if anything isn't working or create a PR for a fix or a new feature.
+All PRs will be reviewed and merged if they improve the gameplay.
+Happy coding!
+
 
 ## Why?
 
