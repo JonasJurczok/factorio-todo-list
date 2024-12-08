@@ -16,16 +16,16 @@ function todo.on_edit_confirm_delete_click(player, id)
 end
 
 function todo.delete_task(id)
-    for i, task in pairs(global.todo.open) do
+    for i, task in pairs(storage.todo.open) do
         if (task.id == id) then
-            table.remove(global.todo.open, i)
+            table.remove(storage.todo.open, i)
             return
         end
     end
 
-    for i, task in pairs(global.todo.done) do
+    for i, task in pairs(storage.todo.done) do
         if (task.id == id) then
-            table.remove(global.todo.done, i)
+            table.remove(storage.todo.done, i)
             return
         end
     end

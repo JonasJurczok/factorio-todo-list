@@ -22,8 +22,8 @@ feature("Testing the UI", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("initially the maximize button should be displayed.", function()
@@ -66,12 +66,12 @@ feature("Testing the UI", function()
 
         faketorio.click('todo_main_task_move_top_' .. bottom_task.id)
 
-        assert(global.todo.open[1].task == 'at the bottom')
+        assert(storage.todo.open[1].task == 'at the bottom')
 
         faketorio.click('todo_main_task_move_top_' .. middle_task.id)
 
-        assert(global.todo.open[1].task == 'middle')
-        assert(global.todo.open[2].task == 'at the bottom')
+        assert(storage.todo.open[1].task == 'middle')
+        assert(storage.todo.open[2].task == 'at the bottom')
     end)
 
      scenario("Checking 'Add to top' when creating a task should add it to the top of the list", function()
@@ -92,7 +92,7 @@ feature("Testing the UI", function()
          faketorio.check('todo_add_top')
          faketorio.click('todo_save_new_task_button')
 
-         assert(global.todo.open[5].task == 'task for the bottom')
-         assert(global.todo.open[1].task == 'task for the top')
+         assert(storage.todo.open[5].task == 'task for the bottom')
+         assert(storage.todo.open[1].task == 'task for the top')
      end)
 end)

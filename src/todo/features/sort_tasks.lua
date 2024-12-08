@@ -13,11 +13,11 @@ function todo.on_main_move_down_click(id)
 end
 
 function todo.move(id, modifier)
-    for i, task in pairs(global.todo.open) do
+    for i, task in pairs(storage.todo.open) do
         if (task.id == id) then
-            local copy = global.todo.open[i + modifier]
-            global.todo.open[i + modifier] = task
-            global.todo.open[i] = copy
+            local copy = storage.todo.open[i + modifier]
+            storage.todo.open[i + modifier] = task
+            storage.todo.open[i] = copy
             break
         end
     end
@@ -32,10 +32,10 @@ function todo.on_main_move_top_click(id)
 end
 
 function todo.move_top(id)
-    for i, current in ipairs(global.todo.open) do
+    for i, current in ipairs(storage.todo.open) do
         if (current.id == id) then
-            local temp = table.remove(global.todo.open, i)
-            table.insert(global.todo.open, 1, temp)
+            local temp = table.remove(storage.todo.open, i)
+            table.insert(storage.todo.open, 1, temp)
             break
         end
     end
@@ -50,10 +50,10 @@ function todo.on_main_move_bottom_click(id)
 end
 
 function todo.move_bottom(id)
-    for i, current in ipairs(global.todo.open) do
+    for i, current in ipairs(storage.todo.open) do
         if (current.id == id) then
-            local temp = table.remove(global.todo.open, i)
-            table.insert(global.todo.open, #global.todo.open + 1, temp)
+            local temp = table.remove(storage.todo.open, i)
+            table.insert(storage.todo.open, #storage.todo.open + 1, temp)
             break
         end
     end

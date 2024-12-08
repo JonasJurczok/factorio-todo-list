@@ -9,8 +9,8 @@ feature("#79 task invisible after minimizing UI", function()
         todo.should_show_maximize_button:revert()
 
         -- clear all tasks
-        global.todo.open = {}
-        global.todo.done = {}
+        storage.todo.open = {}
+        storage.todo.done = {}
     end)
 
     scenario("Minimizing/maximizing after adding task should show task", function()
@@ -23,7 +23,7 @@ feature("#79 task invisible after minimizing UI", function()
         faketorio.click("todo_minimize_button")
         faketorio.click("todo_maximize_button")
 
-        local task = global.todo.open[1]
+        local task = storage.todo.open[1]
 
         faketorio.assert_element_exists("todo_main_task_title_" .. task.id, game.players[1])
     end)
@@ -40,7 +40,7 @@ feature("#79 task invisible after minimizing UI", function()
 
         faketorio.click("todo_maximize_button")
 
-        local task = global.todo.open[1]
+        local task = storage.todo.open[1]
 
         faketorio.assert_element_exists("todo_main_task_title_" .. task.id, game.players[1])
     end)

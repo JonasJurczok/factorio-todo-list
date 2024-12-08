@@ -50,13 +50,13 @@ end
 
 
 function todo.get_task_by_id(id)
-    for _, task in pairs(global.todo.open) do
+    for _, task in pairs(storage.todo.open) do
         if (task.id == id) then
             return task
         end
     end
 
-    for _, task in pairs(global.todo.done) do
+    for _, task in pairs(storage.todo.done) do
         if (task.id == id) then
             return task
         end
@@ -95,7 +95,7 @@ function todo.get_window_height(player)
 end
 
 function todo.show_completed_tasks(player)
-    return global.todo.settings[player.name] and global.todo.settings[player.name].show_completed
+    return storage.todo.settings[player.name] and storage.todo.settings[player.name].show_completed
 end
 
 function todo.get_player_translation_mode(player)
