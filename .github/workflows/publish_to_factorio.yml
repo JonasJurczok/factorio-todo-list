@@ -30,6 +30,12 @@ jobs:
                   action: compress
                   mod-folder: src
 
+            - name: Upload ZIP as Artifact
+              uses: actions/upload-artifact@v3
+              with:
+                name: factorio-mod-zip
+                path: ${{ env.ZIP_FILE }}
+
             - name: Upload Mod
               uses: TheBrutalX/factorio-mod-uploader-action@v1
               with:
