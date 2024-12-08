@@ -22,11 +22,13 @@ jobs:
               uses: TheBrutalX/factorio-mod-uploader-action@v1
               with:
                   action: validate
+                  mod-folder: src
 
             - name: Create zip
               uses: TheBrutalX/factorio-mod-uploader-action@v1
               with:
                   action: compress
+                  mod-folder: src
 
             - name: Upload Mod
               uses: TheBrutalX/factorio-mod-uploader-action@v1
