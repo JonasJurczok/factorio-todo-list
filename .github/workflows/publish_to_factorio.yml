@@ -1,10 +1,12 @@
 name: Publish Factorio Mod
 
 on:
-    push:
-        tags:
-        - 'v*'
-    workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+  workflow_dispatch:
+
 
 jobs:
     publish-mod:
@@ -37,6 +39,7 @@ jobs:
                 path: ${{ env.ZIP_FILE }}
 
             - name: Upload Mod
+              if: startsWith(github.ref, 'refs/tags/v')
               uses: TheBrutalX/factorio-mod-uploader-action@v1
               with:
                   action: upload
