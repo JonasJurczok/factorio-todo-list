@@ -118,6 +118,30 @@ function todo.create_task_table(frame, player)
         caption = "Sort"
     })
 
+    -- Add search container
+    table.add({
+        type = "flow",
+        name = "todo_search_flow",
+        direction = "horizontal"
+    })
+
+    -- Add search textfield
+    table.add({
+        type = "textfield",
+        name = "todo_search_field",
+        style = "todo_textfield_default",
+        tooltip = {"todo.search_tooltip"}
+    })
+
+    -- Add clear search button
+    table.add({
+        type = "sprite-button",
+        style = "todo_sprite_button_default",
+        name = "todo_clear_search_button",
+        sprite = "utility/close_white",
+        tooltip = {"todo.clear_search"}
+    })
+
     table.add({
         type = "label",
         style = "todo_label_default",
