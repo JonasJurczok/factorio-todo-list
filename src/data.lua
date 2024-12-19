@@ -31,3 +31,12 @@ local add_task_shortcut = {
 }
 
 data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut})
+data:extend({
+    {
+        type = "custom-input",
+        name = "todo-search-shortcut",
+        key_sequence = "CONTROL + F",
+        consuming = "none"
+    }
+})
+
