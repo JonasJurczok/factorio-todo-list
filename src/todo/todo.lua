@@ -35,7 +35,6 @@ require("todo/ui/clean_confirm_dialog")
 -- convenience
 require("todo/helper")
 require("todo/logging")
-todo.base64 = require("lib/base64")
 
 function todo.mod_init()
     todo.log("setting up mod data.")
