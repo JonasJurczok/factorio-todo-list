@@ -18,7 +18,7 @@ end
 
 function todo.import_tasks(encoded, player)
 
-    local status, result = pcall(todo.base64.decode, encoded)
+    local status, result = pcall(helpers.decode_string, encoded)
     if (not status) then
         local message = "Importing tasks failed for input %s. Result was %s. Please contact the mod author."
         todo.log(string.format(message, encoded, result))
@@ -28,7 +28,7 @@ function todo.import_tasks(encoded, player)
         return
     end
 
-    local tasks = game.json_to_table(result)
+    local tasks = helpers.json_to_table(result)
 
     todo.log("Importing tasks:")
     todo.log(serpent.block(tasks))
