@@ -1,8 +1,12 @@
 ---------------------------------------------------------------------------------------------------
 Version: 19.10.0
-Date: 2024-12-18
+Date: 2025-02-02
+  Fix:
+    - A crash when importing a list. In 2.0 the LuaGameScript class no longer has json encoding functions, that has also been moved to LuaHelpers.
   Chores:
     - Assemble artificats on PR for easier testing.
+    - Use LuaHelpers class for encoding/decoding base64 strings. See https://lua-api.factorio.com/2.0.31/classes/LuaHelpers.html#encode_string.
+    - Update Github artifacts API version following deprecation.
 ---------------------------------------------------------------------------------------------------
 Version: 19.9.0
 Date: 2024-12-08

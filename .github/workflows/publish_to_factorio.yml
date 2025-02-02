@@ -33,7 +33,7 @@ jobs:
                   mod-folder: src
 
             - name: Upload ZIP as Artifact
-              uses: actions/upload-artifact@v3
+              uses: actions/upload-artifact@v4
               with:
                 name: factorio-mod-zip
                 path: ${{ env.ZIP_FILE }}
