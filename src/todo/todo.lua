@@ -217,7 +217,9 @@ function todo.on_gui_confirmed(event)
         local id = todo.get_task_id_from_element_name(element.name, "todo_main_subtask_new_text_")
         todo.on_save_new_subtask_click(player, id)
         if (player.opened.valid) then
-            player.opened.todo_scroll_pane.todo_task_table[name].focus()
+            if (player.opened.todo_scroll_pane.todo_task_table[name]) then
+                player.opened.todo_scroll_pane.todo_task_table[name].focus()
+            end
         end
     end
 end
