@@ -80,36 +80,93 @@ function todo.update_main_task_list_for_everyone()
 end
 
 function todo.refresh_task_table(player)
+    -- Get search term from the UI if it exists
+    local main_frame = todo.get_main_frame(player)
+    local search_term = ""
+    
+    -- Error handling for search field
+    if main_frame and main_frame.todo_search_flow then
+        local search_field = main_frame.todo_search_flow.todo_search_field
+        if search_field and search_field.valid then  -- Validity check
+            search_term = search_field.text
+            
+            -- Visual indicator when search is active
+            if search_term and search_term ~= "" then
+                search_field.style.font_color = {r=0, g=1, b=0}  -- Green when search is active
+            else
+                search_field.style.font_color = {r=1, g=1, b=1}  -- White when no search
+            end
+        end
+    end
 
     todo.update_current_task_label(player)
 
     -- if the player has the UI minimized do nothing
-    local main_frame = todo.get_main_frame(player)
     if not main_frame then
         return
     end
 
-    local table = todo.get_task_table(player)
-    for i, element in ipairs(table.children) do
-        if i > table.column_count then
+    local task_table = todo.get_task_table(player)
+    for i, element in ipairs(task_table.children) do
+        if i > task_table.column_count then
             element.destroy()
         end
     end
 
-    local open_length = #storage.todo.open
-    for i, task in ipairs(storage.todo.open) do
-        local expanded = todo.should_show_task_details(player, task.id)
-        todo.add_task_to_table(player, table, task, false, i == 1, i == open_length, expanded)
-    end
-
-    if (todo.show_completed_tasks(player)) then
-        for _, task in ipairs(storage.todo.done) do
-            -- we don't want ordering for completed tasks
-            local expanded = todo.should_show_task_details(player, task.id)
-            todo.add_task_to_table(player, table, task, true, true, true, expanded)
+    -- Filter and display open tasks
+    local filtered_open = {}
+    for _, task in ipairs(storage.todo.open) do
+        if not search_term or search_term == "" or todo.task_matches_search(task, search_term) then
+            table.insert(filtered_open, task)
         end
     end
+    
+    local open_length = #filtered_open
+    for i, task in ipairs(filtered_open) do
+        local expanded = todo.should_show_task_details(player, task.id)
+        todo.add_task_to_table(player, task_table, task, false, i == 1, i == open_length, expanded)
+    end
+
+    -- Filter and display completed tasks if enabled
+    if (todo.show_completed_tasks(player)) then
+        for _, task in ipairs(storage.todo.done) do
+            if not search_term or search_term == "" or todo.task_matches_search(task, search_term) then
+                local expanded = todo.should_show_task_details(player, task.id)
+                todo.add_task_to_table(player, task_table, task, true, true, true, expanded)
+            end
+        end
+    end
+
+    -- Add "No results" message if no tasks found
+    if #filtered_open == 0 and (not todo.show_completed_tasks(player) or #storage.todo.done == 0) then
+        table.add({
+            type = "label",
+            caption = {"todo.no_results"},
+            style = "todo_label_default"
+        })
+    end
 end
+
+
+
+-- Helper function to check if a task matches the search term
+function todo.task_matches_search(task, search_term)
+    search_term = string.lower(search_term)
+    return string.find(string.lower(task.title or ""), search_term) or 
+           string.find(string.lower(task.task or ""), search_term) or
+           (task.subtasks and todo.subtasks_match_search(task.subtasks, search_term))
+end
+
+-- Helper function to check if any subtasks match the search term
+function todo.subtasks_match_search(subtasks, search_term)
+    for _, subtask in ipairs(subtasks) do
+        if string.find(string.lower(subtask.title or ""), search_term) then
+            return true
+        end
+    end
+    return false
+end
+
 
 function todo.update_current_task_label(player)
     if not todo.get_maximize_button(player) then
