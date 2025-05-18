@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.11.0
+Date: 2025-05-18
+  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+---------------------------------------------------------------------------------------------------
 Version: 19.10.1
 Date: 2025-05-12
   Improvements: Update the German translation (thanks @Lucanoria).
