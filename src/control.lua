@@ -39,6 +39,10 @@ script.on_event(defines.events.on_gui_closed, function(event)
     end
 end)
 
+script.on_event(defines.events.on_gui_confirmed, function(event)
+    todo.on_gui_confirmed(event)
+end)
+
 script.on_event(defines.events.on_lua_shortcut, function(event)
     todo.on_lua_shortcut(event)
 end)
