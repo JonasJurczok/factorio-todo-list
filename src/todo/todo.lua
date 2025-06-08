@@ -20,6 +20,7 @@ require("todo/features/sort_tasks")
 require("todo/features/subtasks")
 require("todo/features/take_task")
 require("todo/features/clean")
+require("todo/features/search_tasks")
 
 -- UIs
 require("todo/ui/helper")
