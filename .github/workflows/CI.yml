@@ -23,16 +23,17 @@ jobs:
           luarocks install serpent
           luarocks install busted
           luarocks install luacheck
-          luarocks install faketorio
+        
+#          luarocks install faketorio
       
-      # - name: Run tests
-      #   run: |
-      #     luacheck ./src/*.lua
-      #     luacheck ./src/todo/*.lua
-      #     faketorio package -c .github/.faketorio -v
+      - name: Run tests
+        run: |
+          luacheck ./src/*.lua
+          luacheck ./src/todo/*.lua
+#          faketorio package -c .github/.faketorio -v
 
-      # - name: Get the mod zip as artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: Todo-List
-      #     path: target/*.zip
+      - name: Get the mod zip as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Todo-List
+          path: target/*.zip
