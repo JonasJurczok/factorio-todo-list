@@ -1,19 +1,23 @@
 ---------------------------------------------------------------------------------------------------
 Version: 19.12.0
 Date: 2025-06-08
-  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+  Feature:
+    - Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.11.1
 Date: 2025-05-18
-  Revert: Add tasks/subtasks on enter press. By @davidwhite99
+  Revert:
+    - Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.11.0
 Date: 2025-05-18
-  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+  Feature:
+    - Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.10.1
 Date: 2025-05-12
-  Improvements: Update the German translation (thanks @Lucanoria).
+  Improvements:
+    - Update the German translation (thanks @Lucanoria).
 ---------------------------------------------------------------------------------------------------
 Version: 19.10.0
 Date: 2025-02-02
