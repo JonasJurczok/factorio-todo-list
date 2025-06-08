@@ -1,7 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.12.0
+Date: 2025-06-08
+  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+---------------------------------------------------------------------------------------------------
 Version: 19.11.1
 Date: 2025-05-18
-  Rvert: Add tasks/subtasks on enter press. By @davidwhite99
+  Revert: Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.11.0
 Date: 2025-05-18
