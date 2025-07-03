@@ -18,6 +18,34 @@ end
 function todo.create_maximized_frame(player)
     local frame = todo.create_frame(player, "todo_main_frame", { todo.translate(player, "todo_list") }, "todo_minimize_button")
 
+    -- Add search field
+    local search_flow = frame.add({
+        type = "flow",
+        name = "todo_search_flow",
+        direction = "horizontal",
+        style = "todo_search_flow"
+    })
+
+    search_flow.add({
+        type = "label",
+        caption = { todo.translate(player, "search") },
+        style = "todo_label_default"
+    })    search_flow.add({
+        type = "textfield",
+        name = "todo_search_field",
+        style = "todo_search_textfield",
+        tooltip = { todo.translate(player, "search_tooltip") },
+        text = ""
+    })
+
+    search_flow.add({
+        type = "sprite-button",
+        name = "todo_search_clear_button",
+        style = "todo_sprite_button_default",
+        sprite = "utility/close",
+        tooltip = { todo.translate(player, "clear_search") }
+    })
+
     todo.create_task_table(frame, player)
 
     local flow = frame.add({

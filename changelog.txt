@@ -9,6 +9,11 @@ Date: 2026-02-27
   Bugfixes:
     - Fixed changelog not being packed and not showing in the mod portal.
 ---------------------------------------------------------------------------------------------------
+Version: 19.16.0
+Date: 2026-05-12
+  Features:
+    - Added search/filter functionality (Ctrl+F) to filter tasks by title or description.
+---------------------------------------------------------------------------------------------------
 Version: 19.14.1
 Date: 2025-10-31
   Changes:
