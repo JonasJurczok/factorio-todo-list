@@ -195,9 +195,10 @@ function todo.on_gui_click(event)
     elseif (element.name == "todo_clean_button") then
         todo.create_clean_confirm_dialog(player)
     elseif (element.name == "todo_minimize_clean_confirm") or (element.name == "todo_clean_confirm_cancel_button") then
-        todo.destroy_clean_confirm_dialog(player)
-    elseif (element.name == "todo_clean_confirm_button") then
+        todo.destroy_clean_confirm_dialog(player)    elseif (element.name == "todo_clean_confirm_button") then
         todo.on_clean_confirm(player)
+    elseif (element.name == "todo_search_clear_button") then
+        todo.on_search_clear_click(player)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end
