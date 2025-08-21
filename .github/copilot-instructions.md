@@ -96,6 +96,7 @@ luacheck src
 - `src/todo/features/` - Individual feature implementations (add_task.lua, edit_task.lua, etc.)
 - `src/todo/ui/` - UI component definitions
 - `src/info.json` - Contains mod version and metadata (must be updated for the build pipeline to succeed on PRs and release tags)
+- `changelog.txt` - Version history (must be updated along with info.json for version changes)
 - `.luacheckrc` - Defines globals and linting rules specific to Factorio modding
 
 ### Factorio Mod Conventions
@@ -112,6 +113,7 @@ luacheck src
 4. **Before committing**: Ensure no new linting errors are introduced
 5. **Testing mod structure**: Create zip package and verify contents
 6. **Release preparation**: Use `release.py` for version management
+7. **Version updates**: When updating versions, modify BOTH `src/info.json` and `changelog.txt` to ensure CI pipeline success
 
 ### Key Reminders
 - This is a **Factorio mod**, not a standalone application
