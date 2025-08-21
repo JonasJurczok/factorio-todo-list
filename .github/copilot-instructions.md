@@ -25,7 +25,7 @@ Factorio Todo-List is a Lua mod for the Factorio game that provides distributed 
   - `cd src && zip -r ../todo-list.zip . -x "*.DS_Store"`
   - This creates a distributable Factorio mod package
 - Test structure (has compatibility issues):
-  - Tests use busted framework with faketorio but faketorio has Lua 5.1 compatibility issues
+  - Tests use busted framework (a Lua unit testing framework) with faketorio but faketorio has Lua 5.1 compatibility issues (designed for older Lua versions while this environment uses Lua 5.4)
   - Test files are in `spec/` directory but may not run properly in current environment
 
 ### Manual Validation Scenarios
@@ -95,7 +95,7 @@ luacheck src
 - `src/todo/todo.lua` - Core todo list functionality  
 - `src/todo/features/` - Individual feature implementations (add_task.lua, edit_task.lua, etc.)
 - `src/todo/ui/` - UI component definitions
-- `src/info.json` - Contains mod version and metadata
+- `src/info.json` - Contains mod version and metadata (must be updated for the build pipeline to succeed on PRs and release tags)
 - `.luacheckrc` - Defines globals and linting rules specific to Factorio modding
 
 ### Factorio Mod Conventions
