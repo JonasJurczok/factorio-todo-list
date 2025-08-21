@@ -93,7 +93,7 @@ script.on_event("todo-search-shortcut", function(event)
         frame = todo.get_main_frame(player)
     end
 
-    if frame then
+    if frame and frame.todo_search_flow then
         local search_field = frame.todo_search_flow.todo_search_field
         if search_field then
             search_field.focus()
