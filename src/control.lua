@@ -61,3 +61,42 @@ script.on_event(defines.events.on_runtime_mod_setting_changed, function(event)
       todo.on_runtime_mod_setting_changed(player, key)
     end
 end)
+
+-- For the search field changes
+script.on_event(defines.events.on_gui_text_changed, function(event)
+    local element = event.element
+    if element.name == "todo_search_field" then
+        local player = game.players[event.player_index]
+        local search_term = element.text
+        todo.refresh_task_table(player, search_term)
+    end
+end)
+
+-- Clear search on ESC when search field is focused
+script.on_event(defines.events.on_gui_confirmed, function(event)
+    local element = event.element
+    if element.name == "todo_search_field" then
+        local player = game.players[event.player_index]
+        element.text = ""
+        todo.refresh_task_table(player, "")
+    end
+end)
+
+-- For Ctrl+F shortcut
+script.on_event("todo-search-shortcut", function(event)
+    local player = game.players[event.player_index]
+    local frame = todo.get_main_frame(player)
+
+    -- If UI is minimized, maximize it first
+    if not frame then
+        todo.maximize_main_frame(player)
+        frame = todo.get_main_frame(player)
+    end
+
+    if frame and frame.todo_search_flow then
+        local search_field = frame.todo_search_flow.todo_search_field
+        if search_field then
+            search_field.focus()
+        end
+    end
+end)

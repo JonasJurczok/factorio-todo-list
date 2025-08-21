@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.13.0
+Date: 2025-07-03
+  Features:
+    - Added search/filter functionality (Ctrl+F) to filter tasks by title or description
+---------------------------------------------------------------------------------------------------
 Version: 19.12.0
 Date: 2025-06-08
   Feature: Add tasks/subtasks on enter press. By @davidwhite99

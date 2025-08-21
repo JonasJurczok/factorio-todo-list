@@ -30,4 +30,11 @@ local add_task_shortcut = {
     disabled_small_icon = '__Todo-List__/graphics/' .. 'add-task-disabled.png',
 }
 
-data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut})
+local search_shortcut = {
+    type = "custom-input",
+    name = "todo-search-shortcut",
+    key_sequence = "CTRL + F",
+    consuming = "none",
+}
+
+data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut, search_shortcut})
