@@ -29,7 +29,7 @@ function todo.create_frame(player, name, caption, close_name)
         title_bar.add({
             type = "sprite-button",
             style = "frame_action_button",
-            sprite = "utility/close",
+            sprite = "__Todo-List__/graphics/close.png",
             name = close_name
         })
     end
