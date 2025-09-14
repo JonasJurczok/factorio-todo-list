@@ -23,7 +23,8 @@ function todo.create_add_task_dialog(player)
     local title_field = table.add({
         type = "textfield",
         style = "todo_textfield_default",
-        name = "todo_new_task_title"
+        name = "todo_new_task_title",
+        icon_selector = true
     })
 
     -- Task description field
@@ -37,7 +38,8 @@ function todo.create_add_task_dialog(player)
     table.add({
         type = "text-box",
         style = "todo_textbox_default",
-        name = "todo_new_task_textbox"
+        name = "todo_new_task_textbox",
+        icon_selector = true
     })
 
     table.add({

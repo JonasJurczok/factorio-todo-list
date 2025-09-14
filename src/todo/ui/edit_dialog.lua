@@ -30,7 +30,8 @@ function todo.create_edit_task_dialog(player, id)
         type = "textfield",
         style = "todo_textfield_default",
         name = "todo_edit_task_title",
-        text = task.title
+        text = task.title,
+        icon_selector = true
     })
 
     -- Task description field
@@ -45,7 +46,8 @@ function todo.create_edit_task_dialog(player, id)
         type = "text-box",
         style = "todo_textbox_default",
         name = "todo_edit_task_textbox",
-        text = task.task
+        text = task.task,
+        icon_selector = true
     })
 
     table.add({
