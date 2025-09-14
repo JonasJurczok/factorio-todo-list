@@ -323,7 +323,8 @@ function todo.add_subtasks_to_task_table(player, table, task)
     row[2] = {
         type = "textfield",
         style = "todo_textfield_default",
-        name = "todo_main_subtask_new_text_" .. task.id
+        name = "todo_main_subtask_new_text_" .. task.id,
+        icon_selector = true
     }
 
     row[8] = {
