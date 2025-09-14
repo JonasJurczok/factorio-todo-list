@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.13.0
+Date: 2025-09-14
+  Feature: Added support for using in-game icons in text fields. By @blackklotus/@lucerattow
+---------------------------------------------------------------------------------------------------
 Version: 19.12.0
 Date: 2025-06-08
   Feature: Add tasks/subtasks on enter press. By @davidwhite99
