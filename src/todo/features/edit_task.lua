@@ -41,6 +41,7 @@ function todo.edit_persist_task_changes(player, id)
 
     local original = todo.get_task_by_id(id)
     if (original == nil) then
+        todo.log("Task " .. id .. " has been confirmed / cleared by someone else.")
         return
     end
 
