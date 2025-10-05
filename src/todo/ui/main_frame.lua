@@ -115,7 +115,7 @@ function todo.create_task_table(frame, player)
         type = "label",
         style = "todo_label_default",
         name = "todo_title_top",
-        caption = "Sort"
+        caption = { todo.translate(player, "title_sort")}
     })
 
     table.add({
