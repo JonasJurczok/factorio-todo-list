@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.14.0
+Date: 2025-10-05
+  Bugfixes:
+    - Fixed a bug in multiplayer mode where submit task may caused the game to crash. By @MengLeiFudge
+    - Update zh-CN translation. By @MengLeiFudge
+---------------------------------------------------------------------------------------------------
 Version: 19.13.0
 Date: 2025-09-14
   Feature: Added support for using in-game icons in text fields. By @blackklotus/@lucerattow
