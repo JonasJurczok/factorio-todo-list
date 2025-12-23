@@ -25,7 +25,7 @@ feature("#35 show details view for task", function()
         assert(title.caption[1] == "todo.title_details")
 
         local expand_button = faketorio.assert_element_exists("todo_main_open_details_button_" .. task.id, player)
-        assert(expand_button.sprite == "utility/speed_down")
+        assert(expand_button.sprite == "__Todo-List__/graphics/expand.png")
         assert(expand_button.tooltip[1] == "todo.title_details")
     end)
 
@@ -43,7 +43,7 @@ feature("#35 show details view for task", function()
         faketorio.assert_element_not_exists("todo_main_open_details_button_" .. task.id, player)
 
         local close_details_button = faketorio.assert_element_exists("todo_main_close_details_button_" .. task.id, player)
-        assert(close_details_button.sprite == "utility/speed_up")
+        assert(close_details_button.sprite == "__Todo-List__/graphics/collapse.png")
         assert(close_details_button.tooltip[1] == "todo.title_details")
 
         local task_field = faketorio.assert_element_exists("todo_main_expanded_task_label_" .. task.id, player)
@@ -66,7 +66,7 @@ feature("#35 show details view for task", function()
         faketorio.assert_element_not_exists("todo_main_open_details_button_" .. task.id, player)
 
         local close_details_button = faketorio.assert_element_exists("todo_main_close_details_button_" .. task.id, player)
-        assert(close_details_button.sprite == "utility/speed_up")
+        assert(close_details_button.sprite == "__Todo-List__/graphics/collapse.png")
         assert(close_details_button.tooltip[1] == "todo.title_details")
 
         local task_field = faketorio.assert_element_exists("todo_main_expanded_task_label_" .. task.id, player)
@@ -94,11 +94,11 @@ feature("#35 show details view for task", function()
         faketorio.assert_element_not_exists("todo_main_open_details_button_" .. task2.id, player)
 
         local close_details_button_1 = faketorio.assert_element_exists("todo_main_close_details_button_" .. task1.id, player)
-        assert(close_details_button_1.sprite == "utility/speed_up")
+        assert(close_details_button_1.sprite == "__Todo-List__/graphics/collapse.png")
         assert(close_details_button_1.tooltip[1] == "todo.title_details")
 
         local close_details_button_2 = faketorio.assert_element_exists("todo_main_close_details_button_" .. task2.id, player)
-        assert(close_details_button_2.sprite == "utility/speed_up")
+        assert(close_details_button_2.sprite == "__Todo-List__/graphics/collapse.png")
         assert(close_details_button_2.tooltip[1] == "todo.title_details")
 
         local task_field_1 = faketorio.assert_element_exists("todo_main_expanded_task_label_" .. task1.id, player)
