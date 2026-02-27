@@ -32,6 +32,9 @@ jobs:
         - name: Checkout Repository
           uses: actions/checkout@v4
 
+        - name: Copy changelog into mod folder
+          run: cp changelog.txt src/changelog.txt
+
         - name: Set up Node.js
           uses: actions/setup-node@v3
           with:
