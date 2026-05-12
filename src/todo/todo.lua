@@ -20,6 +20,7 @@ require("todo/features/sort_tasks")
 require("todo/features/subtasks")
 require("todo/features/take_task")
 require("todo/features/clean")
+require("todo/features/location")
 
 -- UIs
 require("todo/ui/helper")
@@ -200,6 +201,17 @@ function todo.on_gui_click(event)
         todo.on_clean_confirm(player)
     elseif (element.name == "todo_search_clear_button") then
         todo.on_search_clear_click(player)
+    elseif (element.name == "todo_add_pin_set_button") then
+        todo.on_pin_set_click(player, "add")
+    elseif (element.name == "todo_add_pin_clear_button") then
+        todo.on_pin_clear_click(player, "add")
+    elseif (element.name == "todo_edit_pin_set_button") then
+        todo.on_pin_set_click(player, "edit")
+    elseif (element.name == "todo_edit_pin_clear_button") then
+        todo.on_pin_clear_click(player, "edit")
+    elseif (string.find(element.name, "todo_main_task_pin_")) then
+        local id = todo.get_task_id_from_element_name(element.name, "todo_main_task_pin_")
+        todo.on_main_task_pin_click(player, id)
     elseif (string.find(element.name, "todo_")) then
         todo.log("Unknown todo element name:" .. element.name)
     end

@@ -12,6 +12,8 @@ function todo.mark_complete(id)
     todo.log("Marking task [" .. id .. "] as completed.")
     for i, task in ipairs(storage.todo.open) do
         if (task.id == id) then
+            todo.destroy_chart_tag_for_task(task)
+
             local t = table.remove(storage.todo.open, i)
 
             todo.log("Adding task [" .. t.id .. "] to done list.")

@@ -42,5 +42,12 @@ data:extend({
 		allowed_values = {"default", "quest"},
 		default_value = "default",
 		per_user = true,
+	},
+	{
+		name = "todolist-auto-chart-tag",
+		setting_type = "runtime-per-user",
+		type = "bool-setting",
+		default_value = true,
+		per_user = true,
 	}
 })

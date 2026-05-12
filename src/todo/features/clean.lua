@@ -7,9 +7,15 @@ function todo.on_clean_confirm(player)
 
     if completed_checkbox and in_progress_checkbox then
         if completed_checkbox.state then
+            for _, task in pairs(storage.todo.done) do
+                todo.destroy_chart_tag_for_task(task)
+            end
             storage.todo.done = {}
         end
         if in_progress_checkbox.state then
+            for _, task in pairs(storage.todo.open) do
+                todo.destroy_chart_tag_for_task(task)
+            end
             storage.todo.open = {}
         end
     end
