@@ -103,6 +103,42 @@ function todo.create_edit_task_dialog(player, id)
     table.add({
         type = "label",
         style = "todo_label_default",
+        name = "todo_edit_pin_label",
+        caption = { "todo.pin_label" }
+    })
+
+    local pin_flow = table.add({
+        type = "flow",
+        name = "todo_edit_pin_flow",
+        direction = "horizontal"
+    })
+
+    pin_flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_edit_pin_set_button",
+        caption = { "todo.pin_set" }
+    })
+
+    pin_flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_edit_pin_clear_button",
+        caption = { "todo.pin_clear" }
+    })
+
+    pin_flow.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_edit_pin_caption_label",
+        caption = todo.format_location_caption(task.location)
+    })
+
+    dialog.tags = { pending_location = task.location or nil }
+
+    table.add({
+        type = "label",
+        style = "todo_label_default",
         name = "todo_edit_delete_label",
         caption = { todo.translate(player, "delete") }
     })

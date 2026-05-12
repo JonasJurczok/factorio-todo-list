@@ -90,6 +90,10 @@ function todo.is_auto_assign(player)
     return settings.get_player_settings(player)["todolist-auto-assign"].value
 end
 
+function todo.is_auto_chart_tag(player)
+    return settings.get_player_settings(player)["todolist-auto-chart-tag"].value
+end
+
 function todo.get_window_height(player)
     return settings.get_player_settings(player)["todolist-window-height"].value
 end

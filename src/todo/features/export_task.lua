@@ -74,6 +74,14 @@ function todo.encode_task_list_for_export(tasks)
             export_task.subtasks = task.subtasks
         end
 
+        if (task.location) then
+            export_task.location = {
+                x = task.location.x,
+                y = task.location.y,
+                surface_index = task.location.surface_index,
+            }
+        end
+
         table.insert(to_encode, export_task)
     end
     return helpers.encode_string(helpers.table_to_json(to_encode))
