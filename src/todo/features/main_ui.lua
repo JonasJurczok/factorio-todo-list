@@ -128,7 +128,9 @@ function todo.refresh_task_table(player, search_term)
     for i, task in ipairs(filtered_open) do
         local expanded = todo.should_show_task_details(player, task.id)
         todo.add_task_to_table(player, task_table, task, false, i == 1, i == open_length, expanded)
-    end    -- Filter and display completed tasks if enabled
+    end
+
+    -- Filter and display completed tasks if enabled
     if (todo.show_completed_tasks(player)) then
         local filtered_done = {}
         for _, task in ipairs(storage.todo.done) do
@@ -145,20 +147,24 @@ function todo.refresh_task_table(player, search_term)
         
         -- Add "No results" message if no tasks found
         if search_term and search_term ~= "" and #filtered_open == 0 and #filtered_done == 0 then
-            task_table.add({
+            local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
+            row[2] = {
                 type = "label",
-                caption = {"todo.no_results"},
-                style = "todo_label_default"
-            })
+                style = "todo_label_default",
+                caption = {"todo.no_results"}
+            }
+            todo.add_row_to_main_table(task_table, row)
         end
     else
         -- Add "No results" message if no tasks found and completed tasks are hidden
         if search_term and search_term ~= "" and #filtered_open == 0 then
-            task_table.add({
+            local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
+            row[2] = {
                 type = "label",
-                caption = {"todo.no_results"},
-                style = "todo_label_default"
-            })
+                style = "todo_label_default",
+                caption = {"todo.no_results"}
+            }
+            todo.add_row_to_main_table(task_table, row)
         end
     end
 end

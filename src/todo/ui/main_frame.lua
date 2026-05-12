@@ -30,7 +30,9 @@ function todo.create_maximized_frame(player)
         type = "label",
         caption = { todo.translate(player, "search") },
         style = "todo_label_default"
-    })    search_flow.add({
+    })
+
+    search_flow.add({
         type = "textfield",
         name = "todo_search_field",
         style = "todo_search_textfield",

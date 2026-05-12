@@ -65,20 +65,10 @@ end)
 -- For the search field changes
 script.on_event(defines.events.on_gui_text_changed, function(event)
     local element = event.element
-    if element.name == "todo_search_field" then
+    if element and element.name == "todo_search_field" then
         local player = game.players[event.player_index]
         local search_term = element.text
         todo.refresh_task_table(player, search_term)
-    end
-end)
-
--- Clear search on ESC when search field is focused
-script.on_event(defines.events.on_gui_confirmed, function(event)
-    local element = event.element
-    if element.name == "todo_search_field" then
-        local player = game.players[event.player_index]
-        element.text = ""
-        todo.refresh_task_table(player, "")
     end
 end)
 
