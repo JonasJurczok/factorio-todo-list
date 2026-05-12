@@ -204,7 +204,7 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
     if task.location then
         local title_flow = table.add({
             type = "flow",
-            name = "todo_main_task_title_flow_" .. id,
+            name = "todo_main_task_pin_flow_" .. id,
             direction = "horizontal"
         })
 
