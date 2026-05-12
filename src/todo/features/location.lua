@@ -11,6 +11,16 @@ function todo.capture_player_location(player)
     }
 end
 
+function todo.is_valid_location(location)
+    if type(location) ~= "table" then return false end
+    if type(location.x) ~= "number" then return false end
+    if type(location.y) ~= "number" then return false end
+    if type(location.surface_index) ~= "number" then return false end
+    if location.surface_index ~= math.floor(location.surface_index) then return false end
+    if location.surface_index <= 0 then return false end
+    return true
+end
+
 function todo.format_location_caption(location)
     if not location then
         return { "todo.pin_none" }
@@ -127,7 +137,11 @@ function todo.destroy_chart_tag_for_task(task)
         loc.chart_tag_force  = nil
         return
     end
-    for _, tag in pairs(force.find_chart_tags(surface)) do
+    local area = {
+        left_top = { x = loc.x - 1, y = loc.y - 1 },
+        right_bottom = { x = loc.x + 1, y = loc.y + 1 },
+    }
+    for _, tag in pairs(force.find_chart_tags(surface, area)) do
         if tag.valid and tag.tag_number == loc.chart_tag_number then
             tag.destroy()
             break
