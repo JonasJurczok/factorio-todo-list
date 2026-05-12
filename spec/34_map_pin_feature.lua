@@ -3,8 +3,7 @@ feature("#34 map-pin tasks", function()
     before_scenario(function()
         when(todo, "should_show_maximize_button"):then_return(true)
         when(todo, "show_completed_tasks"):then_return(true)
-
-        faketorio.add_default_setting("todolist-auto-chart-tag", true)
+        when(todo, "is_auto_chart_tag"):then_return(true)
 
         todo.maximize_main_frame(game.players[1])
     end)
@@ -12,6 +11,7 @@ feature("#34 map-pin tasks", function()
     after_scenario(function()
         todo.should_show_maximize_button:revert()
         todo.show_completed_tasks:revert()
+        todo.is_auto_chart_tag:revert()
 
         storage.todo.open = {}
         storage.todo.done = {}
@@ -87,7 +87,6 @@ feature("#34 map-pin tasks", function()
         faketorio.click("todo_save_new_task_button")
 
         todo.create_chart_tag_for_task = orig_create
-        todo.is_auto_chart_tag:revert()
 
         local task = storage.todo.open[#storage.todo.open]
         assert(task ~= nil)
@@ -224,15 +223,26 @@ feature("#34 map-pin tasks", function()
         t2.location = { x = 2, y = 2, surface_index = 1, chart_tag_number = 101, chart_tag_force = "player" }
         todo.save_task_to_open_list(t2)
 
+        when(todo, "get_clean_checkboxes"):then_return({ state = false }, { state = true })
+        when(todo, "destroy_clean_confirm_dialog"):then_return(nil)
+        when(todo, "destroy_clean_dialog"):then_return(nil)
+        when(todo, "update_export_dialog_button_state"):then_return(nil)
+        when(todo, "update_main_task_list_for_everyone"):then_return(nil)
+
         local destroy_count = 0
         local orig_destroy = todo.destroy_chart_tag_for_task
         todo.destroy_chart_tag_for_task = function(t)
             destroy_count = destroy_count + 1
         end
 
-        todo.on_clean_tasks("open")
+        todo.on_clean_confirm(player)
 
         todo.destroy_chart_tag_for_task = orig_destroy
+        todo.get_clean_checkboxes:revert()
+        todo.destroy_clean_confirm_dialog:revert()
+        todo.destroy_clean_dialog:revert()
+        todo.update_export_dialog_button_state:revert()
+        todo.update_main_task_list_for_everyone:revert()
 
         assert(destroy_count == 2, "destroy should be called for each task with a tag, got: " .. destroy_count)
     end)
