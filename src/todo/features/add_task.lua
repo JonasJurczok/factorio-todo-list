@@ -60,7 +60,7 @@ function todo.assemble_task(input, player)
     task.assignee = input.assignee
     task.created_by = player.name
     task.updated_by = player.name
-    if input.location then
+    if todo.is_valid_location(input.location) then
         task.location = {
             x = input.location.x,
             y = input.location.y,

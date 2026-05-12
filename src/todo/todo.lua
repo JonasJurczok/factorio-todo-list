@@ -122,7 +122,7 @@ function todo.on_gui_click(event)
     elseif (string.find(element.name, "todo_main_task_mark_open_checkbox_")) then
         local id = todo.get_task_id_from_element_name(element.name, "todo_main_task_mark_open_checkbox_")
 
-        todo.on_mark_open_click(id)
+        todo.on_mark_open_click(id, player)
     elseif (element.name == "todo_toggle_show_completed_button") then
         todo.on_toggle_show_completed_click(player)
     elseif (string.find(element.name, "todo_main_task_move_up")) then
