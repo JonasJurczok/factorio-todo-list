@@ -6,7 +6,7 @@ Date: 2026-02-27
 ---------------------------------------------------------------------------------------------------
 Version: 19.14.1
 Date: 2025-10-31
-  Improvements:
+  Changes:
     - add the japanese translation. By @AudricSan
 ---------------------------------------------------------------------------------------------------
 Version: 19.14.0
@@ -17,77 +17,82 @@ Date: 2025-10-05
 ---------------------------------------------------------------------------------------------------
 Version: 19.13.0
 Date: 2025-09-14
-  Feature: Added support for using in-game icons in text fields. By @blackklotus/@lucerattow
+  Features:
+    - Added support for using in-game icons in text fields. By @blackklotus/@lucerattow
 ---------------------------------------------------------------------------------------------------
 Version: 19.12.0
 Date: 2025-06-08
-  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+  Features:
+    - Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.11.1
 Date: 2025-05-18
-  Revert: Add tasks/subtasks on enter press. By @davidwhite99
+  Changes:
+    - Reverted: Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.11.0
 Date: 2025-05-18
-  Feature: Add tasks/subtasks on enter press. By @davidwhite99
+  Features:
+    - Add tasks/subtasks on enter press. By @davidwhite99
 ---------------------------------------------------------------------------------------------------
 Version: 19.10.1
 Date: 2025-05-12
-  Improvements: Update the German translation (thanks @Lucanoria).
+  Changes:
+    - Update the German translation (thanks @Lucanoria).
 ---------------------------------------------------------------------------------------------------
 Version: 19.10.0
 Date: 2025-02-02
-  Fix:
+  Bugfixes:
     - A crash when importing a list. In 2.0 the LuaGameScript class no longer has json encoding functions, that has also been moved to LuaHelpers.
-  Chores:
+  Changes:
     - Assemble artificats on PR for easier testing.
     - Use LuaHelpers class for encoding/decoding base64 strings. See https://lua-api.factorio.com/2.0.31/classes/LuaHelpers.html#encode_string.
     - Update Github artifacts API version following deprecation.
 ---------------------------------------------------------------------------------------------------
 Version: 19.9.0
 Date: 2024-12-08
-  Improvements:
+  Changes:
     - Rename "global" to "storage".
 ---------------------------------------------------------------------------------------------------
 Version: 19.8.0
 Date: 2024-12-08
-  Improvements:
+  Changes:
     - Fix a problem with button names not being found in the in-game UI.
 ---------------------------------------------------------------------------------------------------
 Version: 19.7.0
 Date: 2024-12-08
-  Improvements:
+  Changes:
     - Fix mod UI not visible in the game interface.
 ---------------------------------------------------------------------------------------------------
 Version: 19.6.0
 Date: 2024-11-23
-  Improvements:
+  Changes:
     - Adjust auto-release rule.
 ---------------------------------------------------------------------------------------------------
 Version: 19.5.0
 Date: 2024-11-23
-  Improvements:
+  Changes:
     - Implement automatic mod deployment to Factorio mod portal.
 ---------------------------------------------------------------------------------------------------
 Version: 19.4.0
 Date: 2024-11-23
-  Improvements:
+  Changes:
     - Minimal changes to make compatible with Factorio 2.0.
 ---------------------------------------------------------------------------------------------------
 Version: 19.3.0
 Date: 2023-01-30
-  Improvements:
+  Changes:
     - Added ability to remove (un-)compelted tasks in bulk. Thanks flamion!
     - Added Korean locale. Thanks x2605!
 ---------------------------------------------------------------------------------------------------
 Version: 19.2.0
 Date: 2021-04-06
-  Improvements:
+  Changes:
     - Dialogs close on E key as all other factorio UIs. Thanks hoylemd!
 ---------------------------------------------------------------------------------------------------
 Version: 19.1.0
 Date: 2021-01-26
-  Improvements:
+  Changes:
     - When adding a new task the task field gets the focus immediately. Thanks hoylemd!
 ---------------------------------------------------------------------------------------------------
 Version: 19.0.6
@@ -117,12 +122,12 @@ Date: 2020-11-28
     - Ready for 1.1 (Thanks Tastaturtaste)
   Bugfixes:
     - Changelog file errors fixed (Thanks veger, Dae)
-  Gui:
+  Changes:
     - Dialogs are now draggable (Thanks veger).
     - Shortcut icon is now highlighted when main dialog is opened (Thanks veger).
 ---------------------------------------------------------------------------------------------------
 Version: 18.0.1
-Date: 2020-03-7
+Date: 2020-03-07
   Bugfixes:
     - fixed renamed icon bug. Thank you Dilise.
 ---------------------------------------------------------------------------------------------------
@@ -155,7 +160,7 @@ Date: 2019-03-14
     - Added toolbar support for UI toggle and task adding (#102).
   Bugfixes:
     - Fixed Questlog translations for all languages (#126).
-  Minor changes:
+  Changes:
     - Added changelog
     - Added thumbnail
 ---------------------------------------------------------------------------------------------------
@@ -163,7 +168,7 @@ Version: 17.0.0
 Date: 2019-02-27
   Features:
     - Switched to 0.17
-  Internal changes:
+  Changes:
     - Removed custom JSON encoding
 ---------------------------------------------------------------------------------------------------
 Version: 16.9.0
@@ -245,7 +250,7 @@ Date: 2018-08-19
     - Added localization for buttons. Thanks hoylemd!
     - Added styles for everything. Thanks hoylemd!
     - Streamlined the UI. Thanks hoylemd!
-  Internal changes:
+  Changes:
     - Lots of code refactorings. Thanks hoylemd!
 ---------------------------------------------------------------------------------------------------
 Version: 16.0.3
@@ -264,7 +269,7 @@ Version: 16.0.1
     - Updates are now transferred on demand and not every 250ms anymore. This should improve performance by a lot.
     - Added scrollbar to make it usable with a lot of tasks
     - Added window height option to match default window height to screen size
-  Internal changes:
+  Changes:
     - Major code refactoring to make it easier to maintain
 ---------------------------------------------------------------------------------------------------
 Version: 1.4.6
@@ -272,7 +277,7 @@ Version: 1.4.6
     - it was not possible to load old saves that did not contain this mod
 ---------------------------------------------------------------------------------------------------
 Version: 1.4.0
-  Internal changes:
+  Changes:
     - Added settings for debug messages (mostly interesting for development)
     - Major code refactoring to make future changes much easier
 ---------------------------------------------------------------------------------------------------
