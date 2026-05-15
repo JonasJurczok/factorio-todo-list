@@ -237,7 +237,7 @@ function todo.on_search_clear_click(player)
     local frame = todo.get_main_frame(player)
     if frame and frame.todo_search_flow then
         local search_field = frame.todo_search_flow.todo_search_field
-        if search_field then
+        if search_field and search_field.valid then
             search_field.text = ""
             todo.refresh_task_table(player, "")
         end

@@ -221,9 +221,6 @@ function todo.on_gui_confirmed(event)
                 player.opened.todo_scroll_pane.todo_task_table[name].focus()
             end
         end
-    elseif (element.name == "todo_search_field") then
-        element.text = ""
-        todo.refresh_task_table(player, "")
     end
 end
 

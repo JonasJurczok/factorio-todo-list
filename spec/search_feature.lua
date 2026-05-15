@@ -1,5 +1,5 @@
 local task_num = 1
-function add_search_task(player, title, task_text)
+local function add_search_task(player, title, task_text)
     player = player or game.players[1]
     title = title or 'Task ' .. task_num
     task_text = task_text or 'this is task description ' .. task_num
