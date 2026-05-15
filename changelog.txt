@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.15.0
+Date: 2026-05-15
+  Bugfixes:
+    - Replaced base-game utility sprites with local icons to prevent breakage on Factorio updates.
+---------------------------------------------------------------------------------------------------
 Version: 19.14.2
 Date: 2026-02-27
   Bugfixes:
