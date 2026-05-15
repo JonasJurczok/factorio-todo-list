@@ -80,6 +80,7 @@ script.on_event("todo-search-shortcut", function(event)
     -- If UI is minimized, maximize it first
     if not frame then
         todo.maximize_main_frame(player)
+        todo.refresh_task_table(player)
         frame = todo.get_main_frame(player)
     end
 

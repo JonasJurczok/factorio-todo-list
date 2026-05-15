@@ -33,7 +33,7 @@ local add_task_shortcut = {
 local search_shortcut = {
     type = "custom-input",
     name = "todo-search-shortcut",
-    key_sequence = "CTRL + F",
+    key_sequence = "CONTROL + F",
     consuming = "none",
 }
 
