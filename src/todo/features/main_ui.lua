@@ -105,6 +105,10 @@ function todo.refresh_task_table(player, search_term)
         end
     end
 
+    if search_term ~= "" then
+        search_term = string.lower(search_term)
+    end
+
     todo.update_current_task_label(player)
 
     -- if the player has the UI minimized do nothing
@@ -153,7 +157,7 @@ function todo.refresh_task_table(player, search_term)
             row[2] = {
                 type = "label",
                 style = "todo_label_default",
-                caption = {"todo.no_results"}
+                caption = {todo.translate(player, "no_results")}
             }
             todo.add_row_to_main_table(task_table, row)
         end
@@ -164,7 +168,7 @@ function todo.refresh_task_table(player, search_term)
             row[2] = {
                 type = "label",
                 style = "todo_label_default",
-                caption = {"todo.no_results"}
+                caption = {todo.translate(player, "no_results")}
             }
             todo.add_row_to_main_table(task_table, row)
         end
@@ -249,11 +253,9 @@ function todo.task_matches_search(task, search_term)
     if not search_term or search_term == "" then
         return true
     end
-    
-    search_term = string.lower(search_term)
-    return string.find(string.lower(task.title or ""), search_term, 1, true) or 
-           string.find(string.lower(task.task or ""), search_term, 1, true) or
-           (task.subtasks and todo.subtasks_match_search(task.subtasks, search_term))
+    return string.find(string.lower(task.title or ""), search_term, 1, true) ~= nil or
+           string.find(string.lower(task.task or ""), search_term, 1, true) ~= nil or
+           (task.subtasks ~= nil and todo.subtasks_match_search(task.subtasks, search_term))
 end
 
 -- Helper function to check if any subtasks match the search term
