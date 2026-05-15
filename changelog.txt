@@ -1,6 +1,6 @@
 
 ---------------------------------------------------------------------------------------------------
-Version: 19.15.0
+Version: 19.16.0
 Date: 2026-05-12
   Feature:
     - Tasks can now be pinned to a map location. Open a task's edit dialog (or the add dialog) and click "Pin current view" to attach your current position and surface. A pin icon appears next to the task title in the main list — click it to zoom your map view to that location.
