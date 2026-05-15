@@ -80,23 +80,27 @@ function todo.update_main_task_list_for_everyone()
 end
 
 function todo.refresh_task_table(player, search_term)
-    -- Get search term from the UI if it exists and no search_term was provided
+    local main_frame = todo.get_main_frame(player)
+
+    -- Resolve effective search term from UI when not provided
     if not search_term then
-        local main_frame = todo.get_main_frame(player)
         search_term = ""
-        
-        -- Error handling for search field
         if main_frame and main_frame.todo_search_flow then
             local search_field = main_frame.todo_search_flow.todo_search_field
-            if search_field and search_field.valid then  -- Validity check
+            if search_field and search_field.valid then
                 search_term = search_field.text
-                
-                -- Visual indicator when search is active
-                if search_term and search_term ~= "" then
-                    search_field.style.font_color = {r=0, g=1, b=0}  -- Green when search is active
-                else
-                    search_field.style.font_color = {r=1, g=1, b=1}  -- White when no search
-                end
+            end
+        end
+    end
+
+    -- Always sync visual indicator with effective search term
+    if main_frame and main_frame.todo_search_flow then
+        local search_field = main_frame.todo_search_flow.todo_search_field
+        if search_field and search_field.valid then
+            if search_term ~= "" then
+                search_field.style.font_color = {r=0, g=1, b=0}
+            else
+                search_field.style.font_color = {r=1, g=1, b=1}
             end
         end
     end
@@ -104,16 +108,14 @@ function todo.refresh_task_table(player, search_term)
     todo.update_current_task_label(player)
 
     -- if the player has the UI minimized do nothing
-    local main_frame = todo.get_main_frame(player)
     if not main_frame then
         return
     end
 
     local task_table = todo.get_task_table(player)
-    for i, element in ipairs(task_table.children) do
-        if i > task_table.column_count then
-            element.destroy()
-        end
+    local children = task_table.children
+    for i = #children, task_table.column_count + 1, -1 do
+        children[i].destroy()
     end
 
     -- Filter and display open tasks
