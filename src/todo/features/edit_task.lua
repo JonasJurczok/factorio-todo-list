@@ -55,6 +55,38 @@ function todo.edit_persist_task_changes(player, id)
         original.assignee = nil
     end
 
+    local pending_location
+    if dialog.tags then
+        pending_location = dialog.tags.pending_location
+    end
+
+    local old_location = original.location
+    local locations_differ = (old_location == nil) ~= (pending_location == nil)
+        or (old_location and pending_location and (
+            old_location.x ~= pending_location.x
+            or old_location.y ~= pending_location.y
+            or old_location.surface_index ~= pending_location.surface_index
+        ))
+
+    if locations_differ then
+        if old_location and old_location.chart_tag_number then
+            todo.destroy_chart_tag_for_task(original)
+        end
+
+        if pending_location then
+            original.location = {
+                x = pending_location.x,
+                y = pending_location.y,
+                surface_index = pending_location.surface_index,
+            }
+            if todo.is_auto_chart_tag(player) then
+                todo.create_chart_tag_for_task(original, player)
+            end
+        else
+            original.location = nil
+        end
+    end
+
     original.updated_by = player.name
 end
 
