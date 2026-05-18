@@ -34,6 +34,7 @@ local search_shortcut = {
     type = "custom-input",
     name = "todo-search-shortcut",
     key_sequence = "CONTROL + F",
+    alternative_key_sequence = "COMMAND + F",
     consuming = "none",
 }
 
