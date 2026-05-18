@@ -18,6 +18,36 @@ end
 function todo.create_maximized_frame(player)
     local frame = todo.create_frame(player, "todo_main_frame", { todo.translate(player, "todo_list") }, "todo_minimize_button")
 
+    -- Add search field
+    local search_flow = frame.add({
+        type = "flow",
+        name = "todo_search_flow",
+        direction = "horizontal",
+        style = "todo_search_flow"
+    })
+
+    search_flow.add({
+        type = "label",
+        caption = { todo.translate(player, "search") },
+        style = "todo_label_default"
+    })
+
+    search_flow.add({
+        type = "textfield",
+        name = "todo_search_field",
+        style = "todo_search_textfield",
+        tooltip = { todo.translate(player, "search_tooltip") },
+        text = ""
+    })
+
+    search_flow.add({
+        type = "sprite-button",
+        name = "todo_search_clear_button",
+        style = "todo_sprite_button_default",
+        sprite = "todo-close",
+        tooltip = { todo.translate(player, "clear_search") }
+    })
+
     todo.create_task_table(frame, player)
 
     local flow = frame.add({
@@ -51,7 +81,7 @@ function todo.create_maximized_frame(player)
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_main_open_export_dialog_button",
-        sprite = "__Todo-List__/graphics/export.png",
+        sprite = "todo-export",
         tooltip = { todo.translate(player, "export") }
     })
     todo.update_export_dialog_button_state()
@@ -60,7 +90,7 @@ function todo.create_maximized_frame(player)
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_main_open_import_dialog_button",
-        sprite = "__Todo-List__/graphics/import.png",
+        sprite = "todo-import",
         tooltip = { todo.translate(player, "import") }
     })
 
@@ -250,7 +280,7 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_open_edit_dialog_button_" .. id,
-        sprite = "__Todo-List__/graphics/edit.png",
+        sprite = "todo-edit",
         tooltip = { todo.translate(player, "title_edit") }
     })
 
@@ -259,7 +289,7 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
             type = "sprite-button",
             style = "todo_sprite_button_default",
             name = "todo_main_close_details_button_" .. id,
-            sprite = "__Todo-List__/graphics/collapse.png",
+            sprite = "todo-collapse",
             tooltip = { "todo.title_details" }
         })
 
@@ -294,7 +324,7 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
             type = "sprite-button",
             style = "todo_sprite_button_default",
             name = "todo_main_open_details_button_" .. id,
-            sprite = "__Todo-List__/graphics/expand.png",
+            sprite = "todo-expand",
             tooltip = { "todo.title_details" }
         })
     end
@@ -331,7 +361,7 @@ function todo.add_subtasks_to_task_table(player, table, task)
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = "todo_main_subtask_save_new_button_" .. task.id,
-        sprite = "__Todo-List__/graphics/add.png",
+        sprite = "todo-add",
         tooltip = { todo.translate(player, "add_subtask") }
     }
     todo.add_row_to_main_table(table, row)
@@ -380,7 +410,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
             type = "sprite-button",
             style = "todo_sprite_button_default",
             name = string.format("todo_main_subtask_edit_button_%i_%i", task_id, subtask_id),
-            sprite = "__Todo-List__/graphics/edit.png",
+            sprite = "todo-edit",
             tooltip = { todo.translate(player, "edit_subtask") }
         }
     end
@@ -389,7 +419,7 @@ function todo.add_subtask_to_main_table(player, table, task_id, subtask, is_firs
         type = "sprite-button",
         style = "todo_sprite_button_default",
         name = string.format("todo_main_subtask_delete_button_%i_%i", task_id, subtask_id),
-        sprite = "__Todo-List__/graphics/delete.png",
+        sprite = "todo-delete",
         tooltip = { todo.translate(player, "delete_subtask") }
     }
 

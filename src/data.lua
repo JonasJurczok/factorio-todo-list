@@ -30,4 +30,35 @@ local add_task_shortcut = {
     disabled_small_icon = '__Todo-List__/graphics/' .. 'add-task-disabled.png',
 }
 
-data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut})
+local search_shortcut = {
+    type = "custom-input",
+    name = "todo-search-shortcut",
+    key_sequence = "CONTROL + F",
+    alternative_key_sequence = "COMMAND + F",
+    consuming = "none",
+}
+
+local sprite_names = {
+    "close",
+    "export",
+    "import",
+    "edit",
+    "collapse",
+    "expand",
+    "add",
+    "delete",
+}
+
+local sprites = {}
+for _, name in ipairs(sprite_names) do
+    table.insert(sprites, {
+        type = "sprite",
+        name = "todo-" .. name,
+        filename = "__Todo-List__/graphics/" .. name .. ".png",
+        size = 32,
+        flags = {"gui-icon"},
+    })
+end
+
+data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut, search_shortcut})
+data:extend(sprites)

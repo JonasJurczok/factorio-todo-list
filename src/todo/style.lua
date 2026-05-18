@@ -70,6 +70,13 @@ default_gui["todo_textfield_default"] = {
     minimal_width = 300
 }
 
+default_gui["todo_search_textfield"] = {
+    type = "textbox_style",
+    font = "todo_font_default",
+    minimal_width = 200,
+    width = 200
+}
+
 default_gui["todo_base64_textbox"] = {
     type = "textbox_style",
     font = "todo_font_default",
@@ -105,4 +112,11 @@ default_gui["todo_clean_confirm_text_label"] = {
     natural_width = 200,
     maximal_width = 300,
     single_line = false
+}
+
+default_gui["todo_search_flow"] = {
+    type = "horizontal_flow_style",
+    vertical_align = "center",
+    horizontal_spacing = 8,
+    bottom_margin = 8
 }
