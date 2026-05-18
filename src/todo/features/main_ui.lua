@@ -2,16 +2,6 @@
   Business logic for the main UI.
 ]]--
 
-local function unicode_lower(s)
-    s = s:gsub("[A-Z]", function(c) return string.char(c:byte() + 32) end)
-    -- Cyrillic А-П (U+0410-U+041F)
-    s = s:gsub("\xD0[\x90-\x9F]", function(m) return "\xD0" .. string.char(m:byte(2) + 0x20) end)
-    -- Cyrillic Р-Я (U+0420-U+042F)
-    s = s:gsub("\xD0[\xA0-\xAF]", function(m) return "\xD1" .. string.char(m:byte(2) - 0x20) end)
-    -- Ё
-    s = s:gsub("\xD0\x81", "\xD1\x91")
-    return s
-end
 
 function todo.toggle_main_frame(player)
     if todo.get_main_frame(player) then
@@ -105,7 +95,7 @@ function todo.refresh_task_table(player, search_term)
     end
 
     if search_term ~= "" then
-        search_term = unicode_lower(search_term)
+        search_term = string.lower(search_term)
     end
 
     todo.update_current_task_label(player)
@@ -252,8 +242,8 @@ function todo.task_matches_search(task, search_term)
     if not search_term or search_term == "" then
         return true
     end
-    return string.find(unicode_lower(task.title or ""), search_term, 1, true) ~= nil or
-           string.find(unicode_lower(task.task or ""), search_term, 1, true) ~= nil or
+    return string.find(string.lower(task.title or ""), search_term, 1, true) ~= nil or
+           string.find(string.lower(task.task or ""), search_term, 1, true) ~= nil or
            (task.subtasks ~= nil and todo.subtasks_match_search(task.subtasks, search_term))
 end
 
@@ -266,7 +256,7 @@ function todo.subtasks_match_search(subtasks, search_term)
     -- Check open subtasks
     if subtasks.open then
         for _, subtask in ipairs(subtasks.open) do
-            if string.find(unicode_lower(subtask.task or ""), search_term, 1, true) then
+            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
                 return true
             end
         end
@@ -275,7 +265,7 @@ function todo.subtasks_match_search(subtasks, search_term)
     -- Check completed subtasks
     if subtasks.done then
         for _, subtask in ipairs(subtasks.done) do
-            if string.find(unicode_lower(subtask.task or ""), search_term, 1, true) then
+            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
                 return true
             end
         end
