@@ -1,6 +1,10 @@
 ---------------------------------------------------------------------------------------------------
 Version: 19.15.0
 Date: 2026-05-15
+  Features:
+    - Added search/filter functionality (Ctrl+F / Cmd+F on Mac) to filter tasks by title, description, and subtasks in real-time.
+    - Added clear button to reset the search field.
+    - Quest translation mode supported for all new search strings.
   Bugfixes:
     - Replaced base-game utility sprites with local icons to prevent breakage on Factorio updates.
 ---------------------------------------------------------------------------------------------------
@@ -8,13 +12,6 @@ Version: 19.14.2
 Date: 2026-02-27
   Bugfixes:
     - Fixed changelog not being packed and not showing in the mod portal.
----------------------------------------------------------------------------------------------------
-Version: 19.15.0
-Date: 2026-05-15
-  Features:
-    - Added search/filter functionality (Ctrl+F / Cmd+F on Mac) to filter tasks by title, description, and subtasks in real-time.
-    - Added clear button to reset the search field.
-    - Quest translation mode supported for all new search strings.
 ---------------------------------------------------------------------------------------------------
 Version: 19.14.1
 Date: 2025-10-31
