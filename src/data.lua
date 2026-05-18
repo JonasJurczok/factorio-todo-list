@@ -38,4 +38,27 @@ local search_shortcut = {
     consuming = "none",
 }
 
+local sprite_names = {
+    "close",
+    "export",
+    "import",
+    "edit",
+    "collapse",
+    "expand",
+    "add",
+    "delete",
+}
+
+local sprites = {}
+for _, name in ipairs(sprite_names) do
+    table.insert(sprites, {
+        type = "sprite",
+        name = "todo-" .. name,
+        filename = "__Todo-List__/graphics/" .. name .. ".png",
+        size = 32,
+        flags = {"gui-icon"},
+    })
+end
+
 data:extend({hotkey, toggle_ui_shortcut, add_task_shortcut, search_shortcut})
+data:extend(sprites)
