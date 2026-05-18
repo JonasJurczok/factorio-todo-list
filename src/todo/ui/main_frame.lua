@@ -44,7 +44,7 @@ function todo.create_maximized_frame(player)
         type = "sprite-button",
         name = "todo_search_clear_button",
         style = "todo_sprite_button_default",
-        sprite = "utility/close",
+        sprite = "todo-close",
         tooltip = { todo.translate(player, "clear_search") }
     })
 

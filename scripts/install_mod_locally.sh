@@ -1,5 +1,5 @@
 #!/bin/bash
-# Usage: ./scripts/install_mod.sh <PR_NUMBER>
+# Usage: ./scripts/install_mod_locally.sh <PR_NUMBER>
 # Downloads the latest CI artifact from a PR and installs it into the Factorio mods folder.
 set -e
 
