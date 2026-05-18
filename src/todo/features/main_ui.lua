@@ -93,20 +93,8 @@ function todo.refresh_task_table(player, search_term)
         end
     end
 
-    -- Always sync visual indicator with effective search term
-    if main_frame and main_frame.todo_search_flow then
-        local search_field = main_frame.todo_search_flow.todo_search_field
-        if search_field and search_field.valid then
-            if search_term ~= "" then
-                search_field.style.font_color = {r=0, g=1, b=0}
-            else
-                search_field.style.font_color = {r=1, g=1, b=1}
-            end
-        end
-    end
-
     if search_term ~= "" then
-        search_term = string.lower(search_term)
+        search_term = search_term:gsub("[A-Z]", function(c) return string.char(c:byte() + 32) end)
     end
 
     todo.update_current_task_label(player)
@@ -253,8 +241,9 @@ function todo.task_matches_search(task, search_term)
     if not search_term or search_term == "" then
         return true
     end
-    return string.find(string.lower(task.title or ""), search_term, 1, true) ~= nil or
-           string.find(string.lower(task.task or ""), search_term, 1, true) ~= nil or
+    local function al(s) return (s:gsub("[A-Z]", function(c) return string.char(c:byte() + 32) end)) end
+    return string.find(al(task.title or ""), search_term, 1, true) ~= nil or
+           string.find(al(task.task or ""), search_term, 1, true) ~= nil or
            (task.subtasks ~= nil and todo.subtasks_match_search(task.subtasks, search_term))
 end
 
@@ -267,7 +256,7 @@ function todo.subtasks_match_search(subtasks, search_term)
     -- Check open subtasks
     if subtasks.open then
         for _, subtask in ipairs(subtasks.open) do
-            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
+            if string.find((subtask.task or ""):gsub("[A-Z]", function(c) return string.char(c:byte() + 32) end), search_term, 1, true) then
                 return true
             end
         end
@@ -276,7 +265,7 @@ function todo.subtasks_match_search(subtasks, search_term)
     -- Check completed subtasks
     if subtasks.done then
         for _, subtask in ipairs(subtasks.done) do
-            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
+            if string.find((subtask.task or ""):gsub("[A-Z]", function(c) return string.char(c:byte() + 32) end), search_term, 1, true) then
                 return true
             end
         end
