@@ -6,6 +6,7 @@ function todo.on_take_task_click(player, id)
     todo.log("Assigning task " .. id .. " to player " .. player.name)
 
     local task = todo.get_task_by_id(id)
+    if not task then return end
     task.assignee = player.name
 
     todo.update_main_task_list_for_everyone()
