@@ -5,7 +5,11 @@
 function todo.on_save_new_subtask_click(player, task_id)
 
     local task = todo.get_task_by_id(task_id)
-    if not task then return end
+    if not task then
+        player.print({"todo.error_task_deleted"})
+        todo.update_main_task_list_for_everyone()
+        return
+    end
 
     local task_table = todo.get_task_table(player)
     local textfield = task_table["todo_main_subtask_new_text_" .. task_id]
@@ -36,9 +40,17 @@ end
 
 function todo.on_edit_subtask_click(player, task_id, subtask_id)
     local task = todo.get_task_by_id(task_id)
-    if not task then return end
+    if not task then
+        player.print({"todo.error_task_deleted"})
+        todo.update_main_task_list_for_everyone()
+        return
+    end
     local subtask = todo.get_subtask_by_id(task, subtask_id)
-    if not subtask then return end
+    if not subtask then
+        player.print({"todo.error_subtask_deleted"})
+        todo.update_main_task_list_for_everyone()
+        return
+    end
 
     todo.create_edit_subtask_dialog(player, task.id, subtask)
 end
@@ -73,9 +85,15 @@ end
 
 function todo.on_subtask_checkbox_click(task_id, subtask_id)
     local task = todo.get_task_by_id(task_id)
-    if not task then return end
+    if not task then
+        todo.update_main_task_list_for_everyone()
+        return
+    end
     local _, is_completed = todo.get_subtask_by_id(task, subtask_id)
-    if not _ then return end
+    if not _ then
+        todo.update_main_task_list_for_everyone()
+        return
+    end
 
     if (is_completed) then
         todo.mark_subtask_open(task, subtask_id)
@@ -140,9 +158,15 @@ end
 function todo.on_subtask_delete_click(task_id, subtask_id)
 
     local task = todo.get_task_by_id(task_id)
-    if not task then return end
+    if not task then
+        todo.update_main_task_list_for_everyone()
+        return
+    end
     local _, is_completed = todo.get_subtask_by_id(task, subtask_id)
-    if not _ then return end
+    if not _ then
+        todo.update_main_task_list_for_everyone()
+        return
+    end
 
     if (is_completed) then
         todo.delete_subtask(task.subtasks.done, subtask_id)
