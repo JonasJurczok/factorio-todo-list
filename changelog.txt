@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.15.2
+Date: 2026-05-20
+  Bugfixes:
+    - Fixed non-recoverable crash when interacting with a task or subtask that was deleted by another player while a dialog was open (multiplayer race condition).
+    - Ghost tasks/subtasks now disappear immediately from all players' UI when the stale interaction is detected.
+    - Added player notifications when a subtask could not be saved or edited because the parent task or subtask no longer exists.
+    - Export dialog now notifies the player when selected tasks were excluded because they no longer exist.
+---------------------------------------------------------------------------------------------------
 Version: 19.15.1
 Date: 2026-05-20
   Bugfixes:
