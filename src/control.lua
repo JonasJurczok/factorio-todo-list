@@ -72,19 +72,16 @@ script.on_event(defines.events.on_gui_text_changed, function(event)
     end
 end)
 
--- For Ctrl+F shortcut
+-- For Ctrl+F shortcut — only act when todo window is already open
 script.on_event("todo-search-shortcut", function(event)
     local player = game.players[event.player_index]
     local frame = todo.get_main_frame(player)
 
-    -- If UI is minimized, maximize it first
-    if not frame then
-        todo.maximize_main_frame(player)
-        todo.refresh_task_table(player)
-        frame = todo.get_main_frame(player)
+    if not frame or not frame.valid then
+        return
     end
 
-    if frame and frame.valid and frame.todo_search_flow then
+    if frame.todo_search_flow then
         local search_field = frame.todo_search_flow.todo_search_field
         if search_field and search_field.valid then
             search_field.focus()
