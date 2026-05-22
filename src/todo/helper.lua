@@ -121,6 +121,16 @@ function todo.update_player_tag(player)
     player.tag = ""
 end
 
+function todo.update_player_tag_by_name(player_name)
+    if not player_name then
+        return
+    end
+    local player = game.players[player_name]
+    if player then
+        todo.update_player_tag(player)
+    end
+end
+
 function todo.update_all_player_tags()
     for _, player in pairs(game.players) do
         todo.update_player_tag(player)

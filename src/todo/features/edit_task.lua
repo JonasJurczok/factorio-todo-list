@@ -24,13 +24,21 @@ function todo.get_click_to_edit_mouse_button(player)
 end
 
 function todo.on_edit_save_changes_click(player, id)
+    local task = todo.get_task_by_id(id)
+    local old_assignee = task and task.assignee
 
     todo.edit_persist_task_changes(player, id)
 
     todo.get_edit_dialog(player).destroy()
 
     todo.update_main_task_list_for_everyone()
-    todo.update_all_player_tags()
+
+    -- Update tags for old and new assignee (they may differ)
+    local new_assignee = task and task.assignee
+    todo.update_player_tag_by_name(old_assignee)
+    if new_assignee ~= old_assignee then
+        todo.update_player_tag_by_name(new_assignee)
+    end
 end
 
 function todo.edit_persist_task_changes(player, id)

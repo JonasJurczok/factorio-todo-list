@@ -3,10 +3,13 @@
 ]]--
 
 function todo.on_mark_complete_click(id)
+    local task = todo.get_task_by_id(id)
+    local assignee = task and task.assignee
+
     todo.mark_complete(id)
 
     todo.update_main_task_list_for_everyone()
-    todo.update_all_player_tags()
+    todo.update_player_tag_by_name(assignee)
 end
 
 function todo.mark_complete(id)
