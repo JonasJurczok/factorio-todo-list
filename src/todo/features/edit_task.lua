@@ -33,8 +33,9 @@ function todo.on_edit_save_changes_click(player, id)
 
     todo.update_main_task_list_for_everyone()
 
-    -- Update tags for old and new assignee (they may differ)
-    local new_assignee = task and task.assignee
+    -- Update tags for old and new assignee (they may differ after edit)
+    local updated_task = todo.get_task_by_id(id)
+    local new_assignee = updated_task and updated_task.assignee
     todo.update_player_tag_by_name(old_assignee)
     if new_assignee ~= old_assignee then
         todo.update_player_tag_by_name(new_assignee)

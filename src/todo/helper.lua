@@ -113,7 +113,7 @@ function todo.update_player_tag(player)
 
     for _, task in ipairs(storage.todo.open) do
         if task.assignee == player.name then
-            player.tag = "[T] " .. (task.title or "")
+            player.tag = task.title and ("[T] " .. task.title) or "[T]"
             return
         end
     end
