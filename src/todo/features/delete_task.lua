@@ -13,6 +13,7 @@ function todo.on_edit_confirm_delete_click(player, id)
     todo.update_export_dialog_button_state()
 
     todo.update_main_task_list_for_everyone()
+    todo.update_all_player_tags()
 end
 
 function todo.delete_task(id)

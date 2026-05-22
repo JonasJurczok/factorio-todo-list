@@ -30,6 +30,7 @@ function todo.on_edit_save_changes_click(player, id)
     todo.get_edit_dialog(player).destroy()
 
     todo.update_main_task_list_for_everyone()
+    todo.update_all_player_tags()
 end
 
 function todo.edit_persist_task_changes(player, id)

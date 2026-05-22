@@ -6,6 +6,7 @@ function todo.on_mark_open_click(id)
     todo.task_mark_open(id)
 
     todo.update_main_task_list_for_everyone()
+    todo.update_all_player_tags()
 end
 
 function todo.task_mark_open(id)

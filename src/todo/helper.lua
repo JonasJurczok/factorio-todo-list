@@ -102,6 +102,31 @@ function todo.get_player_translation_mode(player)
     return settings.get_player_settings(player)["todolist-translation-mode"].value
 end
 
+function todo.should_modify_player_tag(player)
+    return settings.get_player_settings(player)["todolist-modify-player-tag"].value
+end
+
+function todo.update_player_tag(player)
+    if not todo.should_modify_player_tag(player) then
+        return
+    end
+
+    for _, task in ipairs(storage.todo.open) do
+        if task.assignee == player.name then
+            player.tag = "[T] " .. (task.title or "")
+            return
+        end
+    end
+
+    player.tag = ""
+end
+
+function todo.update_all_player_tags()
+    for _, player in pairs(game.players) do
+        todo.update_player_tag(player)
+    end
+end
+
 function todo.translate(player, input)
     local mode = todo.get_player_translation_mode(player)
 

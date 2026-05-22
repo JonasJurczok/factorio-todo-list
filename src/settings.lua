@@ -42,5 +42,12 @@ data:extend({
 		allowed_values = {"default", "quest"},
 		default_value = "default",
 		per_user = true,
+	},
+	{
+		name = "todolist-modify-player-tag",
+		setting_type = "runtime-per-user",
+		type = "bool-setting",
+		default_value = false,
+		per_user = true,
 	}
 })

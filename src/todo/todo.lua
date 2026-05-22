@@ -247,6 +247,8 @@ function todo.on_runtime_mod_setting_changed(player, key)
         -- automatically redraw main frame on mode change
         todo.toggle_main_frame(player)
         todo.toggle_main_frame(player)
+    elseif (key == "todolist-modify-player-tag") then
+        todo.update_player_tag(player)
     end
 end
 
