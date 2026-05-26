@@ -18,6 +18,7 @@ end
 function todo.delete_task(id)
     for i, task in pairs(storage.todo.open) do
         if (task.id == id) then
+            todo.destroy_chart_tag_for_task(task)
             table.remove(storage.todo.open, i)
             return
         end
@@ -25,6 +26,7 @@ function todo.delete_task(id)
 
     for i, task in pairs(storage.todo.done) do
         if (task.id == id) then
+            todo.destroy_chart_tag_for_task(task)
             table.remove(storage.todo.done, i)
             return
         end

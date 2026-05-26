@@ -53,6 +53,10 @@ function todo.import_tasks(encoded, player)
 
         todo.log(serpent.block(task))
         todo.save_task_to_open_list(task)
+
+        if task.location and todo.is_auto_chart_tag(player) then
+            todo.create_chart_tag_for_task(task, player)
+        end
     end
 
     todo.log("Imported " .. #tasks .. " tasks.")

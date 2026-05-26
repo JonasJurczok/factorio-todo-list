@@ -201,12 +201,35 @@ function todo.add_task_to_table(player, table, task, completed, is_first, is_las
         state = completed
     })
 
-    table.add({
-        type = "label",
-        style = "todo_label_task",
-        name = "todo_main_task_title_" .. id,
-        caption = task.title
-    })
+    if task.location then
+        local title_flow = table.add({
+            type = "flow",
+            name = "todo_main_task_pin_flow_" .. id,
+            direction = "horizontal"
+        })
+
+        title_flow.add({
+            type = "sprite-button",
+            style = "todo_sprite_button_default",
+            name = "todo_main_task_pin_" .. id,
+            sprite = "utility/notification",
+            tooltip = todo.format_location_caption(task.location)
+        })
+
+        title_flow.add({
+            type = "label",
+            style = "todo_label_task",
+            name = "todo_main_task_title_" .. id,
+            caption = task.title
+        })
+    else
+        table.add({
+            type = "label",
+            style = "todo_label_task",
+            name = "todo_main_task_title_" .. id,
+            caption = task.title
+        })
+    end
 
     if (task.assignee) then
         table.add({

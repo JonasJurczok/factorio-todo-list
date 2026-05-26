@@ -15,6 +15,10 @@ function todo.on_save_new_task_click(player)
 
     todo.save_task_to_open_list(task, should_add_to_top)
 
+    if task.location and todo.is_auto_chart_tag(player) then
+        todo.create_chart_tag_for_task(task, player)
+    end
+
     dialog.destroy()
 
     todo.update_main_task_list_for_everyone()
@@ -33,7 +37,12 @@ function todo.get_task_from_add_dialog(dialog)
     local add_top_checkbox = dialog.todo_add_task_table["todo_add_top"]
     local should_add_to_top = add_top_checkbox.state
 
-    local task = { ["title"] = title, ["task"] = text, ["assignee"] = assignee }
+    local pending_location
+    if dialog.tags then
+        pending_location = dialog.tags.pending_location
+    end
+
+    local task = { ["title"] = title, ["task"] = text, ["assignee"] = assignee, ["location"] = pending_location }
 
     todo.log("Reading task: " .. serpent.block(task))
     if should_add_to_top then
@@ -51,6 +60,13 @@ function todo.assemble_task(input, player)
     task.assignee = input.assignee
     task.created_by = player.name
     task.updated_by = player.name
+    if todo.is_valid_location(input.location) then
+        task.location = {
+            x = input.location.x,
+            y = input.location.y,
+            surface_index = input.location.surface_index,
+        }
+    end
     return task
 end
 

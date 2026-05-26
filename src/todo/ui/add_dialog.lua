@@ -71,6 +71,40 @@ function todo.create_add_task_dialog(player)
         caption = { "todo.add_top" }
     })
 
+    table.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_add_pin_label",
+        caption = { "todo.pin_label" }
+    })
+
+    local pin_flow = table.add({
+        type = "flow",
+        name = "todo_add_pin_flow",
+        direction = "horizontal"
+    })
+
+    pin_flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_add_pin_set_button",
+        caption = { "todo.pin_set" }
+    })
+
+    pin_flow.add({
+        type = "button",
+        style = "todo_button_default",
+        name = "todo_add_pin_clear_button",
+        caption = { "todo.pin_clear" }
+    })
+
+    pin_flow.add({
+        type = "label",
+        style = "todo_label_default",
+        name = "todo_add_pin_caption_label",
+        caption = { "todo.pin_none" }
+    })
+
     local button_flow = dialog.add({
         type = "flow",
         name = "todo_add_dialog_button_flow",
