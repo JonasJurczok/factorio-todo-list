@@ -67,7 +67,18 @@ function todo.on_edit_subtask_save_click(player, task_id, subtask_id)
 
     local new_text = dialog.todo_edit_subtask_text.text
 
-    todo.update_subtask(task_id, subtask_id, new_text)
+    local task = todo.get_task_by_id(task_id)
+    if not task then
+        player.print({"todo.error_task_deleted"})
+        dialog.destroy()
+        todo.update_main_task_list_for_everyone()
+        return
+    end
+
+    local ok = todo.update_subtask(task_id, subtask_id, new_text)
+    if not ok then
+        player.print({"todo.error_subtask_deleted"})
+    end
 
     dialog.destroy()
 
@@ -76,11 +87,12 @@ end
 
 function todo.update_subtask(task_id, subtask_id, new_text)
     local task = todo.get_task_by_id(task_id)
-    if not task then return end
+    if not task then return false end
     local subtask = todo.get_subtask_by_id(task, subtask_id)
-    if not subtask then return end
+    if not subtask then return false end
 
     subtask.task = new_text
+    return true
 end
 
 function todo.on_subtask_checkbox_click(task_id, subtask_id)
@@ -89,8 +101,8 @@ function todo.on_subtask_checkbox_click(task_id, subtask_id)
         todo.update_main_task_list_for_everyone()
         return
     end
-    local _, is_completed = todo.get_subtask_by_id(task, subtask_id)
-    if not _ then
+    local subtask, is_completed = todo.get_subtask_by_id(task, subtask_id)
+    if not subtask then
         todo.update_main_task_list_for_everyone()
         return
     end
@@ -162,8 +174,8 @@ function todo.on_subtask_delete_click(task_id, subtask_id)
         todo.update_main_task_list_for_everyone()
         return
     end
-    local _, is_completed = todo.get_subtask_by_id(task, subtask_id)
-    if not _ then
+    local subtask, is_completed = todo.get_subtask_by_id(task, subtask_id)
+    if not subtask then
         todo.update_main_task_list_for_everyone()
         return
     end

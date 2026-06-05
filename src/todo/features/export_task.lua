@@ -25,7 +25,7 @@ function todo.generate_and_show_export_string(player)
     local has_missing = false
 
     for i, checkbox in ipairs(tasks_table.children) do
-        -- every uneven child is a textbox (lists start at 1)
+        -- every odd child is a checkbox, even child is a label (lists start at 1)
         if (i % 2 == 1 and checkbox.state) then
             local id = todo.get_task_id_from_element_name(checkbox.name, "todo_export_select_task_checkbox_")
             local task = todo.get_task_by_id(id)
