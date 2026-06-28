@@ -46,6 +46,7 @@ jobs:
           with:
               action: compress
               mod-folder: src
+              auto-update-version: 'false'
 
         - name: Upload ZIP as Artifact
           uses: actions/upload-artifact@v4
