@@ -17,19 +17,14 @@ jobs:
             - name: Copy changelog into mod folder
               run: cp changelog.txt src/changelog.txt
 
-            - name: Set up Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '20'
-
             - name: Validate Mod
-              uses: TheBrutalX/factorio-mod-uploader-action@v1
+              uses: TheBrutalX/factorio-mod-uploader-action@v2
               with:
                   action: validate
                   mod-folder: src
 
             - name: Create zip
-              uses: TheBrutalX/factorio-mod-uploader-action@v1
+              uses: TheBrutalX/factorio-mod-uploader-action@v2
               with:
                   action: compress
                   mod-folder: src
@@ -38,11 +33,11 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: factorio-mod-zip
-                path: ${{ env.ZIP_FILE }}
+                path: ${{ env.PROCESS_ZIP_FILE }}
 
             - name: Upload Mod
               if: startsWith(github.ref, 'refs/tags/v')
-              uses: TheBrutalX/factorio-mod-uploader-action@v1
+              uses: TheBrutalX/factorio-mod-uploader-action@v2
               with:
                   action: upload
                   factorio-api-key: ${{ secrets.FACTORIO_API_KEY }}
@@ -51,5 +46,5 @@ jobs:
               if: startsWith(github.ref, 'refs/tags/v')
               uses: softprops/action-gh-release@v2
               with:
-                  files: ${{ env.ZIP_FILE }}
+                  files: ${{ env.PROCESS_ZIP_FILE }}
                   generate_release_notes: false
