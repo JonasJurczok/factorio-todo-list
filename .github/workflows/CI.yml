@@ -35,22 +35,17 @@ jobs:
         - name: Copy changelog into mod folder
           run: cp changelog.txt src/changelog.txt
 
-        - name: Set up Node.js
-          uses: actions/setup-node@v3
-          with:
-              node-version: '20'
-
         - name: Validate Mod
-          uses: TheBrutalX/factorio-mod-uploader-action@v1
+          uses: TheBrutalX/factorio-mod-uploader-action@v2
           with:
               action: validate
               mod-folder: src
 
         - name: Create zip
-          uses: TheBrutalX/factorio-mod-uploader-action@v1
+          uses: TheBrutalX/factorio-mod-uploader-action@v2
           with:
               action: compress
-              mod-folder: src          
+              mod-folder: src
 
         - name: Upload ZIP as Artifact
           uses: actions/upload-artifact@v4
