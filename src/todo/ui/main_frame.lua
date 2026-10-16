@@ -1,11 +1,14 @@
 -- This file also contains the maximize button
 
 function todo.create_maximize_button(player)
-    todo.log("Creating Basic UI for player " .. player.name)
+    if not todo.should_show_maximize_button(player) then
+        todo.destroy_maximize_button(player)
+        return
+    end
 
-    if (not todo.get_maximize_button(player)
-            and not todo.get_main_frame(player)
-            and todo.should_show_maximize_button(player)) then
+    local button = todo.get_maximize_button(player)
+    if (not button and not todo.get_main_frame(player)) then
+        todo.log("Creating Basic UI for player " .. player.name)
         mod_gui.get_button_flow(player).add({
             type = "button",
             style = "todo_button_default",

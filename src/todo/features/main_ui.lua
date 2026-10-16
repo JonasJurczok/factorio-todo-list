@@ -98,70 +98,139 @@ function todo.refresh_task_table(player, search_term)
         search_term = string.lower(search_term)
     end
 
-    todo.update_current_task_label(player)
+    if (main_frame) then
+        local table = todo.get_task_table(player)
+        if table then
+            table.clear()
 
-    -- if the player has the UI minimized do nothing
-    if not main_frame then
-        return
-    end
+            -- recreate headers
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_done",
+                caption = { "", { "todo.title_done" }, "   " }
+            })
 
-    local task_table = todo.get_task_table(player)
-    local children = task_table.children
-    for i = #children, task_table.column_count + 1, -1 do
-        children[i].destroy()
-    end
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_task",
+                caption = { todo.translate(player, "title_task") }
+            })
 
-    -- Filter and display open tasks
-    local filtered_open = {}
-    for _, task in ipairs(storage.todo.open) do
-        if not search_term or search_term == "" or todo.task_matches_search(task, search_term) then
-            table.insert(filtered_open, task)
-        end
-    end
-    
-    local open_length = #filtered_open
-    for i, task in ipairs(filtered_open) do
-        local expanded = todo.should_show_task_details(player, task.id)
-        todo.add_task_to_table(player, task_table, task, false, i == 1, i == open_length, expanded)
-    end
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_assignee",
+                caption = { todo.translate(player, "title_assignee") }
+            })
 
-    -- Filter and display completed tasks if enabled
-    if (todo.show_completed_tasks(player)) then
-        local filtered_done = {}
-        for _, task in ipairs(storage.todo.done) do
-            if not search_term or search_term == "" or todo.task_matches_search(task, search_term) then
-                table.insert(filtered_done, task)
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_top",
+                caption = { todo.translate(player, "title_sort") }
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_up",
+                caption = ""
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_down",
+                caption = ""
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_bottom",
+                caption = ""
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_edit",
+                caption = { todo.translate(player, "title_edit") }
+            })
+
+            table.add({
+                type = "label",
+                style = "todo_label_default",
+                name = "todo_title_details",
+                caption = { "todo.title_details" }
+            })
+
+            -- Filter open tasks by search term
+            local filtered_open = {}
+            for _, task in ipairs(storage.todo.open) do
+                if todo.task_matches_search(task, search_term) then
+                    table.insert(filtered_open, task)
+                end
+            end
+
+            local open_count = #filtered_open
+            for i, task in ipairs(filtered_open) do
+                todo.add_task_to_table(player, table, task, false, i == 1, i == open_count, task.expanded)
+            end
+
+            -- Filter completed tasks by search term
+            if (todo.show_completed_tasks(player)) then
+                local filtered_done = {}
+                for _, task in ipairs(storage.todo.done) do
+                    if todo.task_matches_search(task, search_term) then
+                        table.insert(filtered_done, task)
+                    end
+                end
+
+                local done_count = #filtered_done
+                for i, task in ipairs(filtered_done) do
+                    todo.add_task_to_table(player, table, task, true, i == 1, i == done_count, task.expanded)
+                end
             end
         end
-        
-        for _, task in ipairs(filtered_done) do
-            -- we don't want ordering for completed tasks
-            local expanded = todo.should_show_task_details(player, task.id)
-            todo.add_task_to_table(player, task_table, task, true, true, true, expanded)
+    end
+
+    todo.update_current_task_label(player)
+end
+
+function todo.task_matches_search(task, search_term)
+    if search_term == "" then
+        return true
+    end
+
+    if string.find(string.lower(task.title), search_term, 1, true) then
+        return true
+    end
+
+    if string.find(string.lower(task.task), search_term, 1, true) then
+        return true
+    end
+
+    if task.assignee and string.find(string.lower(task.assignee), search_term, 1, true) then
+        return true
+    end
+
+    if task.subtasks then
+        for _, subtask in ipairs(task.subtasks.open) do
+            if string.find(string.lower(subtask.task), search_term, 1, true) then
+                return true
+            end
         end
-        
-        -- Add "No results" message if no tasks found
-        if search_term and search_term ~= "" and #filtered_open == 0 and #filtered_done == 0 then
-            local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
-            row[2] = {
-                type = "label",
-                style = "todo_label_default",
-                caption = {todo.translate(player, "no_results")}
-            }
-            todo.add_row_to_main_table(task_table, row)
-        end
-    else
-        -- Add "No results" message if no tasks found and completed tasks are hidden
-        if search_term and search_term ~= "" and #filtered_open == 0 then
-            local row = { "done", "task", "take", "top", "up", "down", "bottom", "edit", "delete" }
-            row[2] = {
-                type = "label",
-                style = "todo_label_default",
-                caption = {todo.translate(player, "no_results")}
-            }
-            todo.add_row_to_main_table(task_table, row)
+        for _, subtask in ipairs(task.subtasks.done) do
+            if string.find(string.lower(subtask.task), search_term, 1, true) then
+                return true
+            end
         end
     end
+
+    return false
 end
 
 function todo.update_current_task_label(player)
@@ -218,11 +287,33 @@ function todo.toggle_show_completed(player)
 end
 
 function todo.get_maximize_button(player)
-    local flow = mod_gui.get_button_flow(player)
-    if flow.todo_maximize_button then
-        return flow.todo_maximize_button
-    else
-        return nil
+    local gui = player.gui.top
+    if gui.mod_gui_button_flow and gui.mod_gui_button_flow.todo_maximize_button then
+        return gui.mod_gui_button_flow.todo_maximize_button
+    end
+    if gui.mod_gui_top_frame and gui.mod_gui_top_frame.mod_gui_inner_frame and gui.mod_gui_top_frame.mod_gui_inner_frame.todo_maximize_button then
+        return gui.mod_gui_top_frame.mod_gui_inner_frame.todo_maximize_button
+    end
+    return nil
+end
+
+function todo.destroy_maximize_button(player)
+    local button = todo.get_maximize_button(player)
+    if button and button.valid then
+        button.destroy()
+    end
+
+    local gui = player.gui.top
+    if gui.mod_gui_top_frame and gui.mod_gui_top_frame.valid then
+        local inner = gui.mod_gui_top_frame.mod_gui_inner_frame
+        if inner and inner.valid and #inner.children == 0 then
+            gui.mod_gui_top_frame.destroy()
+        elseif not inner or not inner.valid then
+            gui.mod_gui_top_frame.destroy()
+        end
+    end
+    if gui.mod_gui_button_flow and gui.mod_gui_button_flow.valid and #gui.mod_gui_button_flow.children == 0 then
+        gui.mod_gui_button_flow.destroy()
     end
 end
 
@@ -237,39 +328,12 @@ function todo.on_search_clear_click(player)
     end
 end
 
--- Helper function to check if a task matches the search term
-function todo.task_matches_search(task, search_term)
-    if not search_term or search_term == "" then
-        return true
-    end
-    return string.find(string.lower(task.title or ""), search_term, 1, true) ~= nil or
-           string.find(string.lower(task.task or ""), search_term, 1, true) ~= nil or
-           (task.subtasks ~= nil and todo.subtasks_match_search(task.subtasks, search_term))
-end
-
--- Helper function to check if any subtasks match the search term
-function todo.subtasks_match_search(subtasks, search_term)
-    if not subtasks then
-        return false
-    end
-    
-    -- Check open subtasks
-    if subtasks.open then
-        for _, subtask in ipairs(subtasks.open) do
-            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
-                return true
-            end
+function todo.update_export_dialog_button_state()
+    local has_tasks = (#storage.todo.open > 0) or (#storage.todo.done > 0)
+    for _, p in pairs(game.players) do
+        local frame = todo.get_main_frame(p)
+        if frame and frame.todo_main_button_flow and frame.todo_main_button_flow.todo_main_open_export_dialog_button then
+            frame.todo_main_button_flow.todo_main_open_export_dialog_button.enabled = has_tasks
         end
     end
-    
-    -- Check completed subtasks
-    if subtasks.done then
-        for _, subtask in ipairs(subtasks.done) do
-            if string.find(string.lower(subtask.task or ""), search_term, 1, true) then
-                return true
-            end
-        end
-    end
-    
-    return false
 end

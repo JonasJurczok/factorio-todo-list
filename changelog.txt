@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 19.16.0
+Date: 2026-10-16
+  Features:
+    - Added dedicated 32x32px shortcut bar icon for Toggle TODO List.
+    - Linked Toggle TODO List shortcut bar button to keybind (Shift + T).
+  Changes:
+    - Disabled on-screen floating button by default to avoid screen clutter.
+    - Removed redundant Add Task shortcut bar button.
+  Bugfixes:
+    - Fixed empty leftover mod_gui container frame lingering in top-left corner when the on-screen button is hidden.
+---------------------------------------------------------------------------------------------------
 Version: 19.15.3
 Date: 2026-06-25
   Changes:

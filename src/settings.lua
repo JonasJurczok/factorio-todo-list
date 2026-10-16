@@ -3,7 +3,7 @@ data:extend({
 		name = "todolist-show-button",
 		setting_type = "runtime-per-user",
 		type = "bool-setting",
-		default_value = true,
+		default_value = false,
 		per_user = true,
 	},
 	{
